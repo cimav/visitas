@@ -1,0 +1,29 @@
+%h1 Listing room_visits
+
+%table
+  %thead
+    %tr
+      %th Date
+      %th Status
+      %th Visit
+      %th Room
+      %th Persona
+      %th
+      %th
+      %th
+
+  %tbody
+    - @room_visits.each do |room_visit|
+      %tr
+        %td= room_visit.date
+        %td= room_visit.status
+        %td= room_visit.visit
+        %td= room_visit.room
+        %td= room_visit.persona
+        %td= link_to 'Show', room_visit
+        %td= link_to 'Edit', edit_room_visit_path(room_visit)
+        %td= link_to 'Destroy', room_visit, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Room visit', new_room_visit_path

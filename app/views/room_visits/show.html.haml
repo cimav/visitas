@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = @room_visit.date
+%p
+  %b Status:
+  = @room_visit.status
+%p
+  %b Visit:
+  = @room_visit.visit
+%p
+  %b Room:
+  = @room_visit.room
+%p
+  %b Persona:
+  = @room_visit.persona
+
+= link_to 'Edit', edit_room_visit_path(@room_visit)
+\|
+= link_to 'Back', room_visits_path

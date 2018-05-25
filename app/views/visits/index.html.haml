@@ -1,0 +1,35 @@
+%h1 Listing visits
+
+%table
+  %thead
+    %tr
+      %th Departamento
+      %th Institution
+      %th Resp name
+      %th Resp phone
+      %th Resp email
+      %th Requested date
+      %th Transport type
+      %th Date
+      %th
+      %th
+      %th
+
+  %tbody
+    - @visits.each do |visit|
+      %tr
+        %td= visit.departamento
+        %td= visit.institution
+        %td= visit.resp_name
+        %td= visit.resp_phone
+        %td= visit.resp_email
+        %td= visit.requested_date
+        %td= visit.transport_type
+        %td= visit.date
+        %td= link_to 'Show', visit
+        %td= link_to 'Edit', edit_visit_path(visit)
+        %td= link_to 'Destroy', visit, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Visit', new_visit_path

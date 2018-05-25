@@ -1,0 +1,30 @@
+%p#notice= notice
+
+%p
+  %b Departamento:
+  = @visit.departamento
+%p
+  %b Institution:
+  = @visit.institution
+%p
+  %b Resp name:
+  = @visit.resp_name
+%p
+  %b Resp phone:
+  = @visit.resp_phone
+%p
+  %b Resp email:
+  = @visit.resp_email
+%p
+  %b Requested date:
+  = @visit.requested_date
+%p
+  %b Transport type:
+  = @visit.transport_type
+%p
+  %b Date:
+  = @visit.date
+
+= link_to 'Edit', edit_visit_path(@visit)
+\|
+= link_to 'Back', visits_path
