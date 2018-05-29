@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2018_05_25_174848) do
     t.string "notes"
     t.string "resp_email"
     t.integer "transport_type"
+    t.integer "status"
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

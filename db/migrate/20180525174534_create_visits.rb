@@ -8,6 +8,7 @@ class CreateVisits < ActiveRecord::Migration[5.2]
       t.string :notes
       t.string :resp_email
       t.integer :transport_type
+      t.integer :status
       t.datetime :date
 
       t.timestamps

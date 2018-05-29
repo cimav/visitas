@@ -16,7 +16,11 @@
           %i.material-icons menu
         %ul.right.hide-on-med-and-down
           %li{class:"#{active_class('/visits')} #{'active' if request.path.eql?'/'}"}
-            %a{:href => "/visits"} Visitas
+            %a{:href => "/visits"}
+              Visitas
+              -if Visit.where(status: Visit::REQUESTED).size > 0
+                %span.new.badge.pink{'data-badge-caption':"solicitudes"}
+                  =Visit.where(status: Visit::REQUESTED).size
           %li{class:"#{active_class('/rooms')}"}
             %a{:href => "/rooms"} Laboratorios
         %ul#mobile-demo.side-nav
