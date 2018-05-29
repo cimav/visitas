@@ -1,34 +1,89 @@
 = form_for @visit do |f|
-  - if @visit.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@visit.errors.count, "error")} prohibited this visit from being saved:"
-      %ul
-        - @visit.errors.full_messages.each do |message|
-          %li= message
+  .row
+    .col.s12.m6
+      = f.label :department_id
+      = f.collection_select :department_id, Department.all, :id,:name
 
-  .field
-    = f.label :departamento
-    = f.text_field :departamento
-  .field
-    = f.label :institution
-    = f.text_field :institution
-  .field
-    = f.label :resp_name
-    = f.text_field :resp_name
-  .field
-    = f.label :resp_phone
-    = f.text_field :resp_phone
-  .field
-    = f.label :resp_email
-    = f.text_field :resp_email
-  .field
-    = f.label :requested_date
-    = f.datetime_select :requested_date
-  .field
-    = f.label :transport_type
-    = f.number_field :transport_type
-  .field
-    = f.label :date
-    = f.datetime_select :date
+    .col.s12.m6
+      = f.label :institution
+      = f.text_field :institution, required:true, autocomplete:"off", class:'autocomplete'
+  .row
+    .input-field.col.s12.m4
+      = f.label :resp_name
+      = f.text_field :resp_name, required:true
+    .input-field.col.s12.m4
+      = f.label :resp_phone
+      = f.text_field :resp_phone, required:true
+    .input-field.col.s12.m4
+      = f.label :resp_email
+      = f.text_field :resp_email, type:'email', required:true
+  .row
+    .col.s12.m4
+      = f.label :transport_type
+      = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
+    .col.s12.m4
+      = f.label :date
+      = text_field_tag :date, @date,class: "datepicker",placeholder:'Selecciona la fecha de la visita', type:'date'
+    .col.s12.m4
+      = f.label :time
+      = text_field_tag 'time',@time, class: "timepicker", placeholder:'Selecciona la hora de la visita', :type => "text"
   .actions
     = f.submit 'Save'
+:javascript
+   $(document).ready(function(){
+    $.ajax({
+      url: "/get_institutions",
+      cache: true,
+      success: function(data){
+        $('input.autocomplete').autocomplete({
+          data: data,
+          onAutocomplete: function(val) {
+            //autoCompleteEmail(val);
+          },
+           limit: 10 // The max amount of results that can be shown at once. Default: Infinity.
+
+        });
+      }
+    });
+  });
+
+  $('.datepicker').pickadate({
+
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+
+        // The title label to use for the month nav buttons
+        labelMonthNext: 'Mes siguiente',
+        labelMonthPrev: 'Mes anterior',
+
+        // The title label to use for the dropdown selectors
+        labelMonthSelect: 'Selecciona un mes',
+        labelYearSelect: 'Selecciona un año',
+
+        // Months and weekdays
+        monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+
+        // Materialize modified
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+
+        // Today and clear
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+
+        format: 'yyyy-mm-dd'
+  });
+  $('.timepicker').pickatime({
+    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+    twelvehour: true, // Use AM/PM or 24-hour format
+    donetext: 'OK', // text for done-button
+    cleartext: 'Clear', // text for clear-button
+    canceltext: 'Cancel', // Text for cancel-button
+    autoclose: false, // automatic close timepicker
+    ampmclickable: true, // make AM PM clickable
+    aftershow: function(){} //Function for after opening timepicker
+  });

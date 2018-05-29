@@ -7,6 +7,32 @@
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
   %body
+    %nav
+      .nav-wrapper
+        %a.brand-logo{:href => "/"} Visitas
+        %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
+          %i.material-icons menu
+        %ul.right.hide-on-med-and-down
+          %li
+            %a{:href => "/visits"} Visitas
+          %li
+            %a{:href => "/rooms"} Laboratorios
+        %ul#mobile-demo.side-nav
+          %li
+            %a{:href => "/visits"} Visitas
+          %li
+            %a{:href => "/rooms"} Laboratorios
+
+
     .container
       = yield
+
+/ Mensajes
+-if flash[:alert]
+  -flash[:alert].each do |message|
+    :javascript
+      Materialize.toast("#{message}", 4500, 'orange darken-4')
+:javascript
+  Materialize.toast("#{notice}", 3000)

@@ -12,7 +12,13 @@
 
 ActiveRecord::Schema.define(version: 2018_05_25_174848) do
 
-  create_table "room_visits", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "room_visits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "date"
     t.integer "status"
     t.bigint "visit_id"
@@ -25,27 +31,26 @@ ActiveRecord::Schema.define(version: 2018_05_25_174848) do
     t.index ["visit_id"], name: "index_room_visits_on_visit_id"
   end
 
-  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.bigint "departamento_id"
+    t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["departamento_id"], name: "index_rooms_on_departamento_id"
+    t.index ["department_id"], name: "index_rooms_on_department_id"
   end
 
-  create_table "visits", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.bigint "departamento_id"
-    t.bigint "institution_id"
+  create_table "visits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "department_id"
+    t.string "institution"
     t.string "resp_name"
     t.string "resp_phone"
+    t.string "notes"
     t.string "resp_email"
-    t.datetime "requested_date"
     t.integer "transport_type"
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["departamento_id"], name: "index_visits_on_departamento_id"
-    t.index ["institution_id"], name: "index_visits_on_institution_id"
+    t.index ["department_id"], name: "index_visits_on_department_id"
   end
 
   add_foreign_key "room_visits", "rooms"

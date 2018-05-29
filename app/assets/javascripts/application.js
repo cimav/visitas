@@ -11,7 +11,18 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require activestorage
+//= require jquery
 //= require turbolinks
-//= require materialize
+//= require materialize-sprockets
+//= require activestorage
+//= require select2
 //= require_tree .
+
+$(document).on('ready turbolinks:load', function() {
+    $(".dropdown-button").dropdown();
+    $('select').material_select();
+    $(".button-collapse").sideNav();
+    $(".do-select2").select2();
+    Materialize.updateTextFields();
+});
+

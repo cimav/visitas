@@ -1,4 +1,4 @@
 class Room < ApplicationRecord
-  belongs_to :departamento
+  belongs_to :department
   has_many :room_visits
 end

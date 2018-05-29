@@ -2,9 +2,9 @@
 
 %p
   %b Departamento:
-  = @visit.departamento
+  = @visit.department.name
 %p
-  %b Institution:
+  %b Institución:
   = @visit.institution
 %p
   %b Resp name:
@@ -16,14 +16,14 @@
   %b Resp email:
   = @visit.resp_email
 %p
-  %b Requested date:
-  = @visit.requested_date
-%p
   %b Transport type:
-  = @visit.transport_type
+  = @visit.get_transport_type
 %p
   %b Date:
-  = @visit.date
+  = fdate(@visit.date)
+%p
+  %b Time:
+  =ftime(@visit.date)
 
 = link_to 'Edit', edit_visit_path(@visit)
 \|

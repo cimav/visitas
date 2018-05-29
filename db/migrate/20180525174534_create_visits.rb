@@ -1,12 +1,12 @@
 class CreateVisits < ActiveRecord::Migration[5.2]
   def change
     create_table :visits do |t|
-      t.references :departamento, foreign_key: false
-      t.references :institution, foreign_key: false
+      t.references :department, foreign_key: false
+      t.string :institution
       t.string :resp_name
       t.string :resp_phone
+      t.string :notes
       t.string :resp_email
-      t.datetime :requested_date
       t.integer :transport_type
       t.datetime :date
 
