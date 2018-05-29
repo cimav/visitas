@@ -1,3 +1,12 @@
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to root_path, class:'breadcrumb' do
+          Listado de becas
+        %a.breadcrumb{}
+          =@visit.institution
+
 %p#notice= notice
 
 %p
