@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :visits
   resources :rooms
 
+  root 'visits#index'
   get '/get_institutions' => 'visits#get_institutions'
 end

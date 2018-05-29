@@ -15,9 +15,9 @@
         %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
           %i.material-icons menu
         %ul.right.hide-on-med-and-down
-          %li
+          %li{class:"#{active_class('/visits')} #{'active' if request.path.eql?'/'}"}
             %a{:href => "/visits"} Visitas
-          %li
+          %li{class:"#{active_class('/rooms')}"}
             %a{:href => "/rooms"} Laboratorios
         %ul#mobile-demo.side-nav
           %li
