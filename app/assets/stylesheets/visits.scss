@@ -1,3 +1,10 @@
-// Place all the styles related to the visits controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.card .card-content .card-title  a i {
+  line-height: inherit;
+}.card .card-content .card-title  button i {
+   line-height: inherit;
+}
+#visits-wrapper{
+  display: block;
+  overflow-y: scroll;
+}
+

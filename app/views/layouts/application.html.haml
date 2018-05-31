@@ -11,12 +11,12 @@
   %body
     %nav.custom-navbar
       .nav-wrapper
-        %a.brand-logo{:href => "/"} Visitas
+        %a.brand-logo{:href => "/", 'data-turbolinks':"false"} Visitas
         %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
           %i.material-icons menu
         %ul.right.hide-on-med-and-down
           %li{class:"#{active_class('/visits')} #{'active' if request.path.eql?'/'}"}
-            %a{:href => "/visits"}
+            %a{:href => "/visits", 'data-turbolinks':"false"}
               Visitas
               -if Visit.where(status: Visit::REQUESTED).size > 0
                 %span.new.badge.pink{'data-badge-caption':"solicitudes"}
@@ -25,7 +25,7 @@
             %a{:href => "/rooms"} Laboratorios
         %ul#mobile-demo.side-nav
           %li
-            %a{:href => "/visits"} Visitas
+            %a{:href => "/visits", "data-no-turbolink" => false} Visitas
           %li
             %a{:href => "/rooms"} Laboratorios
 

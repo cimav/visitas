@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   root 'visits#index'
   get '/get_institutions' => 'visits#get_institutions'
+  get '/load_visits' => 'visits#load_visits'
 end

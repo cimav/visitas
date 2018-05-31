@@ -1,0 +1,16 @@
+-@visits.each do |visit|
+  %tr.tr-click{href:"/visits/#{visit.id}"}
+    %td
+      =visit.department.name
+    %td
+      =visit.institution
+    %td
+      =visit.resp_name
+    %td
+      =visit.get_status
+    %td
+      =fdatetime visit.date
+:javascript
+  $("tr.tr-click").on('click', function () {
+    window.location = ($(this).attr("href"));
+  });

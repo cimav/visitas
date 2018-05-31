@@ -1,33 +1,159 @@
-%h1 Listing visits
+.row
+  .col.s12.m12
+    .card
+      .card-content
+        .card-title
+          Visitas
+          %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva beca','data-delay':40,'data-position':'right',onclick:"openModal($('#new_visit_modal'));"}
+            %i.material-icons
+              add
 
-%table
-  %thead
-    %tr
-      %th Institution
-      %th Departamento
-      %th Resp name
-      %th Resp phone
-      %th Resp email
-      %th Transport type
-      %th Date
-      %th
-      %th
-      %th
+        .row
+          %form#visits-search-form{'data-remote':true, action:'/load_part_visits'}
+            .row
+              .col.l4.input-field
+                =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
+                %label{for:'visits-search-type'} Departamento
+              .col.l4.input-field
+                %input#visits-search-institution{placeholder:'Nombre de la institución'}
+                %label.active{for:'visits-search-institution'} Institución
+              .col.l4.input-field
+                %input#visits-search-resp{placeholder:'Nombre del responsable'}
+                %label.active{for:'visits-search-resp'} Responsable
+            .row
+              .col.l4.input-field
+                =select_tag 'visits-search-status', options_from_collection_for_select(Visit::STATUS.except(Visit::DELETED),:first, :last), include_blank: 'Todos los estatus'
+                %label{for:'visits-search-status'} Estatus
+              .col.l4.input-field
+                =text_field_tag 'visits-search-date','', class: "datepicker", type:'date'
+                %label.active{for:'visits-search-date'} Fecha
+              .col.l4.center
+                %button#visits-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
+                  Buscar
+                  %i.material-icons.left
+                    search
+        #visits-wrapper
+          %table#visits-table.bordered.highlight
+            %thead
+              %tr
+                %th Departamento
+                %th Institución
+                %th Responsable
+                %th Estado
+                %th Fecha
+              %tbody
 
-  %tbody
-    - @visits.each do |visit|
-      %tr
-        %td= visit.institution
-        %td= visit.department.name
-        %td= visit.resp_name
-        %td= visit.resp_phone
-        %td= visit.resp_email
-        %td= visit.transport_type
-        %td= fdatetime visit.date
-        %td= link_to 'Show', visit
-        %td= link_to 'Edit', edit_visit_path(visit)
-        %td= link_to 'Destroy', visit, method: :delete, data: { confirm: 'Are you sure?' }
+        .center-align
+          .preloader-wrapper.big.load-more.active{style:'display:none;'}
+            .spinner-layer.spinner-blue-only
+              .circle-clipper.left
+                .circle
+              .gap-patch
+                .circle
+              .circle-clipper.right
+                .circle
+.fixed-action-btn
+  %button.btn-floating.right.white.darken-2.tooltipped{'data-tooltip':'Exportar a excel','data-delay':40,'data-position':'left',onclick:"getExcel();"}
+    %i.fa.fa-file-excel.green-text.text-darken-3
 
-%br
 
-= link_to 'New Visit', new_visit_path
+#new_visit_modal.modal
+  .modal-content
+    .center
+      %h5 Nueva visita
+    =render 'form', visit: Visit.new, screen:'new'
+
+
+:javascript
+
+  var visits_loaded;
+  var searchObject = {};
+
+  $("#visits-search-form").on('submit', function() {
+    searchVisits();
+  });
+  $("#visits-search-department").on('change', function() {
+    searchVisits();
+  });
+  $("#visits-search-status").on('change', function() {
+    searchVisits();
+  });
+
+  $(document).ready(function(){
+    setVisitsHeight();
+    searchVisits();
+    $('.datepicker').pickadate({
+
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+
+        // The title label to use for the month nav buttons
+        labelMonthNext: 'Mes siguiente',
+        labelMonthPrev: 'Mes anterior',
+
+        // The title label to use for the dropdown selectors
+        labelMonthSelect: 'Selecciona un mes',
+        labelYearSelect: 'Selecciona un año',
+
+        // Months and weekdays
+        monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+
+        // Materialize modified
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+
+        // Today and clear
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+
+        format: 'yyyy-mm-dd'
+  });
+  });
+
+  $('#visits-wrapper').scroll(function (){
+    if($(this)[0].scrollHeight - $(this).scrollTop() === $(this).outerHeight()) {
+      loadVisits();
+    }
+  });
+
+  function searchVisits() {
+    visits_loaded = 0;
+    searchObject.department = $("#visits-search-department").val();
+    searchObject.institution = $("#visits-search-institution").val();
+    searchObject.resp = $("#visits-search-resp").val();
+    searchObject.status = $("#visits-search-status").val();
+    searchObject.date = $("#visits-search-date").val();
+    console.log(searchObject);
+    loadVisits();
+
+  }
+
+  function loadVisits(){
+    $.ajax({
+      type:'GET',
+      url:'/load_visits',
+      chache:false,
+      data :{
+        visits_loaded: visits_loaded,
+        search_object : searchObject
+      },
+      beforeSend:function(){
+        $('.load-more').show();
+      },
+      success:function(html){
+        if(visits_loaded == 0){
+          $("#visits-table tbody").html(html);
+        }else{
+          $("#visits-table tbody").append(html);
+        }
+        $('.load-more').hide();
+        visits_loaded += 50;
+      }
+    });
+  }
+  function getExcel() {
+    window.open("/load_visits?"+$.param({search_object: searchObject, format: "xls"}));
+  }

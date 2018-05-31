@@ -12,6 +12,40 @@ class VisitsController < ApplicationController
   def show
   end
 
+  def load_visits
+    ###################### Se reciben los parámetros
+    visits_loaded = params[:visits_loaded].to_i
+    department_id = params[:search_object][:department]
+    institution = params[:search_object][:institution]
+    date = params[:search_object][:date]
+    resp = params[:search_object][:resp]
+    status = params[:search_object][:status]
+    @visits = Visit.where.not(status: Visit::DELETED)
+
+    #filtro por departamento
+    @visits = @visits.where(department_id:department_id) unless department_id.blank?
+
+    #filtro por institución
+    @visits = @visits.where("institution LIKE '%#{institution}%'") unless institution.blank?
+
+    #filtro por fecha
+    @visits = @visits.where("date LIKE '#{date}%'") unless date.blank?
+
+    #filtro por fecha
+    @visits = @visits.where("resp_name LIKE '%#{resp}%'") unless resp.blank?
+
+    #filtro por fecha
+    @visits = @visits.where(status:status) unless status.blank?
+
+    respond_to do |format|
+      format.html do
+        @visits = @visits.offset(visits_loaded).limit(50)
+        render layout:false
+      end
+    end
+
+  end
+
   # GET /visits/new
   def new
     @visit = Visit.new
@@ -98,6 +132,6 @@ class VisitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def visit_params
-      params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type)
+      params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status)
     end
 end

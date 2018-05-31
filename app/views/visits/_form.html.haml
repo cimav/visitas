@@ -1,34 +1,43 @@
-= form_for @visit do |f|
+= form_for visit do |f|
   .row
-    .col.s12.m6
-      = f.label :department_id
+    .col.s12.m6.input-field
+      = f.label :department_id, class:'active'
       = f.collection_select :department_id, Department.all, :id,:name
 
-    .col.s12.m6
+    .col.s12.m6.input-field
       = f.label :institution
       = f.text_field :institution, required:true, autocomplete:"off", class:'autocomplete'
-  .row
-    .input-field.col.s12.m4
-      = f.label :resp_name
-      = f.text_field :resp_name, required:true
-    .input-field.col.s12.m4
-      = f.label :resp_phone
-      = f.text_field :resp_phone, required:true
-    .input-field.col.s12.m4
-      = f.label :resp_email
-      = f.text_field :resp_email, type:'email', required:true
-  .row
-    .col.s12.m4
-      = f.label :transport_type
-      = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
-    .col.s12.m4
-      = f.label :date
-      = text_field_tag :date, @date,class: "datepicker",placeholder:'Selecciona la fecha de la visita', type:'date'
-    .col.s12.m4
-      = f.label :time
-      = text_field_tag 'time',@time, class: "timepicker", placeholder:'Selecciona la hora de la visita', :type => "text"
-  .actions
-    = f.submit 'Save'
+  .section
+    .row
+      .input-field.col.s12.m4
+        = f.label :resp_name
+        = f.text_field :resp_name, required:true
+      .input-field.col.s12.m4
+        = f.label :resp_phone
+        = f.text_field :resp_phone, required:true
+      .input-field.col.s12.m4
+        = f.label :resp_email
+        = f.text_field :resp_email, type:'email', required:true
+  .section
+    .row
+      .col.s12.m4
+        = f.label :transport_type
+        = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
+      .col.s12.m4
+        = f.label :date
+        = text_field_tag :date, @date,class: "datepicker",placeholder:'Selecciona la fecha de la visita', type:'date'
+      .col.s12.m4
+        = f.label :time
+        = text_field_tag 'time',@time, class: "timepicker", placeholder:'Selecciona la hora de la visita'
+        =f.hidden_field :status, value:Visit::APPROVED
+  .section
+    .row
+      .col.s12
+        .right
+          -if screen == 'edit'
+            %a.btn.btn-large.red{href:"/visits/#{visit.id}", 'data-method': 'delete', data: { confirm: '¿Deseas eliminar la visita?' }}
+              Eliminar
+          =f.submit 'Guardar', class:'btn btn-large purple'
 :javascript
    $(document).ready(function(){
     $.ajax({

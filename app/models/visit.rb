@@ -9,12 +9,13 @@ class Visit < ApplicationRecord
   CONFIRMED = 3
   CANCELED = 4
   FINISHED = 5
+  DELETED = 99
 
   CAR = 1
   BUS = 2
   WALK = 3
 
-  TRANSPORT_TYPE = {CAR => 'Automovil', BUS => 'Autobus', WALK => 'Caminando'}
+  TRANSPORT_TYPE = {CAR => 'Automóvil', BUS => 'Autobus', WALK => 'Caminando'}
 
   STATUS = {
       REQUESTED => 'Solicitada',
@@ -26,6 +27,10 @@ class Visit < ApplicationRecord
 
   def get_transport_type
     TRANSPORT_TYPE[self.transport_type]
+  end
+
+  def get_status
+    STATUS[self.status]
   end
 
 end
