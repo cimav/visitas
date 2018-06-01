@@ -1,5 +1,12 @@
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to rooms_path, class:'breadcrumb' do
+          Laboratorios
+        %a.breadcrumb{}
+          Nuevo
+
 %h1 Nuevo laboratorio
 
 = render 'form'
-
-= link_to 'Back', rooms_path

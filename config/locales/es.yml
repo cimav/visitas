@@ -10,17 +10,21 @@ es:
 
     attributes:
       visit:
-          department: Departamento
-          department_id: Departamento
-          institution: Institución
-          resp_email: Correo del responsable
-          resp_name: Nombre del responsable
-          resp_phone: Teléfono del responsable
-          requested_date: Fecha solicitada
-          transport_date: Tipo de transporte
-          notes: Notas
-          date: Fecha
-          date: Hora
+        department: Departamento
+        department_id: Departamento
+        institution: Institución
+        resp_email: Correo del responsable
+        resp_name: Nombre del responsable
+        resp_phone: Teléfono del responsable
+        requested_date: Fecha solicitada
+        transport_date: Tipo de transporte
+        notes: Notas
+        date: Fecha
+        date: Hora
+      room:
+        name: Nombre
+        department: Departamneto
+        department_id: Departamneto
 
   date:
     abbr_day_names:

@@ -1,6 +1,6 @@
 %h1 Lista de laboratorios
 
-%table
+%table.striped
   %thead
     %tr
       %th Nombre
@@ -14,10 +14,16 @@
       %tr
         %td= room.name
         %td= room.department.name
-        %td= link_to 'Show', room
-        %td= link_to 'Edit', edit_room_path(room)
-        %td= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          = link_to edit_room_path(room), class:'btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-delay': 30 do
+            %i.material-icons edit
+        %td
+          = link_to  room, method: :delete, class:'btn-floating tooltipped red', 'data-tooltip':'Eliminar', 'data-delay': 30, data: { confirm: 'Are you sure?' } do
+            %i.material-icons delete
 
 %br
 
-= link_to 'New Room', new_room_path
+= link_to  new_room_path, class:'btn-large purple' do
+  %i.material-icons.left
+    add
+  Nuevo laboratorio

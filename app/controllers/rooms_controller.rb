@@ -28,7 +28,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       if @room.save
-        format.html { redirect_to @room, notice: 'Room was successfully created.' }
+        format.html { redirect_to rooms_path, notice: 'Laboratorio creado' }
         format.json { render :show, status: :created, location: @room }
       else
         format.html { render :new }

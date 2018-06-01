@@ -1,16 +1,10 @@
 = form_for @room do |f|
-  - if @room.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@room.errors.count, "error")} prohibited this room from being saved:"
-      %ul
-        - @room.errors.full_messages.each do |message|
-          %li= message
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :department_id
-    = f.collection_select :department_id, Department.all, :id,:name
-  .actions
-    = f.submit 'Save'
+  .row
+    .input-field.col.s12.m6
+      = f.label :name
+      = f.text_field :name
+    .input-field.col.s12.m6
+      = f.label :department_id, class:'active'
+      = f.collection_select :department_id, Department.all, :id,:name
+  .row.right
+    = f.submit 'Guardar', class:'btn green'
