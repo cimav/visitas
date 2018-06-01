@@ -36,5 +36,39 @@
 \|
 = link_to 'Back', visits_path
 
+.row
+  .col.s12.m12
+    .card
+      .card-content
+        .card-title
+          Visita a laboratorios
+          %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Solicitar nueva beca','data-position':'right'}
+            %i.material-icons.left
+              add
+            Solicitar nueva beca
+        -if @room_visits.size > 0
+          %tablebordered.highlight.responsive-table
+            %thead
+              %tr
+                %th Laboratorio
+                %th Guía
+                %th Hora
+                %th Estatus
+            %tbody
+              -@room_visits.each do |room_visit|
+                %tr.tr-click{href:"/room_visits/#{room_visit.id}"}
+                  %td
+                    =room_visit.room.name
+                  %td
+                    =room_visit.persona.full_name rescue ''
+                  %td
+                    =ftime room_visit.date rescue ''
+                  %td
+                    =room_visit.get_status
+        -else
+          %blockquote
+            Aun no hay becas
+
+
 :javascript
   Turbolinks.clearCache();
