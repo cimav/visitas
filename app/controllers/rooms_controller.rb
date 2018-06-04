@@ -51,6 +51,7 @@ class RoomsController < ApplicationController
     end
   end
 
+
   # DELETE /rooms/1
   # DELETE /rooms/1.json
   def destroy

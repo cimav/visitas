@@ -1,0 +1,38 @@
+
+=form_for room_visit, url: url do |f|
+  .row
+    .input-field.col.s12
+      = f.label :persona_id, class:'active'
+      = f.select :persona_id, options_from_collection_for_select(Persona.all, :id, :nombre), {},class:'do-select2'
+  .row
+    .col.s12
+      = f.label :room_id
+      = f.select :room_id, options_from_collection_for_select(@visit.department.rooms, :id, :name), {}, class:'material-select'
+  .row
+    .col.s12
+      = f.label :time
+      = text_field_tag 'time',time, class: "timepicker", placeholder:'Selecciona la hora de la visita'
+  .section
+    .row
+      .col.s12
+        .right
+          -if screen == 'edit'
+            %a.btn.btn-large.red{href:"/visits/#{@visit.id}/delete_room_visit/#{room_visit.id}", 'data-method': 'delete', data: { confirm: '¿Deseas eliminar la visita?' }}
+              Eliminar
+          =f.submit 'Guardar', class:'btn btn-large green darken-2'
+
+
+:javascript
+  $('.material-select').material_select();
+  $('.do-select2').select2();
+  $('.timepicker').pickatime({
+    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+    twelvehour: true, // Use AM/PM or 24-hour format
+    donetext: 'OK', // text for done-button
+    cleartext: 'Clear', // text for clear-button
+    canceltext: 'Cancel', // Text for cancel-button
+    autoclose: false, // automatic close timepicker
+    ampmclickable: true, // make AM PM clickable
+    aftershow: function(){} //Function for after opening timepicker
+  });

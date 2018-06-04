@@ -8,3 +8,5 @@
       = f.collection_select :department_id, Department.all, :id,:name
   .row.right
     = f.submit 'Guardar', class:'btn green'
+:javascript
+  $('select').material_select();

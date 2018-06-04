@@ -20,11 +20,17 @@ es:
         transport_date: Tipo de transporte
         notes: Notas
         date: Fecha
-        date: Hora
       room:
         name: Nombre
-        department: Departamneto
-        department_id: Departamneto
+        department: Departamento
+        department_id: Departamento
+      room_visit:
+          date: Fecha
+          persona: Guia
+          persona_id: Guia
+          status: Estado
+          room: Laboratorio
+          room_id: Laboratorio
 
   date:
     abbr_day_names:

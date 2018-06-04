@@ -20,7 +20,6 @@
 
 $(document).on('ready turbolinks:load', function() {
     $(".dropdown-button").dropdown();
-    $('select').material_select();
     $(".button-collapse").sideNav();
     $(".do-select2").select2();
     Materialize.updateTextFields();

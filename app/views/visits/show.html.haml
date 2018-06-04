@@ -33,21 +33,17 @@
   =ftime(@visit.date)
 
 = link_to 'Edit', edit_visit_path(@visit)
-\|
-= link_to 'Back', visits_path
 
 .row
   .col.s12.m12
     .card
       .card-content
         .card-title
-          Visita a laboratorios
-          %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Solicitar nueva beca','data-position':'right'}
-            %i.material-icons.left
-              add
-            Solicitar nueva beca
+          Visitas a laboratorios
+          %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openModal($('#new_room_visit_modal'));"}
+            %i.material-icons add
         -if @room_visits.size > 0
-          %tablebordered.highlight.responsive-table
+          %table.bordered.highlight.responsive-table
             %thead
               %tr
                 %th Laboratorio
@@ -56,7 +52,9 @@
                 %th Estatus
             %tbody
               -@room_visits.each do |room_visit|
-                %tr.tr-click{href:"/room_visits/#{room_visit.id}"}
+                %tr.tr-click{onclick:"openEditRoomVisitModal(#{room_visit.id});"}
+                  %td
+                    %img.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
                   %td
                     =room_visit.room.name
                   %td
@@ -67,8 +65,29 @@
                     =room_visit.get_status
         -else
           %blockquote
-            Aun no hay becas
+            Aun no hay visitas a laboratorio
 
+#new_room_visit_modal.modal
+  .modal-content
+    .center
+      %h4 Nueva visita a laboratorio
+    =render 'form_room_visit', room_visit: RoomVisit.new, screen:'new', time:'', url:"/visits/#{@visit.id}/create_room_visit"
+
+
+#edit_room_visit_modal.modal
+  .modal-content
+    %h4.center Editar visita a laboratorio
+    .center-align
+      #edit_room_visit_preloader.preloader-wrapper.big.active
+        .spinner-layer.spinner-blue-only
+          .circle-clipper.left
+            .circle
+          .gap-patch
+            .circle
+          .circle-clipper.right
+            .circle
+
+    #edit_room_visit_content
 
 :javascript
   Turbolinks.clearCache();

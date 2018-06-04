@@ -24,10 +24,10 @@
         = f.label :transport_type
         = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
       .col.s12.m4
-        = f.label :date
+        = f.label :date, 'Fecha'
         = text_field_tag :date, @date,class: "datepicker",placeholder:'Selecciona la fecha de la visita', type:'date'
       .col.s12.m4
-        = f.label :time
+        = f.label :time, 'Hora'
         = text_field_tag 'time',@time, class: "timepicker", placeholder:'Selecciona la hora de la visita'
         =f.hidden_field :status, value:Visit::APPROVED
   .section
@@ -40,6 +40,7 @@
           =f.submit 'Guardar', class:'btn btn-large purple'
 :javascript
    $(document).ready(function(){
+    $('select').material_select();
     $.ajax({
       url: "/get_institutions",
       cache: true,

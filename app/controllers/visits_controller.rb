@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:show, :edit, :update, :destroy]
+  before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit]
 
   # GET /visits
   # GET /visits.json
@@ -116,6 +116,53 @@ class VisitsController < ApplicationController
       institutions[institution.name] = institution.image.blank? ? nil : "http://posgrado.cimav.edu.mx/images/institution/image/#{institution.id}/#{institution.image}"
     end
     render json: institutions
+  end
+
+  def create_room_visit
+    room_visit = @visit.room_visits.new(
+      persona_id: params[:room_visit][:persona_id],
+      room_id: params[:room_visit][:room_id],
+      date: "01-01-2000 #{params[:room_visit][:time]}".to_date, #todos los room_visit tienen la misma fecha ya que sólo importa la hora
+      status: RoomVisit::SCHEDULED
+    )
+    respond_to do |format|
+      if room_visit.save
+        format.html { redirect_to @visit, notice: 'Visita a laboratorio agendada' }
+        format.json { render :show, status: :created, location: @visit }
+      else
+        format.html {
+          flash[:alert] = room_visit.errors.full_messages
+          render :new }
+        format.json { render json: @visit.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_room_visit
+    room_visit = RoomVisit.find(params[:room_visit_id])
+    room_visit_params = {
+        persona_id: params[:room_visit][:persona_id],
+        room_id: params[:room_visit][:room_id],
+        date: "01-01-2000 #{params[:room_visit][:time]}".to_date, #todos los room_visit tienen la misma fecha ya que sólo importa la hora
+        status: RoomVisit::SCHEDULED
+    }
+    respond_to do |format|
+      if room_visit.update(room_visit_params)
+        format.html { redirect_to room_visit.visit, notice: 'Visita a laboratorio agendada' }
+        format.json { render :show, status: :created, location: @visit }
+      else
+        format.html {
+          flash[:alert] = room_visit.errors.full_messages
+          render :new }
+        format.json { render json: @visit.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def edit_room_visit
+    @room_visit = RoomVisit.find(params[:room_visit_id])
+    @visit = @room_visit.visit
+    render layout: false
   end
 
   private

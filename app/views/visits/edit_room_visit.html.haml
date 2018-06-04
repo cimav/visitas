@@ -1,0 +1,1 @@
+=render 'form_room_visit', room_visit:@room_visit, screen:'edit', time:@room_visit.date.to_s.split(" ")[1].to_time.strftime('%l:%M%P'), url:"/visits/update_room_visit/#{@room_visit.id}"

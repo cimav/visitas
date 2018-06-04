@@ -6,7 +6,7 @@
     vertical-align: middle
 }
 .select2 {
-    width: calc(100% - 45px) !important;
+    width: 100% !important;
 }
 
 .select2-container .select2-selection--single {
@@ -166,7 +166,7 @@
 }
 
 .select2-container--default .select2-selection--single {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0);
     border: 1px solid #aaa;
     border-radius: 4px
 }
