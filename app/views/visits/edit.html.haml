@@ -1,7 +1,11 @@
-%h1 Editing visit
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to 'Visitas',root_path, class:'breadcrumb'
+        =link_to @visit.institution,root_path, class:'breadcrumb'
+        %a.breadcrumb{} Editar
+
+%h1 Editar visita
 
 = render 'form', visit:@visit, screen:'edit'
-
-= link_to 'Show', @visit
-\|
-= link_to 'Back', visits_path

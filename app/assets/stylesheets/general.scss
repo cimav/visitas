@@ -3,6 +3,10 @@ $color-background: #F3F3F3;
 $color-icons: #868686;
 $color-icons-lighter: #eceeeb;
 
+body{
+  background-color: $color-background;
+}
+
 .config-breadcrumb {
   background: none;
   border: none;

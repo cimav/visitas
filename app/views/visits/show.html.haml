@@ -2,37 +2,43 @@
   .nav-wrapper
     .row
       .col.s12.m12.l12
-        =link_to root_path, class:'breadcrumb' do
-          Visitas
-        %a.breadcrumb{}
+        =link_to 'Visitas',root_path, class:'breadcrumb'
+        %a.breadcrumb
           =@visit.institution
+.row
+  .col.s12.m12
+    .card
+      .card-content
+        .card-title
+          Información de la visita
+          = link_to edit_visit_path(@visit), class:'right btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-position':'right' do
+            %i.material-icons edit
+        %p
+          %b Departamento:
+          = @visit.department.name
+        %p
+          %b Institución:
+          = @visit.institution
+        %p
+          %b Nombre del responsable:
+          = @visit.resp_name
+        %p
+          %b Teléfono del responsable:
+          = @visit.resp_phone
+        %p
+          %b Correo del responsable:
+          = @visit.resp_email
+        %p
+          %b Tipo de transporte:
+          = @visit.get_transport_type
+        %p
+          %b Fecha:
+          = fdate(@visit.date)
+        %p
+          %b Hora:
+          =ftime(@visit.date)
 
-%p
-  %b Departamento:
-  = @visit.department.name
-%p
-  %b Institución:
-  = @visit.institution
-%p
-  %b Resp name:
-  = @visit.resp_name
-%p
-  %b Resp phone:
-  = @visit.resp_phone
-%p
-  %b Resp email:
-  = @visit.resp_email
-%p
-  %b Transport type:
-  = @visit.get_transport_type
-%p
-  %b Date:
-  = fdate(@visit.date)
-%p
-  %b Time:
-  =ftime(@visit.date)
 
-= link_to 'Edit', edit_visit_path(@visit)
 
 .row
   .col.s12.m12
@@ -46,6 +52,7 @@
           %table.bordered.highlight.responsive-table
             %thead
               %tr
+                %th
                 %th Laboratorio
                 %th Guía
                 %th Hora
@@ -54,7 +61,7 @@
               -@room_visits.each do |room_visit|
                 %tr.tr-click{onclick:"openEditRoomVisitModal(#{room_visit.id});"}
                   %td
-                    %img.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
+                    %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
                   %td
                     =room_visit.room.name
                   %td
