@@ -34,10 +34,6 @@
         %p
           %b Fecha:
           = fdate(@visit.date)
-        %p
-          %b Hora:
-          =ftime(@visit.date)
-
 
 
 .row
@@ -58,7 +54,7 @@
                 %th Hora
                 %th Estatus
             %tbody
-              -@room_visits.each do |room_visit|
+              -@room_visits.order('date ASC').each do |room_visit|
                 %tr.tr-click{onclick:"openEditRoomVisitModal(#{room_visit.id});"}
                   %td
                     %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}

@@ -3,7 +3,7 @@
     .row
       .col.s12.m12.l12
         =link_to 'Visitas',root_path, class:'breadcrumb'
-        =link_to @visit.institution,root_path, class:'breadcrumb'
+        =link_to @visit.institution,@visit, class:'breadcrumb'
         %a.breadcrumb{} Editar
 
 %h1 Editar visita

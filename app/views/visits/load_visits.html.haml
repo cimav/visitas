@@ -9,7 +9,7 @@
     %td
       =visit.get_status
     %td
-      =fdatetime visit.date
+      =fdate visit.date
 :javascript
   $("tr.tr-click").on('click', function () {
     window.location = ($(this).attr("href"));

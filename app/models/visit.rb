@@ -3,6 +3,7 @@ class Visit < ApplicationRecord
   has_many :room_visits
   validates_presence_of :date
   validates_presence_of :institution
+  before_create :set_status
 
   REQUESTED = 1
   APPROVED = 2
@@ -31,6 +32,12 @@ class Visit < ApplicationRecord
 
   def get_status
     STATUS[self.status]
+  end
+
+  def set_status
+    if self.status.nil?
+      self.status = REQUESTED
+    end
   end
 
 end

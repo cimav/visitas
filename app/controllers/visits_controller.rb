@@ -62,10 +62,7 @@ class VisitsController < ApplicationController
   # POST /visits
   # POST /visits.json
   def create
-    data = {}
-    data = visit_params
-    data[:date] = get_datetime(params)
-    @visit = Visit.new(data)
+    @visit = Visit.new(visit_params)
 
     respond_to do |format|
       if @visit.save
@@ -74,7 +71,7 @@ class VisitsController < ApplicationController
       else
         format.html {
           flash[:alert] = @visit.errors.full_messages
-          render :new }
+          redirect_to root_path}
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
     end
@@ -83,11 +80,8 @@ class VisitsController < ApplicationController
   # PATCH/PUT /visits/1
   # PATCH/PUT /visits/1.json
   def update
-    data = {}
-    data = visit_params
-    data[:date] = get_datetime(params)
     respond_to do |format|
-      if @visit.update(data)
+      if @visit.update(visit_params)
         format.html { redirect_to @visit, notice: 'Visit was successfully updated.' }
         format.json { render :show, status: :ok, location: @visit }
       else
@@ -122,7 +116,7 @@ class VisitsController < ApplicationController
     room_visit = @visit.room_visits.new(
       persona_id: params[:room_visit][:persona_id],
       room_id: params[:room_visit][:room_id],
-      date: "01-01-2000 #{params[:room_visit][:time]}".to_date, #todos los room_visit tienen la misma fecha ya que sólo importa la hora
+      date: "01-01-2000 #{params[:room_visit][:time]}", #todos los room_visit tienen la misma fecha ya que sólo importa la hora
       status: RoomVisit::SCHEDULED
     )
     respond_to do |format|
@@ -143,9 +137,12 @@ class VisitsController < ApplicationController
     room_visit_params = {
         persona_id: params[:room_visit][:persona_id],
         room_id: params[:room_visit][:room_id],
-        date: "01-01-2000 #{params[:room_visit][:time]}".to_date, #todos los room_visit tienen la misma fecha ya que sólo importa la hora
+        date: "01-01-2000 #{params[:room_visit][:time]}", #todos los room_visit tienen la misma fecha ya que sólo importa la hora
         status: RoomVisit::SCHEDULED
     }
+    puts '---------------'
+    puts params[:room_visit][:time]
+    puts '---------------'
     respond_to do |format|
       if room_visit.update(room_visit_params)
         format.html { redirect_to room_visit.visit, notice: 'Visita a laboratorio agendada' }
@@ -172,14 +169,8 @@ class VisitsController < ApplicationController
     end
 
 
-    def get_datetime(params)
-      date    = params[:date]
-      time    = params[:time]
-      return "#{date} #{time}"
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def visit_params
-      params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status)
+      params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status, :date)
     end
 end

@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2018_05_25_174848) do
     t.string "resp_email"
     t.integer "transport_type"
     t.integer "status"
-    t.datetime "date"
+    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_visits_on_department_id"

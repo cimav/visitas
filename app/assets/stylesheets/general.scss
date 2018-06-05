@@ -6,6 +6,10 @@ $color-icons-lighter: #eceeeb;
 body{
   background-color: $color-background;
 }
+table.striped tbody {
+  background-color: #ededed !important;
+}
+
 
 .config-breadcrumb {
   background: none;

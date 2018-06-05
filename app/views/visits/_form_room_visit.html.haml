@@ -10,8 +10,8 @@
       = f.select :room_id, options_from_collection_for_select(@visit.department.rooms, :id, :name), {}, class:'material-select'
   .row
     .col.s12
-      = f.label :time
-      = text_field_tag 'time',time, class: "timepicker", placeholder:'Selecciona la hora de la visita'
+      = f.label :date
+      = text_field_tag '[room_visit][time]',time, class: "timepicker", placeholder:'Selecciona la hora de la visita'
   .section
     .row
       .col.s12

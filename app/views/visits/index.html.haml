@@ -4,7 +4,7 @@
       .card-content
         .card-title
           Visitas
-          %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva beca','data-delay':40,'data-position':'right',onclick:"openModal($('#new_visit_modal'));"}
+          %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva visita','data-delay':40,'data-position':'right',onclick:"openModal($('#new_visit_modal'));"}
             %i.material-icons
               add
 
@@ -111,7 +111,10 @@
         clear: 'Limpiar',
         close: 'Cerrar',
 
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        disable: [
+          1, 2, 3, 4, 5, 7
+        ]
   });
   });
 
