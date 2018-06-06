@@ -6,6 +6,7 @@ class Visit < ApplicationRecord
   validates_presence_of :date
   validates_presence_of :institution
   before_create :set_status
+  before_create :set_token
 
   REQUESTED = 1
   APPROVED = 2
@@ -40,6 +41,10 @@ class Visit < ApplicationRecord
     if self.status.nil?
       self.status = REQUESTED
     end
+  end
+
+  def set_token
+    self.token = Digest::SHA256.hexdigest DateTime.now.to_s
   end
 
 end

@@ -179,6 +179,29 @@ class VisitsController < ApplicationController
     end
   end
 
+  def upload_file_with_token
+    @visit = Visit.find_by_token(params[:token])
+    file = VisitFile.new
+    file.visit_id = @visit.id
+    file.file_type = params[:visit_file]['file_type']
+    file.file = params[:visit_file]['file']
+    file.name = params[:visit_file]['file'].original_filename rescue 'Sin nombre'
+    respond_to do |format|
+      if file.save
+        format.html {redirect_to @visit, notice: 'Se subió el documento'}
+        format.json {head :no_content}
+      else
+        format.html {redirect_to @visit, notice: 'Error al subir documento'}
+        format.json {head :no_content}
+      end
+    end
+  end
+
+  def access_with_token
+    @visit = Visit.find_by_token(params[:token])
+    render layout: 'empty_layout'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_visit
