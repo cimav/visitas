@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get '/visits/edit_room_visit/:room_visit_id' => 'visits#edit_room_visit'
   patch '/visits/update_room_visit/:room_visit_id' => 'visits#update_room_visit'
   post '/visits/:id/upload_file' => 'visits#upload_file'
+  get '/visits/token/:token' => 'visits#access_with_token'
 end

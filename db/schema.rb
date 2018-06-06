@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2018_06_05_220508) do
     t.string "resp_email"
     t.integer "transport_type"
     t.integer "status"
+    t.string "token"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

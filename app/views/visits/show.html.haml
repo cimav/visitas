@@ -123,6 +123,8 @@
                     =room_visit.persona.full_name rescue ''
                   %td
                     =ftime room_visit.date rescue ''
+                    -if !room_visit.date.between?('01-01-2000 08:00:00 -0700', '01-01-2000 17:00:00 -0700')
+                      %i.material-icons.inline.orange-text.tooltipped{'data-tooltip':'Está fuera del horario de CIMAV'} error_outline
                   %td
                     =room_visit.get_status
         -else
