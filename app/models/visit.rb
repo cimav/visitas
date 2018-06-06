@@ -1,6 +1,8 @@
 class Visit < ApplicationRecord
   belongs_to :department
   has_many :room_visits
+  has_many :visit_files
+
   validates_presence_of :date
   validates_presence_of :institution
   before_create :set_status

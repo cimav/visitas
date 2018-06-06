@@ -35,6 +35,65 @@
           %b Fecha:
           = fdate(@visit.date)
 
+.row
+  .col.s12.m12
+    .card
+      .card-content
+        .card-title
+          Documentos para la visita
+        %table.bordered.responsive-table
+          %thead
+            %tr
+              %th Estado
+              %th Documento
+              %th
+          %tbody
+            -######################## Solicitud de la institución
+            %tr
+              -file = @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last
+              %td
+                -if file
+                  %i.material-icons.green-text check_circle
+                -else
+                  %i.material-icons.grey-text.text-lighten-1 check_circle
+
+              %td
+                =VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
+              %td
+                -if file
+                  %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
+                %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
+            -######################## Póliza de seguro
+            %tr
+              -file = @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
+              %td
+                -if file
+                  %i.material-icons.green-text check_circle
+                -else
+                  %i.material-icons.grey-text.text-lighten-1 check_circle
+
+              %td
+                =VisitFile::FILE_TYPES[VisitFile::INSURANCE]
+              %td
+                -if file
+                  %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
+                %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
+            -######################## Lista de asistencia
+            %tr
+              -file = @visit.visit_files.where(file_type:VisitFile::ATTENDANCE_LIST).last
+              %td
+                -if file
+                  %i.material-icons.green-text check_circle
+                -else
+                  %i.material-icons.grey-text.text-lighten-1 check_circle
+
+              %td
+                =VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
+              %td
+                -if file
+                  %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
+                %i.material-icons.icon-button{onclick:"openModal($('#upload_attendance_list_modal'));"} cloud_upload
+
 
 .row
   .col.s12.m12
@@ -70,11 +129,30 @@
           %blockquote
             Aun no hay visitas a laboratorio
 
+
 #new_room_visit_modal.modal
   .modal-content
     .center
       %h4 Nueva visita a laboratorio
     =render 'form_room_visit', room_visit: RoomVisit.new, screen:'new', time:'', url:"/visits/#{@visit.id}/create_room_visit"
+
+#upload_institution_request_modal.modal
+  .modal-content
+    .center
+      %h5= VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
+    =render 'visit_file_form', type:VisitFile::INSTITUTION_REQUEST
+
+#upload_insurance_modal.modal
+  .modal-content
+    .center
+      %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
+    =render 'visit_file_form', type:VisitFile::INSURANCE
+
+#upload_attendance_list_modal.modal
+  .modal-content
+    .center
+      %h5= VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
+    =render 'visit_file_form', type:VisitFile::ATTENDANCE_LIST
 
 
 #edit_room_visit_modal.modal

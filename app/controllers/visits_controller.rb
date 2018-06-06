@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit]
+  before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit, :upload_file]
 
   # GET /visits
   # GET /visits.json
@@ -160,6 +160,23 @@ class VisitsController < ApplicationController
     @room_visit = RoomVisit.find(params[:room_visit_id])
     @visit = @room_visit.visit
     render layout: false
+  end
+
+  def upload_file
+    file = VisitFile.new
+    file.visit_id = @visit.id
+    file.file_type = params[:visit_file]['file_type']
+    file.file = params[:visit_file]['file']
+    file.name = params[:visit_file]['file'].original_filename rescue 'Sin nombre'
+    respond_to do |format|
+      if file.save
+        format.html {redirect_to @visit, notice: 'Se subió el documento'}
+        format.json {head :no_content}
+      else
+        format.html {redirect_to @visit, notice: 'Error al subir documento'}
+        format.json {head :no_content}
+      end
+    end
   end
 
   private

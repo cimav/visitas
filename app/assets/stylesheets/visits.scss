@@ -11,3 +11,19 @@
 .room-visit-icon{
   max-height: 40px;
 }
+
+i.icon-button:hover{
+  cursor: pointer;
+  color: #30758b !important;
+}
+
+.icon-button{
+  margin-left: 1rem;
+}
+
+.icon-button:first-of-type{
+  margin-left: 0;
+}
+.icon-button:last-of-type{
+  margin-right: 0;
+}

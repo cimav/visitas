@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_25_174848) do
+ActiveRecord::Schema.define(version: 2018_06_05_220508) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 2018_05_25_174848) do
     t.index ["department_id"], name: "index_rooms_on_department_id"
   end
 
+  create_table "visit_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "visit_id"
+    t.string "name"
+    t.string "file"
+    t.integer "file_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["visit_id"], name: "index_visit_files_on_visit_id"
+  end
+
   create_table "visits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "department_id"
     t.string "institution"
@@ -56,4 +66,5 @@ ActiveRecord::Schema.define(version: 2018_05_25_174848) do
 
   add_foreign_key "room_visits", "rooms"
   add_foreign_key "room_visits", "visits"
+  add_foreign_key "visit_files", "visits"
 end

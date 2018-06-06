@@ -1,0 +1,10 @@
+=form_for VisitFile.new, url:"/visits/#{@visit.id}/upload_file" do |f|
+  .section
+    .row.center
+      .col.s6
+        =f.file_field :file, required:true
+        =f.hidden_field :file_type, value: type
+
+      .col.s6
+        =f.button class:'btn-floating blue tooltipped', type:'submit', value:'submit', 'data-tooltip':'Subir' do
+          %i.material-icons file_upload
