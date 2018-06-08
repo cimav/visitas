@@ -1,0 +1,165 @@
+//////////////////////////////////////////////////// Smartphones
+@media screen and (max-width: 600px){
+  #app-logo{
+    margin-top: 2rem;
+  }
+  #login-area {
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 90%;
+    background-color: rgba(255, 255, 255, 0.93);
+    transform: translate(-50%, -50%);
+  }
+
+  #cimav-logo{
+    //height: 4rem;
+    width: 6rem;
+  }
+
+  #app-logo{
+    //height: 4rem;
+    margin-top: 4rem;
+    width: 10rem;
+  }
+
+  #login-title{
+    margin: 4rem 2rem;
+    font-size: 120%;
+  }
+
+  #login-button{
+    margin-bottom: 4rem;
+  }
+}
+
+////////////////////////////////////////////////// Tablets
+@media screen and (min-width: 600px){
+  #app-logo{
+    margin-top: 2rem;
+  }
+  #login-area {
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 90%;
+    background-color: rgba(255, 255, 255, 0.93);
+    transform: translate(-50%, -50%);
+  }
+
+  #cimav-logo{
+    //height: 4rem;
+    width: 9rem;
+  }
+
+  #app-logo{
+    //height: 4rem;
+    margin-top: 4rem;
+    width: 13rem;
+  }
+
+  #login-title{
+    margin: 5rem 2rem;
+    font-size: 150%;
+    //width: 100%;
+  }
+
+  #login-button{
+    margin-bottom: 4rem;
+  }
+}
+
+////////////////////////////////////////////////// Desktop
+@media screen and (min-width: 892px){
+  #app-logo{
+    margin-top: 2rem;
+  }
+  #login-area {
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    height: 90%;
+    background-color: rgba(255, 255, 255, 0.93);
+    transform: translate(-50%, -50%);
+  }
+
+  #cimav-logo{
+    //height: 4rem;
+    width: 10rem;
+  }
+
+  #app-logo{
+    //height: 4rem;
+    margin-top: 3rem;
+    width: 13rem;
+  }
+
+  #login-title{
+    margin: 4rem 2rem;
+    font-size: 130%;
+    //width: 100%;
+  }
+
+  #login-button{
+    margin-bottom: 4rem;
+  }
+}
+
+////////////////////////////////////////////////// Desktop
+@media screen and (min-width: 1900px){
+  #app-logo{
+    margin-top: 2rem;
+  }
+  #login-area {
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    height: 90%;
+    background-color: rgba(255, 255, 255, 0.93);
+    transform: translate(-50%, -50%);
+  }
+
+  #cimav-logo{
+    //height: 4rem;
+    width: 10rem;
+  }
+
+  #app-logo{
+    //height: 4rem;
+    margin-top: 5rem;
+    margin-bottom: 4rem;
+    width: 19rem;
+  }
+
+  #login-title{
+    margin: 3rem 1rem;
+    font-size: 150%;
+    //width: 100%;
+  }
+
+  #login-button{
+    margin-bottom: 6rem;
+    margin-top: 1em;
+  }
+}
+
+
+
+
+//////////////////////////////////////////// unauthorized
+
+#unauthorized{
+  margin-top: 8%;
+  img{
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+}

@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Visitas
+    = csrf_meta_tags
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+    /= favicon_link_tag
+  %body
+    .slider.fullscreen
+      %ul.slides
+        %li
+          = image_tag "IMG_9942.JPG", class: 'slide-image'
+        %li
+          = image_tag "IMG_1782.JPG", class: 'slide-image'
+        %li
+          = image_tag "IMG_9922.JPG", class: 'slide-image'
+
+    = yield
+    :javascript
+      $(document).ready(function(){
+          $('.slider').slider({indicators: false});
+      });

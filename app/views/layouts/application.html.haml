@@ -23,11 +23,20 @@
                   =Visit.where(status: Visit::REQUESTED).size
           %li{class:"#{active_class('/rooms')}"}
             %a{:href => "/rooms"} Laboratorios
+          %li.tooltipped{'data-tooltip':'Cerrar sesión'}
+            %a{:href => "/logout"}
+              %i.material-icons.right
+                exit_to_app
         %ul#mobile-demo.side-nav
           %li
             %a{:href => "/visits", "data-no-turbolink" => false} Visitas
           %li
             %a{:href => "/rooms"} Laboratorios
+          %li
+            %a{:href => "/logout"}
+              Cerrar sesión
+              %i.material-icons.right
+                exit_to_app
 
 
     .container

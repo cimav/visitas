@@ -14,4 +14,11 @@ Rails.application.routes.draw do
   get '/public_new_visit' => 'visits#public_new_visit'
   post '/public_create_visit' => 'visits#public_create_visit'
   get '/visit_success' => 'visits#visit_success'
+
+
+  ########################################## sesiones
+  get 'login' => 'login#index'
+  get '/auth/:provider/callback' => 'sessions#create'
+  get '/auth/failure' => 'sessions#failure'
+  get '/logout' => 'sessions#destroy'
 end
