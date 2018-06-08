@@ -7,36 +7,44 @@
           .card
             .card-content
               .card-title
+                %i.material-icons.left
+                  info_outline
                 Información de la visita
-                = link_to edit_visit_path(@visit), class:'right btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-position':'right' do
-                  %i.material-icons edit
-              %p
-                %b Departamento:
-                = @visit.department.name
-              %p
-                %b Institución:
-                = @visit.institution
-              %p
-                %b Nombre del responsable:
-                = @visit.resp_name
-              %p
-                %b Teléfono del responsable:
-                = @visit.resp_phone
-              %p
-                %b Correo del responsable:
-                = @visit.resp_email
-              %p
-                %b Tipo de transporte:
-                = @visit.get_transport_type
-              %p
-                %b Fecha:
-                = fdate(@visit.date)
+              .row
+                .col.s12.m7
+                  %p
+                    %b Departamento:
+                    = @visit.department.name
+                  %p
+                    %b Institución:
+                    = @visit.institution
+                  %p
+                    %b Nombre del responsable:
+                    = @visit.resp_name
+                  %p
+                    %b Teléfono del responsable:
+                    = @visit.resp_phone
+                  %p
+                    %b Correo del responsable:
+                    = @visit.resp_email
+                  %p
+                    %b Tipo de transporte:
+                    = @visit.get_transport_type
+                  %p
+                    %b Fecha:
+                    = fdate(@visit.date)
+                .col.s12.m5.center
+                  %i.material-icons.center.inline{class:status_color(@visit.status)} lens
+                  =@visit.get_status
+
 
       .row
         .col.s12.m12
           .card
             .card-content
               .card-title
+                %i.material-icons.left
+                  folder_open
                 Documentos para la visita
               %table.bordered.responsive-table
                 %thead
@@ -100,11 +108,11 @@
           .card
             .card-content
               .card-title
+                %i.material-icons.left
+                  insert_invitation
                 Visitas a laboratorios
-                %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openModal($('#new_room_visit_modal'));"}
-                  %i.material-icons add
               -if @visit.room_visits.size > 0
-                %table.bordered.highlight.responsive-table
+                %table.striped.responsive-table
                   %thead
                     %tr
                       %th
@@ -114,7 +122,7 @@
                       %th Estatus
                   %tbody
                     -@visit.room_visits.order('date ASC').each do |room_visit|
-                      %tr.tr-click{onclick:"openEditRoomVisitModal(#{room_visit.id});"}
+                      %tr
                         %td
                           %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
                         %td

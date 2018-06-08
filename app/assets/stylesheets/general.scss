@@ -6,7 +6,7 @@ $color-icons-lighter: #eceeeb;
 body{
   background-color: $color-background;
 }
-table.striped tbody {
+table.striped.darker tbody {
   background-color: #ededed !important;
 }
 
@@ -54,4 +54,9 @@ nav.custom-navbar{
 }
 .material-icons.inline {
   vertical-align: middle !important;
+}
+.vertical-center{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }

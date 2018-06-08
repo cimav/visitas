@@ -66,7 +66,7 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to @visit, notice: 'Visit was successfully created.' }
+        format.html { redirect_to @visit, notice: 'Visita agendada exitósamente' }
         format.json { render :show, status: :created, location: @visit }
       else
         format.html {
@@ -82,7 +82,7 @@ class VisitsController < ApplicationController
   def update
     respond_to do |format|
       if @visit.update(visit_params)
-        format.html { redirect_to @visit, notice: 'Visit was successfully updated.' }
+        format.html { redirect_to @visit, notice: 'Visita actualizada' }
         format.json { render :show, status: :ok, location: @visit }
       else
         format.html {
@@ -98,7 +98,7 @@ class VisitsController < ApplicationController
   def destroy
     @visit.destroy
     respond_to do |format|
-      format.html { redirect_to visits_url, notice: 'Visit was successfully destroyed.' }
+      format.html { redirect_to visits_url, notice: 'Visit eliminada' }
       format.json { head :no_content }
     end
   end
@@ -121,13 +121,13 @@ class VisitsController < ApplicationController
     )
     respond_to do |format|
       if room_visit.save
-        format.html { redirect_to @visit, notice: 'Visita a laboratorio agendada' }
+        format.html { redirect_to '/visit_success', notice: 'Visita a laboratorio agendada' }
         format.json { render :show, status: :created, location: @visit }
       else
         format.html {
           flash[:alert] = room_visit.errors.full_messages
           render :new }
-        format.json { render json: @visit.errors, status: :unprocessable_entity }
+        format.json { render json: '/visit_error', status: :unprocessable_entity }
       end
     end
   end
@@ -199,6 +199,30 @@ class VisitsController < ApplicationController
 
   def access_with_token
     @visit = Visit.find_by_token(params[:token])
+    render layout: 'empty_layout'
+  end
+
+  def public_new_visit
+    @visit = Visit.new
+  end
+
+  def public_create_visit
+    @visit = Visit.new(visit_params)
+
+    respond_to do |format|
+      if @visit.save
+        format.html { redirect_to '/visit_success', notice: 'Visita agendada exitósamente' }
+        format.json { render :show, status: :created, location: @visit }
+      else
+        format.html {
+          flash[:alert] = @visit.errors.full_messages
+          redirect_to '/public_new_visit'}
+        format.json { render json: @visit.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def visit_success
     render layout: 'empty_layout'
   end
 

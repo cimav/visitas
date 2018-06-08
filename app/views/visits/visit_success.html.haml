@@ -1,0 +1,18 @@
+:css
+  .centered {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  #success-img{
+    width: 50%;
+  }
+
+
+.centered
+  .center
+    = image_tag 'check.svg', id:'success-img'
+  %h2.center  Visita agendada
+  %p
+    Hemos enviado un correo electrónico con las intrucciones para continuar con el proceso.
