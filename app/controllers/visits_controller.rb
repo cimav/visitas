@@ -1,5 +1,6 @@
 class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit, :upload_file]
+  skip_before_action :auth_required, only: [:access_with_token, :public_create_visit, :public_new_visit]
 
   # GET /visits
   # GET /visits.json
