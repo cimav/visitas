@@ -205,6 +205,7 @@ class VisitsController < ApplicationController
 
   def public_new_visit
     @visit = Visit.new
+    render layout: false
   end
 
   def public_create_visit
