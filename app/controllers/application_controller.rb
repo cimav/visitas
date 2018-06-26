@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   before_action :auth_required
-  before_action :allow_iframe_requests
   protect_from_forgery with: :exception
 
   def  authenticated?
