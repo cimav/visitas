@@ -9,6 +9,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
     /= favicon_link_tag
+    / Let browser know website is optimized for mobile
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+
   %body
     .slider.fullscreen
       %ul.slides
