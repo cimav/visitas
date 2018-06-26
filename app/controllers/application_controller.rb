@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :auth_required
+  before_action :allow_iframe_requests
   protect_from_forgery with: :exception
 
   def  authenticated?
@@ -18,4 +19,9 @@ class ApplicationController < ActionController::Base
   def auth_required
     redirect_to '/login' unless authenticated?
   end
+
+  def allow_iframe_requests
+    response.headers.delete('X-Frame-Options')
+  end
+
 end
