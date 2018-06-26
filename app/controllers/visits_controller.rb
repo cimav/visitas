@@ -214,7 +214,7 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to '/visit_success', notice: 'Visita agendada exitósamente' }
+        format.html { redirect_to '/visit_success'}
         format.json { render :show, status: :created, location: @visit }
       else
         format.html {
