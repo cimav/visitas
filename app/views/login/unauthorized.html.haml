@@ -1,11 +1,12 @@
-#unauthorized
-  %p.flow-text.center-align.red-text.text-darken-4
-    Usuario no autorizado
-  .row
-    .col.s12.m12.l12.center
-      =image_tag 'einstein.png', class:'responsive-img'
-  %p.center-align.flow-text
-    El correo
-    %span.blue-text.text-darken-3
-      =session[:user_email]
-    no está autorizado en la base de datos
+.container{style:'margin-top:3rem;'}
+  #unauthorized
+    %p.flow-text.center-align.red-text.text-darken-4
+      Usuario no autorizado
+    .row
+      .col.s12.m12.l12.center
+        =image_tag 'einstein.png', class:'responsive-img'
+    %p.center-align.flow-text
+      El correo
+      %span.blue-text.text-darken-3
+        =session[:user_email]
+      no está autorizado en la base de datos
