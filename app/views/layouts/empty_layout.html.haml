@@ -2,23 +2,21 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-
-
     %title Visitas
     = csrf_meta_tags
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}
+    = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
   %body
     %main
       .container{style:'margin-top:3rem;'}
         = yield
 
 / Mensajes
--if alert
-  -alert.each do |error|
+-if flash[:alert]
+  -flash[:alert].each do |message|
     :javascript
-      Materialize.toast("#{error}", 4500, 'orange darken-4')
+      Materialize.toast("#{message}", 4500, 'orange darken-4')
 :javascript
-      Materialize.toast("#{notice}", 3000)
+  Materialize.toast("#{notice}", 3000)
