@@ -31,5 +31,21 @@ module Visitas
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.active_job.queue_adapter = :sidekiq
+
+    # Email Configuration
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        :address   => "smtp.gmail.com",
+        :port      => 587,
+        :domain    => "cimav.edu.mx",
+        :authentication => :plain,
+        :user_name      => "notificaciones@cimav.edu.mx",
+        :password       => "N0t1f1c4c10n35@C1m4v!",
+        :enable_starttls_auto => true
+    }
+
   end
 end

@@ -1,161 +1,162 @@
 -if @visit
   -if @visit.status != Visit::DELETED
     -if @visit.status.in? [Visit::REQUESTED, Visit::APPROVED, Visit::CONFIRMED]
+      .container{style:'margin-top:3rem;'}
 
-      .row
-        .col.s12.m12
-          .card
-            .card-content
-              .card-title
-                %i.material-icons.left
-                  info_outline
-                Información de la visita
-              .row
-                .col.s12.m7
-                  %p
-                    %b Departamento:
-                    = @visit.department.name
-                  %p
-                    %b Institución:
-                    = @visit.institution
-                  %p
-                    %b Nombre del responsable:
-                    = @visit.resp_name
-                  %p
-                    %b Teléfono del responsable:
-                    = @visit.resp_phone
-                  %p
-                    %b Correo del responsable:
-                    = @visit.resp_email
-                  %p
-                    %b Tipo de transporte:
-                    = @visit.get_transport_type
-                  %p
-                    %b Fecha:
-                    = fdate(@visit.date)
-                .col.s12.m5.center
-                  %i.material-icons.center.inline{class:status_color(@visit.status)} lens
-                  =@visit.get_status
-
-
-      .row
-        .col.s12.m12
-          .card
-            .card-content
-              .card-title
-                %i.material-icons.left
-                  folder_open
-                Documentos para la visita
-              %table.bordered.responsive-table
-                %thead
-                  %tr
-                    %th Estado
-                    %th Documento
-                    %th
-                %tbody
-                  -######################## Solicitud de la institución
-                  %tr
-                    -file = @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last
-                    %td
-                      -if file
-                        %i.material-icons.green-text check_circle
-                      -else
-                        %i.material-icons.grey-text.text-lighten-1 check_circle
-
-                    %td
-                      =VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
-                    %td
-                      -if file
-                        %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                      -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
-                        %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
-                  -######################## Póliza de seguro
-                  %tr
-                    -file = @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
-                    %td
-                      -if file
-                        %i.material-icons.green-text check_circle
-                      -else
-                        %i.material-icons.grey-text.text-lighten-1 check_circle
-
-                    %td
-                      =VisitFile::FILE_TYPES[VisitFile::INSURANCE]
-                    %td
-                      -if file
-                        %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                      -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
-                        %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
-                  -######################## Lista de asistencia
-                  %tr
-                    -file = @visit.visit_files.where(file_type:VisitFile::ATTENDANCE_LIST).last
-                    %td
-                      -if file
-                        %i.material-icons.green-text check_circle
-                      -else
-                        %i.material-icons.grey-text.text-lighten-1 check_circle
-
-                    %td
-                      =VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
-                    %td
-                      -if file
-                        %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                      -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
-                        %i.material-icons.icon-button{onclick:"openModal($('#upload_attendance_list_modal'));"} cloud_upload
+        .row
+          .col.s12.m12
+            .card
+              .card-content
+                .card-title
+                  %i.material-icons.left
+                    info_outline
+                  Información de la visita
+                .row
+                  .col.s12.m7
+                    %p
+                      %b Departamento:
+                      = @visit.department.name
+                    %p
+                      %b Institución:
+                      = @visit.institution
+                    %p
+                      %b Nombre del responsable:
+                      = @visit.resp_name
+                    %p
+                      %b Teléfono del responsable:
+                      = @visit.resp_phone
+                    %p
+                      %b Correo del responsable:
+                      = @visit.resp_email
+                    %p
+                      %b Tipo de transporte:
+                      = @visit.get_transport_type
+                    %p
+                      %b Fecha:
+                      = fdate(@visit.date)
+                  .col.s12.m5.center
+                    %i.material-icons.center.inline{class:status_color(@visit.status)} lens
+                    =@visit.get_status
 
 
-      .row
-        .col.s12.m12
-          .card
-            .card-content
-              .card-title
-                %i.material-icons.left
-                  insert_invitation
-                Visitas a laboratorios
-              -if @visit.room_visits.size > 0
-                %table.striped.responsive-table
+        .row
+          .col.s12.m12
+            .card
+              .card-content
+                .card-title
+                  %i.material-icons.left
+                    folder_open
+                  Documentos para la visita
+                %table.bordered.responsive-table
                   %thead
                     %tr
+                      %th Estado
+                      %th Documento
                       %th
-                      %th Laboratorio
-                      %th Guía
-                      %th Hora
-                      %th Estatus
                   %tbody
-                    -@visit.room_visits.order('date ASC').each do |room_visit|
+                    -######################## Solicitud de la institución
+                    %tr
+                      -file = @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last
+                      %td
+                        -if file
+                          %i.material-icons.green-text check_circle
+                        -else
+                          %i.material-icons.grey-text.text-lighten-1 check_circle
+
+                      %td
+                        =VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
+                      %td
+                        -if file
+                          %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
+                        -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
+                          %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
+                    -######################## Póliza de seguro
+                    %tr
+                      -file = @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
+                      %td
+                        -if file
+                          %i.material-icons.green-text check_circle
+                        -else
+                          %i.material-icons.grey-text.text-lighten-1 check_circle
+
+                      %td
+                        =VisitFile::FILE_TYPES[VisitFile::INSURANCE]
+                      %td
+                        -if file
+                          %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
+                        -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
+                          %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
+                    -######################## Lista de asistencia
+                    %tr
+                      -file = @visit.visit_files.where(file_type:VisitFile::ATTENDANCE_LIST).last
+                      %td
+                        -if file
+                          %i.material-icons.green-text check_circle
+                        -else
+                          %i.material-icons.grey-text.text-lighten-1 check_circle
+
+                      %td
+                        =VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
+                      %td
+                        -if file
+                          %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
+                        -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
+                          %i.material-icons.icon-button{onclick:"openModal($('#upload_attendance_list_modal'));"} cloud_upload
+
+
+        .row
+          .col.s12.m12
+            .card
+              .card-content
+                .card-title
+                  %i.material-icons.left
+                    insert_invitation
+                  Visitas a laboratorios
+                -if @visit.room_visits.size > 0
+                  %table.striped.responsive-table
+                    %thead
                       %tr
-                        %td
-                          %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
-                        %td
-                          =room_visit.room.name
-                        %td
-                          =room_visit.persona.full_name rescue ''
-                        %td
-                          =ftime room_visit.date rescue ''
-                          -if !room_visit.date.between?('01-01-2000 08:00:00 -0700', '01-01-2000 17:00:00 -0700')
-                            %i.material-icons.inline.orange-text.tooltipped{'data-tooltip':'Está fuera del horario de CIMAV'} error_outline
-                        %td
-                          =room_visit.get_status
-              -else
-                %blockquote
-                  Aun no hay visitas a laboratorio
+                        %th
+                        %th Laboratorio
+                        %th Guía
+                        %th Hora
+                        %th Estatus
+                    %tbody
+                      -@visit.room_visits.order('date ASC').each do |room_visit|
+                        %tr
+                          %td
+                            %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
+                          %td
+                            =room_visit.room.name
+                          %td
+                            =room_visit.persona.full_name rescue ''
+                          %td
+                            =ftime room_visit.date rescue ''
+                            -if !room_visit.date.between?('01-01-2000 08:00:00 -0700', '01-01-2000 17:00:00 -0700')
+                              %i.material-icons.inline.orange-text.tooltipped{'data-tooltip':'Está fuera del horario de CIMAV'} error_outline
+                          %td
+                            =room_visit.get_status
+                -else
+                  %blockquote
+                    Aun no hay visitas a laboratorio
 
-      #upload_institution_request_modal.modal
-        .modal-content
-          .center
-            %h5= VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
-          =render 'visit_file_form', type:VisitFile::INSTITUTION_REQUEST
+        #upload_institution_request_modal.modal
+          .modal-content
+            .center
+              %h5= VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
+            =render 'visit_file_form', type:VisitFile::INSTITUTION_REQUEST
 
-      #upload_insurance_modal.modal
-        .modal-content
-          .center
-            %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
-          =render 'visit_file_form', type:VisitFile::INSURANCE
+        #upload_insurance_modal.modal
+          .modal-content
+            .center
+              %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
+            =render 'visit_file_form', type:VisitFile::INSURANCE
 
-      #upload_attendance_list_modal.modal
-        .modal-content
-          .center
-            %h5= VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
-          =render 'visit_file_form', type:VisitFile::ATTENDANCE_LIST
+        #upload_attendance_list_modal.modal
+          .modal-content
+            .center
+              %h5= VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
+            =render 'visit_file_form', type:VisitFile::ATTENDANCE_LIST
 
 
 
