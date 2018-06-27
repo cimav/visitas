@@ -47,5 +47,7 @@ module Visitas
         :enable_starttls_auto => true
     }
 
+    config.action_mailer.asset_host = "http://pruebas.visitas.cimav.edu.mx"
+
   end
 end
