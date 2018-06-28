@@ -1,0 +1,18 @@
+%p
+  ="Estimado(a) #{@visit.resp_name}."
+
+%p
+  Su solicitud para visitar el Centro de Investigación en Materiales Avanzados ha sido aprobada para el día
+  ="#{fdate(@visit.date)}."
+%p
+  Para continuar con el proceso haga click
+  %a{href:"http://pruebas.visitas.cimav.edu.mx/visits/token/#{@visit.token}"} aquí
+  para subir los siguientes documentos:
+
+  %ul
+    %li Oficio de solicitud de la institución.
+    %li Poliza de seguro.
+    %li Lista de personas que asistirán a la visita.
+
+%p Puede consultar el itinerario de la visita en el enlace anterior.
+%p Que pase un excelente día.

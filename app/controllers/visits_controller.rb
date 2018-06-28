@@ -83,7 +83,17 @@ class VisitsController < ApplicationController
   # PATCH/PUT /visits/1.json
   def update
     respond_to do |format|
+      send_approved_email = false
+
+
+      if (@visit.status != Visit::APPROVED) && (params[:visit][:status].to_i == Visit::APPROVED)
+        send_approved_email = true
+      end
+
       if @visit.update(visit_params)
+        if send_approved_email
+          @visit.send_approved_email
+        end
         format.html { redirect_to @visit, notice: 'Visita actualizada' }
         format.json { render :show, status: :ok, location: @visit }
       else
@@ -142,9 +152,6 @@ class VisitsController < ApplicationController
         date: "01-01-2000 #{params[:room_visit][:time]}", #todos los room_visit tienen la misma fecha ya que sólo importa la hora
         status: RoomVisit::SCHEDULED
     }
-    puts '---------------'
-    puts params[:room_visit][:time]
-    puts '---------------'
     respond_to do |format|
       if room_visit.update(room_visit_params)
         format.html { redirect_to room_visit.visit, notice: 'Visita a laboratorio agendada' }

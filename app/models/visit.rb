@@ -7,7 +7,7 @@ class Visit < ApplicationRecord
   validates_presence_of :institution
   before_create :set_status
   before_create :set_token
-  after_create :send_email
+  after_create :send_requested_email
 
   REQUESTED = 1
   APPROVED = 2
@@ -48,9 +48,14 @@ class Visit < ApplicationRecord
     self.token = Digest::SHA256.hexdigest DateTime.now.to_s
   end
 
-  def send_email
+  def send_requested_email
     VisitsMailer.new_visit(self).deliver_later
-    puts "Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
+    puts "[SOLICITUD] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
+  end
+
+  def send_approved_email
+    VisitsMailer.visit_approved(self).deliver_later
+    puts "[APROBADA] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
   end
 
 end

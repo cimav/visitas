@@ -48,7 +48,7 @@
         = f.label :transport_type
         = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
       .col.s12.m6
-        = f.label :date, 'Fecha'
+        = f.label :date, 'Fecha sugerida'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
 
   .section
