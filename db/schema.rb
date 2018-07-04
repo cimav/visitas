@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_08_223619) do
+ActiveRecord::Schema.define(version: 2018_07_03_183007) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -56,12 +56,20 @@ ActiveRecord::Schema.define(version: 2018_06_08_223619) do
     t.index ["visit_id"], name: "index_visit_files_on_visit_id"
   end
 
+  create_table "visit_people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "visit_id"
+    t.string "name"
+    t.integer "person_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["visit_id"], name: "index_visit_people_on_visit_id"
+  end
+
   create_table "visits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "department_id"
     t.string "institution"
     t.string "resp_name"
     t.string "resp_phone"
-    t.string "notes"
     t.string "resp_email"
     t.integer "transport_type"
     t.integer "status"
@@ -69,10 +77,13 @@ ActiveRecord::Schema.define(version: 2018_06_08_223619) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "career"
+    t.text "reason"
     t.index ["department_id"], name: "index_visits_on_department_id"
   end
 
   add_foreign_key "room_visits", "rooms"
   add_foreign_key "room_visits", "visits"
   add_foreign_key "visit_files", "visits"
+  add_foreign_key "visit_people", "visits"
 end

@@ -40,22 +40,27 @@
         = f.label :resp_phone
         = f.text_field :resp_phone, required:true
       .input-field.col.s12.m4
-        = f.label :resp_email
-        = f.text_field :resp_email, type:'email', required:true
+        = f.text_field :resp_email, type:'email', required:true, class:'validate'
+        = f.label :resp_email, 'data-error':"Invalido", 'data-success':"Correcto"
   .section
     .row
-      .col.s12.m6
+      .col.s12.m4
         = f.label :transport_type
         = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
-      .col.s12.m6
+      .col.s12.m4
         = f.label :date, 'Fecha sugerida'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
+      .col.s12.m4
+        = f.label :career
+        = f.text_field :career, required:true
+
+
 
   .section
     .row
       .col.s12
         .right
-          =f.submit 'Agendar', class:'btn btn-large purple'
+          =f.submit 'Solicitar', class:'btn btn-large purple'
 :javascript
    $(document).ready(function(){
     $('select').material_select();

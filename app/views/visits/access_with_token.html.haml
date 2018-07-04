@@ -86,22 +86,6 @@
                           %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
                         -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
                           %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
-                    -######################## Lista de asistencia
-                    %tr
-                      -file = @visit.visit_files.where(file_type:VisitFile::ATTENDANCE_LIST).last
-                      %td
-                        -if file
-                          %i.material-icons.green-text check_circle
-                        -else
-                          %i.material-icons.grey-text.text-lighten-1 check_circle
-
-                      %td
-                        =VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
-                      %td
-                        -if file
-                          %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                        -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
-                          %i.material-icons.icon-button{onclick:"openModal($('#upload_attendance_list_modal'));"} cloud_upload
 
 
         .row
@@ -152,11 +136,6 @@
               %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
             =render 'visit_file_form', type:VisitFile::INSURANCE
 
-        #upload_attendance_list_modal.modal
-          .modal-content
-            .center
-              %h5= VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
-            =render 'visit_file_form', type:VisitFile::ATTENDANCE_LIST
 
 
 

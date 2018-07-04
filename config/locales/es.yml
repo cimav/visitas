@@ -17,6 +17,8 @@ es:
         resp_name: Nombre del responsable
         resp_phone: Teléfono del responsable
         requested_date: Fecha solicitada
+        career: Carrera o especialidad
+        reason: Motivo de visita
         transport_date: Tipo de transporte
         notes: Notas
         date: Fecha

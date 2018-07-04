@@ -9,15 +9,18 @@
       = f.text_field :institution, required:true, autocomplete:"off", class:'autocomplete'
   .section
     .row
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         = f.label :resp_name
         = f.text_field :resp_name, required:true
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         = f.label :resp_phone
         = f.text_field :resp_phone, required:true
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         = f.label :resp_email
         = f.text_field :resp_email, type:'email', required:true
+      .input-field.col.s12.m3
+        = f.label :career
+        = f.text_field :career, required:true
   .section
     .row
       .col.s12.m4

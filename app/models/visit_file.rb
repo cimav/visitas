@@ -5,12 +5,10 @@ class VisitFile < ApplicationRecord
 
   INSTITUTION_REQUEST = 1
   INSURANCE = 2
-  ATTENDANCE_LIST = 3
 
   FILE_TYPES = {
       INSTITUTION_REQUEST => 'Solicitud de la institución',
-      INSURANCE => 'Póliza de seguro',
-      ATTENDANCE_LIST => 'Lista de asistencia'
+      INSURANCE => 'Póliza de seguro'
   }
 
   def delete_file
