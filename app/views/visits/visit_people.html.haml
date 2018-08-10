@@ -11,7 +11,7 @@
             %td=person.get_type
 
   .row
-    %p.grey-text="#{@visit.visit_people.size} personas registradas para la visita"
+    %p.grey-text="#{@visit.visit_people.size} #{@visit.visit_people.size > 1 ? 'personas registradas' : 'persona registrada'} para la visita"
 -else
   %blockquote
     Aun no hay asistentes para esta visita
