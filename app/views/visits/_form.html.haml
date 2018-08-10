@@ -32,6 +32,13 @@
       .col.s12.m4
         = f.label :status
         = f.select :status, Visit::STATUS.invert
+
+  .section
+    .row
+      .col.s12
+        =f.label :reason
+        =f.text_area :reason, class:'materialize-textarea', placeholder:'Aquí puede especificar detalladamente los motivos y requerimientos de su visita'
+
   .section
     .row
       .col.s12
