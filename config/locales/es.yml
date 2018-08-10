@@ -33,6 +33,9 @@ es:
           status: Estado
           room: Laboratorio
           room_id: Laboratorio
+      visit_person:
+        name: Nombre
+        person_type: Tipo de persona
 
   date:
     abbr_day_names:

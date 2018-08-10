@@ -1,5 +1,7 @@
 class VisitPerson < ApplicationRecord
   belongs_to :visit
+  validates_presence_of :name
+  validates_presence_of :person_type
 
   STUDENT = 1
   TEACHER = 2

@@ -1,0 +1,20 @@
+-if !@visit.visit_people.blank?
+  .row
+    %table.striped
+      %thead
+        %th Nombre
+        %th Tipo de persona
+      %tbody
+        -@visit.visit_people.each do |person|
+          %tr.tr-click{onclick:"openEditVisitPersonModal(#{person.id}, #{@is_token});"}
+            %td=person.name
+            %td=person.get_type
+
+  .row
+    %p.grey-text="#{@visit.visit_people.size} personas registradas para la visita"
+-else
+  %blockquote
+    Aun no hay asistentes para esta visita
+
+
+

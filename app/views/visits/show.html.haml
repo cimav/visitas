@@ -88,21 +88,34 @@
                 -if file
                   %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
                 %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
-            -######################## Lista de asistencia
-            %tr
-              -file = @visit.visit_files.where(file_type:VisitFile::ATTENDANCE_LIST).last
-              %td
-                -if file
-                  %i.material-icons.green-text check_circle
-                -else
-                  %i.material-icons.grey-text.text-lighten-1 check_circle
 
-              %td
-                =VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
-              %td
-                -if file
-                  %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                %i.material-icons.icon-button{onclick:"openModal($('#upload_attendance_list_modal'));"} cloud_upload
+.row
+  .col.s12.m12
+    .card
+      .card-content
+        .card-title
+          %i.material-icons.left
+            people
+          Lista de asistencia
+        .center-align
+          #visit_people_preloader.preloader-wrapper.big.active{style:'display:none;'}
+            .spinner-layer.spinner-blue-only
+              .circle-clipper.left
+                .circle
+              .gap-patch
+                .circle
+              .circle-clipper.right
+                .circle
+        #visit_people
+        .row#add-person
+          .col.s12.m5.input-field
+            %label.active{for:'add_person_name'}Nombre
+            %input#add_person_name{type:'text'}
+          .col.s12.m4.input-field
+            %label.active{for:'add_person_type'}Tipo de persona
+            =select_tag :add_person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
+          .col.s12.m3
+            %button.btn.btn-large.blue{onclick:"addPerson(#{@visit.id})", style:'width:100%;'} Agregar
 
 
 .row
@@ -162,12 +175,6 @@
       %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
     =render 'visit_file_form', type:VisitFile::INSURANCE
 
-#upload_attendance_list_modal.modal
-  .modal-content
-    .center
-      %h5= VisitFile::FILE_TYPES[VisitFile::ATTENDANCE_LIST]
-    =render 'visit_file_form', type:VisitFile::ATTENDANCE_LIST
-
 
 #edit_room_visit_modal.modal
   .modal-content
@@ -184,5 +191,24 @@
 
     #edit_room_visit_content
 
+#edit_visit_person_modal.modal
+  .modal-content
+    %h4.center Editar Persona
+    .center-align
+      #edit_visit_person_preloader.preloader-wrapper.big.active
+        .spinner-layer.spinner-blue-only
+          .circle-clipper.left
+            .circle
+          .gap-patch
+            .circle
+          .circle-clipper.right
+            .circle
+
+    #edit_visit_person_content
+
 :javascript
+  $(document).ready(function(){
+    loadVisitPeople(#{@visit.id},false);
+  });
+  $('select').material_select();
   Turbolinks.clearCache();

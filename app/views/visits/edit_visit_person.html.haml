@@ -1,0 +1,20 @@
+=form_for @visit_person, url:"/visits/update_visit_person/#{@visit_person.id}" do |f|
+  .row
+    .input-field.col.s12.m4
+      -if @is_token # @token es una variable booleana, si es true se retorna la pantalla de visita con token
+        =hidden_field_tag 'is_token', true
+      =f.label :name, class:'active'
+      =f.text_field :name
+    .input-field.col.s12.m4
+      =f.label :person_type, class:'active'
+      =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
+    .col.s12.m2
+      =f.submit 'Guardar', class:'btn green darken-2 btn-large', style:'width:100%;'
+    .col.s12.m2
+      -if @is_token
+        %a.btn.red.btn-large{style:'width:100%;', href:"/visits/delete_visit_person_token/#{@visit_person.id}", 'data-method': 'delete', 'data-confirm':"¿Estás seguro?"} Eliminar
+      -else
+        %a.btn.red.btn-large{style:'width:100%;', href:"/visits/delete_visit_person/#{@visit_person.id}", 'data-method': 'delete', 'data-confirm':"¿Estás seguro?"} Eliminar
+
+:javascript
+  $('select').material_select();

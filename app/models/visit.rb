@@ -2,6 +2,7 @@ class Visit < ApplicationRecord
   belongs_to :department
   has_many :room_visits
   has_many :visit_files
+  has_many :visit_people
 
   validates_presence_of :date
   validates_presence_of :institution
