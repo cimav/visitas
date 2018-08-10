@@ -20,6 +20,9 @@
                       %b Institución:
                       = @visit.institution
                     %p
+                      %b Carrera o especialidad:
+                      = @visit.career
+                    %p
                       %b Nombre del responsable:
                       = @visit.resp_name
                     %p
@@ -34,6 +37,10 @@
                     %p
                       %b Fecha:
                       = fdate(@visit.date)
+                    %p
+                      %b Motivo de visita:
+                      = @visit.reason
+
                   .col.s12.m5.center
                     %i.material-icons.center.inline{class:status_color(@visit.status)} lens
                     =@visit.get_status
