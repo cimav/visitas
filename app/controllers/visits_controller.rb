@@ -41,6 +41,7 @@ class VisitsController < ApplicationController
     #filtro por fecha
     @visits = @visits.where(status:status) unless status.blank?
 
+    @visits =  @visits.order('created_at desc')
     respond_to do |format|
       format.html do
         @visits = @visits.offset(visits_loaded).limit(50)
