@@ -239,13 +239,17 @@ class VisitsController < ApplicationController
   end
 
   def add_person
+    response = {}
     person = @visit.visit_people.new(name:params[:visit_person][:name], person_type:params[:visit_person][:person_type])
     if person.save
-      message = 'Persona agregada'
+      response[:message] = 'Persona agregada'
     else
-      message = person.errors.full_messages.first
+      response[:message] = person.errors.full_messages.first
     end
-    render plain:message
+    respond_to do |format|
+      format.json { render json: response}
+    end
+
   end
 
   def visit_people
@@ -276,6 +280,7 @@ class VisitsController < ApplicationController
       end
     end
   end
+
 
   def delete_visit_person
     person = VisitPerson.find(params[:visit_person_id])

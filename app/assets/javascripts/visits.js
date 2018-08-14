@@ -53,25 +53,25 @@ function loadVisitPeople(visit_id, is_token){
     });
 }
 
-function addPerson(visit_id){
-    $.ajax({
-        url: "/visits/"+visit_id+"/add_person",
-        type: 'POST',
-        data:{
-          visit_person : {
-              name: $('#add_person_name').val(),
-              person_type: $('#add_person_type').val()
-          }
-        },
-        error: function (){
-            //Mostrar toast de error
-        },
-        success: function(res) {
+
+// Se hace el submit de manera asíncrona, desactivando el submit por defecto
+$(function() {
+    $('form#add_people_form').submit(function(event) {
+        event.preventDefault(); // Prevent the form from submitting via the browser
+        var form = $(this);
+        var visit_id = form.attr('visit_id');
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize()
+        }).success(function(data) {
+            Materialize.toast(data.message, 3000);
+            $('#visit_person_name').val('');
+        }).fail(function(data) {
+            Materialize.toast("Error al enviar información", 4000)
+            // Optionally alert the user of an error here...
+        }).done(function () {
             loadVisitPeople(visit_id);
-            Materialize.toast(res, 3000)
-        },
-        complete: function () {
-            $('#add_person_name').val('')
-        }
+        });
     });
-}
+});

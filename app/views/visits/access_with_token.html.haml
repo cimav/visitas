@@ -112,15 +112,16 @@
                       .circle-clipper.right
                         .circle
                 #visit_people
-                .row#add-person
-                  .col.s12.m5.input-field
-                    %label.active{for:'add_person_name'}Nombre
-                    %input#add_person_name{type:'text'}
-                  .col.s12.m4.input-field
-                    %label.active{for:'add_person_type'}Tipo de persona
-                    =select_tag :add_person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
-                  .col.s12.m3
-                    %button.btn.btn-large.blue{onclick:"addPerson(#{@visit.id})", style:'width:100%;'} Agregar
+                =form_for @visit.visit_people.new, url: "/visits/#{@visit.id}/add_person", html:{id:'add_people_form', visit_id:@visit.id} do |f|
+                  .row#add-person
+                    .col.s12.m5.input-field
+                      =f.label :name, class:'active'
+                      =f.text_field :name
+                    .col.s12.m4.input-field
+                      =f.label :person_type, class:'active'
+                      =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
+                    .col.s12.m3
+                      %button.btn.btn-large.blue{type:'submit',value:'submit', style:'width:100%;'} Agregar
 
 
 
