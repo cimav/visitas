@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 2018_07_03_183007) do
     t.bigint "visit_id"
     t.string "name"
     t.integer "person_type"
+    t.datetime "check_in"
+    t.datetime "check_out"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["visit_id"], name: "index_visit_people_on_visit_id"
