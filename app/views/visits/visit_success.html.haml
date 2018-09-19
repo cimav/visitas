@@ -1,4 +1,4 @@
-:css
+:scss
   body{
       background-color: #fff;
     }
@@ -12,10 +12,70 @@
     width: 50%;
   }
 
+  @import "bourbon/bourbon";
+
+  $color--green: #052d3e;
+  $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
+
+  .checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: $color--green;
+    fill: none;
+    animation: stroke .6s $curve forwards;
+  }
+
+  .checkmark {
+    width: 156px;
+    height: 156px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    margin: 10% auto;
+    box-shadow: inset 0px 0px 0px $color--green;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+  }
+
+  .checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke .3s $curve .8s forwards;
+  }
+
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes scale {
+    0%, 100% {
+      transform: none;
+    }
+    50% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+  }
+
+  @keyframes fill {
+    100% {
+      box-shadow: inset 0px 0px 0px 130px $color--green;
+    }
+  }
+
+%link{rel:'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css'}
 
 .centered
   .center
-    = image_tag 'check.png', id:'success-img'
-  %h2.center  Solicitud enviada
-  %p.center
-    Se le avisará por correo electrónico acerca de su visita.
+    %svg.checkmark{:viewbox => "0 0 52 52", :xmlns => "http://www.w3.org/2000/svg"}
+      %circle.checkmark__circle{:cx => "26", :cy => "26", :fill => "none", :r => "25"}
+      %path.checkmark__check{:d => "M14.1 27.2l7.1 7.2 16.7-16.8", :fill => "none"}
+  .animated.fadeInUp.delay-1s
+    %h2.center  Solicitud enviada
+    %p.center
+      Se le avisará por correo electrónico acerca de su visita.
