@@ -223,12 +223,12 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to 'https:visitas.cimav.edu.mx/visit_success'} # hay que especificar el path con https para que el iframe no bloqueé el contenido
+        format.html { redirect_to 'https://visitas.cimav.edu.mx/visit_success'} # hay que especificar el path con https para que el iframe no bloqueé el contenido
         format.json { render :show, status: :created, location: @visit }
       else
         format.html {
           flash[:alert] = @visit.errors.full_messages
-          redirect_to 'https:visitas.cimav.edu.mx/public_new_visit'} # hay que especificar el path con https para que el iframe no bloqueé el contenido
+          redirect_to 'https://visitas.cimav.edu.mx/public_new_visit'} # hay que especificar el path con https para que el iframe no bloqueé el contenido
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
     end
