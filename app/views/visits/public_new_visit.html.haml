@@ -25,12 +25,12 @@
   .section
     .row
       .col.s12.m12.l6.input-field
-        = f.label :department_id, class:'active'
-        = f.collection_select :department_id, Department.all, :id,:name
-
-      .col.s12.m12.l6.input-field
         = f.label :institution
         = f.text_field :institution, required:true, autocomplete:"off", class:'autocomplete'
+      .col.s12.m12.l6.input-field
+        = f.label :career
+        = f.text_field :career, required:true
+
   .section
     .row
       .input-field.col.s12.m4
@@ -45,14 +45,14 @@
   .section
     .row
       .col.s12.m4
-        = f.label :transport_type
-        = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
+        = f.label :department_id, 'Departamento a visitar', class:'active'
+        = f.collection_select :department_id, Department.all, :id,:name
       .col.s12.m4
         = f.label :date, 'Fecha sugerida'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
       .col.s12.m4
-        = f.label :career
-        = f.text_field :career, required:true
+        = f.label :transport_type
+        = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
 
   .section
     .row
@@ -112,6 +112,7 @@
         close: 'Cerrar',
 
         format: 'yyyy-mm-dd',
+        min: new Date(),
         disable: [
           1, 2, 3, 4, 5, 7
         ]
