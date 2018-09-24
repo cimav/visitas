@@ -1,159 +1,102 @@
 //////////////////////////////////////////////////// Smartphones
-@media screen and (max-width: 600px){
-  #app-logo{
-    margin-top: 2rem;
-  }
-  #login-area {
-    z-index: 999;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 80%;
-    height: 90%;
-    background-color: rgba(255, 255, 255, 0.93);
-    transform: translate(-50%, -50%);
-  }
-
-  #cimav-logo{
-    //height: 4rem;
-    width: 6rem;
-  }
-
-  #app-logo{
-    //height: 4rem;
-    margin-top: 4rem;
-    width: 10rem;
-  }
-
-  #login-title{
-    margin: 4rem 2rem;
-    font-size: 120%;
-  }
-
-  #login-button{
-    margin-bottom: 4rem;
-  }
+#login-area {
+  z-index: 999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 90%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.87);
+  transform: translate(-50%, -50%);
 }
+
+#cimav-logo{
+  width: 6rem;
+}
+
+#app-logo{
+  margin-top: 2em;
+  width: 70%;
+}
+
+#app-title{
+  padding: 1em 0;
+  font-size: 1.2em;
+}
+
+
+#login-button{
+  margin-bottom: 4rem;
+}
+
+
+////////////////////////////////////////////////// Smartphones horizontal
+@media screen and (min-width: 500px) {
+  #login-area {
+    width: 40%;
+    padding: 1em;
+  }
+  #app-logo{
+    margin-top: 1em;
+    width: 60%;
+  }
+  #app-title{
+    padding: 0;
+    font-size: 1.2em;
+  }
+
+}
+
 
 ////////////////////////////////////////////////// Tablets
-@media screen and (min-width: 600px){
-  #app-logo{
-    margin-top: 2rem;
-  }
+@media screen and (min-width: 760px) {
   #login-area {
-    z-index: 999;
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    width: 60%;
+    padding: 2em;
+  }
+  #app-logo{
+    margin-top: 6em;
+  }
+
+  #cimav-logo{
+    width: 10rem;
+  }
+
+  #app-title{
+    padding: 1em 0 2.2em 0;
+    font-size: 1.6em;
+  }
+
+}
+////////////////////////////////////////////////// Tablet horizontal
+@media screen and (min-width: 892px) {
+  #login-area {
     width: 50%;
-    height: 90%;
-    background-color: rgba(255, 255, 255, 0.93);
-    transform: translate(-50%, -50%);
   }
-
-  #cimav-logo{
-    //height: 4rem;
-    width: 9rem;
-  }
-
   #app-logo{
-    //height: 4rem;
-    margin-top: 4rem;
-    width: 13rem;
-  }
-
-  #login-title{
-    margin: 5rem 2rem;
-    font-size: 150%;
-    //width: 100%;
-  }
-
-  #login-button{
-    margin-bottom: 4rem;
+    margin-top: 4em;
+    width: 45%;
   }
 }
-
 ////////////////////////////////////////////////// Desktop
-@media screen and (min-width: 892px){
-  #app-logo{
-    margin-top: 2rem;
-  }
+@media screen and (min-width: 1200px) {
   #login-area {
-    z-index: 999;
-    position: fixed;
-    top: 50%;
-    left: 50%;
     width: 30%;
-    height: 90%;
-    background-color: rgba(255, 255, 255, 0.93);
-    transform: translate(-50%, -50%);
+  }
+  #app-logo{
+    margin-top: 5em;
+    width: 50%;
   }
 
   #cimav-logo{
-    //height: 4rem;
-    width: 10rem;
+    width: 12rem;
   }
 
-  #app-logo{
-    //height: 4rem;
-    margin-top: 3rem;
-    width: 13rem;
-  }
-
-  #login-title{
-    margin: 4rem 2rem;
-    font-size: 130%;
-    //width: 100%;
-  }
-
-  #login-button{
-    margin-bottom: 4rem;
+  #app-title{
+    font-size: 1.7em;
   }
 }
-
-////////////////////////////////////////////////// Desktop
-@media screen and (min-width: 1900px){
-  #app-logo{
-    margin-top: 2rem;
-  }
-  #login-area {
-    z-index: 999;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 30%;
-    height: 90%;
-    background-color: rgba(255, 255, 255, 0.93);
-    transform: translate(-50%, -50%);
-  }
-
-  #cimav-logo{
-    //height: 4rem;
-    width: 10rem;
-  }
-
-  #app-logo{
-    //height: 4rem;
-    margin-top: 5rem;
-    margin-bottom: 4rem;
-    width: 19rem;
-  }
-
-  #login-title{
-    margin: 3rem 1rem;
-    font-size: 150%;
-    //width: 100%;
-  }
-
-  #login-button{
-    margin-bottom: 6rem;
-    margin-top: 1em;
-  }
-}
-
-
-
-
 //////////////////////////////////////////// unauthorized
 
 #unauthorized{
