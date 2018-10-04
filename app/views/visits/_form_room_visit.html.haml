@@ -3,7 +3,7 @@
   .row
     .input-field.col.s12
       = f.label :persona_id, class:'active'
-      = f.select :persona_id, options_from_collection_for_select(Persona.all, :id, :nombre), {},class:'do-select2'
+      = f.select :persona_id, options_from_collection_for_select(Persona.all, :id, :nombre), {}, class:'material-select'
   .row
     .col.s12
       = f.label :room_id
