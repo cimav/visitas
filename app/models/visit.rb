@@ -9,6 +9,7 @@ class Visit < ApplicationRecord
   before_create :set_status
   before_create :set_token
   after_create :send_requested_email
+  after_create :send_notice_admin_email
 
   REQUESTED = 1
   APPROVED = 2
@@ -54,9 +55,17 @@ class Visit < ApplicationRecord
     puts "[SOLICITUD] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
   end
 
+  def send_notice_admin_email
+    User.where(user_type:User::ADMIN).each do |user|
+      VisitsMailer.notice_new_visit(self, user.email).deliver_later
+      puts "[NOTIFICACIÓN] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
+    end
+  end
+
   def send_approved_email
     VisitsMailer.visit_approved(self).deliver_later
     puts "[APROBADA] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
   end
+
 
 end
