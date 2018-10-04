@@ -10,7 +10,7 @@
       %th
 
   %tbody
-    - @rooms.each do |room|
+    - @rooms.order(:department_id).each do |room|
       %tr
         %td= room.name
         %td= room.department.name
