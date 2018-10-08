@@ -161,21 +161,26 @@
                   %blockquote
                     Aun no hay visitas a laboratorio
 
-        .row
-          .col.s12.m12
-            .card
-              .card-content
-                .card-title
-                  %i.material-icons.left
-                    insert_invitation
-                  Confirmar visita
-                -if @visit_people_size > 0 # Se usa una variable desde el controlador ya que al calcularla en la interfaz nunca marca cero
-
-                -else
-                  %p.grey-text
-                    No se puede confirmar la visita.
-                    %br
-                    Asegúrese de subir todos los documentos solicitados y agregar al menos una persona a la lista de asistencia
+        -if @visit.status == Visit::APPROVED
+          .row
+            .col.s12.m12
+              .card
+                .card-content
+                  .card-title
+                    %i.material-icons.left
+                      assignment_turned_in
+                    Confirmar visita
+                  -if @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last && @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
+                    .section
+                      %p.grey-text.text-darken-2 Al dar click en "confirmar visita" usted está de acuerdo con las fechas y el itinerario que el CIMAV le ofrece.
+                    .row
+                      .center
+                        =link_to 'Confirmar visita', "/visits/#{@visit.token}/confirm_visit", class:'btn btn-large green', data: { confirm: '¿Desea confirmar la visita?', method:'post'}
+                  -else
+                    %p.grey-text
+                      No se puede confirmar la visita.
+                      %br
+                      Asegúrese de subir todos los documentos solicitados y dar de alta la lista de asistencia.
         #upload_institution_request_modal.modal
           .modal-content
             .center

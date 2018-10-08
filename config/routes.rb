@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/visit_success' => 'visits#visit_success'
   get '/visits/:id/load_people' => 'visits#visit_people'
   post '/visits/:id/add_person' => 'visits#add_person'
+  post '/visits/:token/confirm_visit' => 'visits#confirm_visit'
 
 
   ########################################## sesiones

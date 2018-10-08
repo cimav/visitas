@@ -315,6 +315,24 @@ class VisitsController < ApplicationController
     end
   end
 
+  def confirm_visit
+    @visit = Visit.find_by_token(params[:token])
+    @visit.status =  Visit::CONFIRMED
+    respond_to do |format|
+      if @visit.save
+        format.html { redirect_to "/visits/token/#{params[:token]}", notice: 'Visita confirmada' }
+        format.json { head :no_content }
+      else
+        format.html {
+          flash[:alert] = @visit.errors.full_messages
+          redirect_to "/visits/token/#{params[:token]}"
+        }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+
   def edit_visit_person
     @visit_person = VisitPerson.find(params[:visit_person_id])
     @is_token = params[:is_token] == 'true'
