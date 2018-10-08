@@ -132,7 +132,7 @@
                 .card-title
                   %i.material-icons.left
                     insert_invitation
-                  Visitas a laboratorios
+                  Itinerario
                 -if @visit.room_visits.size > 0
                   %table.striped.responsive-table
                     %thead
@@ -146,7 +146,7 @@
                       -@visit.room_visits.order('date ASC').each do |room_visit|
                         %tr
                           %td
-                            %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
+                            %img.room-visit-icon.circle{src:"https://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
                           %td
                             =room_visit.room.name
                           %td
@@ -161,6 +161,21 @@
                   %blockquote
                     Aun no hay visitas a laboratorio
 
+        .row
+          .col.s12.m12
+            .card
+              .card-content
+                .card-title
+                  %i.material-icons.left
+                    insert_invitation
+                  Confirmar visita
+                -if @visit_people_size > 0 # Se usa una variable desde el controlador ya que al calcularla en la interfaz nunca marca cero
+
+                -else
+                  %p.grey-text
+                    No se puede confirmar la visita.
+                    %br
+                    Asegúrese de subir todos los documentos solicitados y agregar al menos una persona a la lista de asistencia
         #upload_institution_request_modal.modal
           .modal-content
             .center

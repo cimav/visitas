@@ -210,6 +210,7 @@ class VisitsController < ApplicationController
 
   def access_with_token
     @visit = Visit.find_by_token(params[:token])
+    @visit_people_size = @visit.visit_people.size
     render layout: 'empty_layout'
   end
 

@@ -120,7 +120,7 @@
               =f.text_field :name
             .col.s12.m4.input-field
               =f.label :person_type, class:'active'
-              =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
+              =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert), {}, class:'material-select'
             .col.s12.m3
               %button.btn.btn-large.blue{type:'submit',value:'submit', style:'width:100%;'} Agregar
 
@@ -148,7 +148,7 @@
               -@room_visits.order('date ASC').each do |room_visit|
                 %tr.tr-click{onclick:"openEditRoomVisitModal(#{room_visit.id});"}
                   %td
-                    %img.room-visit-icon.circle{src:"http://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
+                    %img.room-visit-icon.circle{src:"https://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
                   %td
                     =room_visit.room.name
                   %td
@@ -217,5 +217,6 @@
   $(document).ready(function(){
     loadVisitPeople(#{@visit.id},false);
   });
-  $('select').material_select();
+  $('.material-select').material_select();
+  $('.do-select2').select2();
   Turbolinks.clearCache();

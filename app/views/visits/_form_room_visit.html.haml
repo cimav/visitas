@@ -3,15 +3,15 @@
   .row
     .input-field.col.s12
       = f.label :persona_id, class:'active'
-      = f.select :persona_id, options_from_collection_for_select(Persona.all, :id, :nombre), {}, class:'material-select'
+      = f.select :persona_id, Persona.all.collect {|p| [p.nombre, p.id]}, {}, class:'do-select2'
   .row
     .col.s12
       = f.label :room_id
-      = f.select :room_id, options_from_collection_for_select(@visit.department.rooms, :id, :name), {}, class:'material-select'
+      = f.select :room_id, @visit.department.rooms.collect {|p| [p.name, p.id]}, {}, class:'material-select'
   .row
     .col.s12
       = f.label :date
-      = text_field_tag '[room_visit][time]',time, class: "timepicker", placeholder:'Selecciona la hora de la visita'
+      = text_field_tag '[room_visit][time]',time, class: "timepicker", placeholder:'Selecciona la hora de la visita', required:true
   .section
     .row
       .col.s12
@@ -23,8 +23,6 @@
 
 
 :javascript
-  $('.material-select').material_select();
-  $('.do-select2').select2();
   $('.timepicker').pickatime({
     default: 'now', // Set default time: 'now', '1:30AM', '16:30'
     fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
