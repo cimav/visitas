@@ -17,7 +17,7 @@
         %td
           = link_to edit_room_path(room), class:'btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-delay': 30 do
             %i.material-icons edit
-        %td
+        -#%td
           = link_to  room, method: :delete, class:'btn-floating tooltipped red', 'data-tooltip':'Eliminar', 'data-delay': 30, data: { confirm: 'Are you sure?' } do
             %i.material-icons delete
 

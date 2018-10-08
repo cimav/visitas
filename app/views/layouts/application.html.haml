@@ -24,6 +24,8 @@
               -if Visit.where(status: Visit::REQUESTED).size > 0
                 %span.new.badge.pink{'data-badge-caption':"solicitudes"}
                   =Visit.where(status: Visit::REQUESTED).size
+          %li{class:"#{active_class('/departments')}"}
+            %a{:href => "/departments"} Departamentos
           %li{class:"#{active_class('/rooms')}"}
             %a{:href => "/rooms"} Laboratorios
           %li.tooltipped{'data-tooltip':'Cerrar sesión'}
@@ -33,6 +35,8 @@
         %ul#mobile-demo.side-nav
           %li
             %a{:href => "/visits", "data-no-turbolink" => false} Visitas
+          %li
+            %a{:href => "/departments"} Departamentos
           %li
             %a{:href => "/rooms"} Laboratorios
           %li

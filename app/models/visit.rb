@@ -53,11 +53,17 @@ class Visit < ApplicationRecord
   def send_requested_email
     VisitsMailer.new_visit(self).deliver_later
     puts "[SOLICITUD] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
+
+    # También se envía correo al asistente del departamento para que esté enterado de la visita
+    if !self.department.assistant_email.blank?
+      VisitsMailer.notice_assistant_new_visit(self).deliver_later
+      puts "[NOTIFICACIÓN] Se notificará al asistente de #{self.department.name} #{self.department.assistant_email} sobre visita de #{self.institution}"
+    end
   end
 
   def send_notice_admin_email
     User.where(user_type:User::ADMIN).each do |user|
-      VisitsMailer.notice_new_visit(self, user.email).deliver_later
+      VisitsMailer.notice_admin_new_visit(self, user.email).deliver_later
       puts "[NOTIFICACIÓN] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
     end
   end

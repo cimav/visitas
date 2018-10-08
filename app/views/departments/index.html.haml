@@ -1,0 +1,25 @@
+%h1 Departamentos
+
+%table.striped.darker
+  %thead
+    %tr
+      %th Nombre
+      %th Correo de asistente
+      %th
+      %th
+
+  %tbody
+    - @deparments.each do |department|
+      %tr
+        %td= department.name
+        %td= department.assistant_email
+        %td
+          = link_to edit_department_path(department), class:'btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-delay': 30 do
+            %i.material-icons edit
+
+%br
+
+= link_to  new_department_path, class:'btn-large purple' do
+  %i.material-icons.left
+    add
+  Nuevo departamento

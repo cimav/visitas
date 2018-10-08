@@ -1,0 +1,10 @@
+= form_for @department do |f|
+  .row
+    .input-field.col.s12.m6
+      = f.label :name
+      = f.text_field :name
+    .input-field.col.s12.m6
+      = f.label :assistant_email, class:'active'
+      = f.text_field :assistant_email, type:'email'
+  .row.right
+    = f.submit 'Guardar', class:'btn green'

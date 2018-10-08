@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  get 'departments/index'
+  get 'departments/new'
+  get 'departments/edit'
   resources :room_visits
   resources :visits
   resources :rooms
+  resources :departments, except: [:show]
 
   root 'visits#index'
   get '/get_institutions' => 'visits#get_institutions'

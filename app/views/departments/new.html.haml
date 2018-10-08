@@ -1,0 +1,12 @@
+%nav.config-breadcrumb.z-depth-0
+  .nav-wrapper
+    .row
+      .col.s12.m12.l12
+        =link_to departments_path, class:'breadcrumb' do
+          Departamentos
+        %a.breadcrumb{}
+          Nuevo
+
+%h1 Nuevo departamento
+
+= render 'form'

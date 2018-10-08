@@ -19,7 +19,8 @@ es:
         requested_date: Fecha solicitada
         career: Carrera o especialidad
         reason: Motivo de visita
-        transport_date: Tipo de transporte
+        transport_type: Tipo de transporte
+        status: Estado
         notes: Notas
         date: Fecha
       room:
@@ -28,14 +29,17 @@ es:
         department_id: Departamento
       room_visit:
           date: Fecha
-          persona: Guia
-          persona_id: Guia
+          persona: Guía
+          persona_id: Guía
           status: Estado
           room: Laboratorio
           room_id: Laboratorio
       visit_person:
         name: Nombre
         person_type: Tipo de persona
+      department:
+        name: Nombre
+        assistant_email: Correo de asistente
 
   date:
     abbr_day_names:
