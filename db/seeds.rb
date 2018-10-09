@@ -9,11 +9,11 @@
 Department.delete_all
 ActiveRecord::Base.connection.execute('ALTER TABLE departments AUTO_INCREMENT = 1')
 
-Department.create(name:'Departamento de Física de Materiales')
-Department.create(name:'Departamento de Ingeniería y Química de Materiales')
-Department.create(name:'Departamento de Metalurgia e Integridad Estructural')
-Department.create(name:'Departamento de Medio Ambiente y Energía')
-Department.create(name:'Servicios Generales')
+Department.create(id:1, name:'Departamento de Física de Materiales')
+Department.create(id:2, name:'Departamento de Ingeniería y Química de Materiales')
+Department.create(id:3, name:'Departamento de Metalurgia e Integridad Estructural')
+Department.create(id:4, name:'Departamento de Medio Ambiente y Energía')
+Department.create(id:5, name:'Servicios Generales')
 
 #Se crean laboratorios
 Room.delete_all
