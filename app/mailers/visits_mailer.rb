@@ -24,4 +24,10 @@ class VisitsMailer < ApplicationMailer
     @from = "Notificaciones CIMAV <notificaciones@cimav.edu.mx>"
     mail(to: @visit.resp_email, :from => @from, subject: '(VISITAS) Solicitud aprobada')
   end
+
+  def visit_confirmed(visit, email)
+    @visit = visit
+    @from = "Notificaciones CIMAV <notificaciones@cimav.edu.mx>"
+    mail(to: user_email, :from => @from, subject: '(VISITAS) Visita confirmada')
+  end
 end

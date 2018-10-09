@@ -73,5 +73,15 @@ class Visit < ApplicationRecord
     puts "[APROBADA] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
   end
 
+  def send_confirmed_email
+    VisitsMailer.visit_confirmed(self, self.resp_email).deliver_later
+    puts "[CONFIRMADA] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
+
+    User.where(user_type:User::ADMIN).each do |user|
+      VisitsMailer.visit_confirmed(self, user.email).deliver_later
+      puts "[CONFIRMADA] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
+    end
+  end
+
 
 end
