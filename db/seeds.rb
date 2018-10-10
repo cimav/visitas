@@ -14,6 +14,7 @@ Department.create(name:'Departamento de Ingeniería y Química de Materiales')
 Department.create(name:'Departamento de Metalurgia e Integridad Estructural')
 Department.create(name:'Departamento de Medio Ambiente y Energía')
 Department.create(name:'Servicios Generales')
+Department.create(name:'Laboratorio Nacional de Nanotecnología')
 
 #Se crean laboratorios
 Room.delete_all
@@ -87,6 +88,17 @@ Department.find_by_name('Servicios Generales').rooms.create(
         {name:'Rayos X'},
         {name:'Metrología'},
         {name:'Análisis químicos'},
-        {name:'Taller de prototipos'},
+        {name:'Taller de prototipos'}
+    ]
+)
+
+#Laboratorios de Laboratorio Nacional de Nanotecnología
+Department.find_by_name('Laboratorio Nacional de Nanotecnología').rooms.create(
+    [
+        {name:'Microscopía Electrónica de Transmisión HRTEM y Biológico'},
+        {name:'Microscopía Electrónica de Barrido HRSEM y SEM'},
+        {name:'Espectroscopía Raman'},
+        {name:'Haz de Iones Enfocados (FIB)'},
+        {name:'Microscopia de Fuerza Atómica'}
     ]
 )
