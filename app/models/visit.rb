@@ -47,7 +47,7 @@ class Visit < ApplicationRecord
   end
 
   def get_visit_type
-    STATUS[self.visit_type]
+    VISIT_TYPES[self.visit_type]
   end
 
   def set_status
