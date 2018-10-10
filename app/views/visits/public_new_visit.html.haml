@@ -44,15 +44,18 @@
         = f.label :resp_email, 'data-error':"Invalido", 'data-success':"Correcto"
   .section
     .row
-      .col.s12.m4
+      .col.s12.m3
         = f.label :department_id, 'Departamento a visitar', class:'active'
         = f.collection_select :department_id, Department.all, :id,:name
-      .col.s12.m4
+      .col.s12.m3
         = f.label :date, 'Fecha sugerida'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
-      .col.s12.m4
+      .col.s12.m3
         = f.label :transport_type
-        = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
+        = f.select :transport_type, Visit::TRANSPORT_TYPES.invert
+      .col.s12.m3
+        = f.label :visit_type
+        = f.select :visit_type, Visit::VISIT_TYPES.invert
 
   .section
     .row

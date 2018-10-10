@@ -22,6 +22,7 @@ es:
         transport_type: Tipo de transporte
         status: Estado
         notes: Notas
+        visit_type: Tipo de visita
         date: Fecha
       room:
         name: Nombre

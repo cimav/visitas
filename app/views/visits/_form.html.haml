@@ -23,13 +23,16 @@
         = f.text_field :career, required:true
   .section
     .row
-      .col.s12.m4
+      .col.s12.m3
         = f.label :transport_type
-        = f.select :transport_type, Visit::TRANSPORT_TYPE.invert
-      .col.s12.m4
+        = f.select :transport_type, Visit::TRANSPORT_TYPES.invert
+      .col.s12.m3
         = f.label :date, 'Fecha'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
-      .col.s12.m4
+      .col.s12.m3
+        = f.label :visit_type
+        = f.select :visit_type, Visit::VISIT_TYPES.invert
+      .col.s12.m3
         = f.label :status
         = f.select :status, Visit::STATUS.invert
 

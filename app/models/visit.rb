@@ -22,7 +22,13 @@ class Visit < ApplicationRecord
   BUS = 2
   WALK = 3
 
-  TRANSPORT_TYPE = {CAR => 'Automóvil', BUS => 'Autobus', WALK => 'Caminando'}
+  TOUR = 1
+  WORKSHOP = 2
+  PRACTICE = 3
+
+  VISIT_TYPES = {TOUR => 'Recorrido', WORKSHOP => 'Taller', PRACTICE => 'Práctica de laboratorio'}
+
+  TRANSPORT_TYPES = {CAR => 'Automóvil', BUS => 'Autobus', WALK => 'Caminando'}
 
   STATUS = {
       REQUESTED => 'Solicitada',
@@ -33,11 +39,15 @@ class Visit < ApplicationRecord
   }
 
   def get_transport_type
-    TRANSPORT_TYPE[self.transport_type]
+    TRANSPORT_TYPES[self.transport_type]
   end
 
   def get_status
     STATUS[self.status]
+  end
+
+  def get_visit_type
+    STATUS[self.visit_type]
   end
 
   def set_status
