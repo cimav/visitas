@@ -21,6 +21,9 @@
               %b Departamento:
               = @visit.department.name
             %p
+              %b Tipo de visita:
+              = @visit.get_visit_type
+            %p
               %b Institución:
               = @visit.institution
             %p
