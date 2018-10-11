@@ -24,6 +24,7 @@ class VisitsController < ApplicationController
     date = params[:search_object][:date]
     resp = params[:search_object][:resp]
     status = params[:search_object][:status]
+    visit_type = params[:search_object][:visit_type]
     @visits = Visit.where.not(status: Visit::DELETED)
 
     #filtro por departamento
@@ -41,11 +42,34 @@ class VisitsController < ApplicationController
     #filtro por fecha
     @visits = @visits.where(status:status) unless status.blank?
 
+    #filtro por tipo
+    @visits = @visits.where(visit_type:visit_type) unless visit_type.blank?
+
     @visits =  @visits.order('created_at desc')
     respond_to do |format|
       format.html do
         @visits = @visits.offset(visits_loaded).limit(50)
         render layout:false
+      end
+      format.xls do
+        rows = Array.new
+
+        @visits.collect do |visit|
+          rows << {
+              'Departamento'=> (visit.department.name rescue 'Sin información'),
+              'Institución'=> (visit.institution rescue 'Sin información'),
+              'Carrera'=> (visit.career rescue 'Sin información'),
+              'Tipo de visita'=> (visit.get_visit_type rescue 'Sin información'),
+              'Responsable'=> (visit.resp_name rescue 'Sin información'),
+              'Teléfono Responsable' => (visit.resp_phone rescue 'Sin información'),
+              'Email Responsable' => (visit.resp_email rescue 'Sin información'),
+              'Tipo de transporte' => (visit.get_transport_type rescue 'Sin información'),
+              'Fecha'=> (visit.date rescue 'Sin información'),
+              'Estado'=> (visit.get_status rescue 'Sin información')
+          }
+        end
+        column_order = ['Departamento','Institución','Carrera','Tipo de visita','Responsable','Teléfono Responsable','Email Responsable','Tipo de transporte','Fecha', 'Estado']
+        to_excel(rows,column_order,"Servicios","Reporte_Becas")
       end
     end
 

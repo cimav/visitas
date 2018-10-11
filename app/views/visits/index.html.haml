@@ -21,13 +21,16 @@
                 %input#visits-search-resp{placeholder:'Nombre del responsable'}
                 %label.active{for:'visits-search-resp'} Responsable
             .row
-              .col.l4.input-field
+              .col.l3.input-field
                 =select_tag 'visits-search-status', options_from_collection_for_select(Visit::STATUS.except(Visit::DELETED),:first, :last), include_blank: 'Todos los estatus'
                 %label{for:'visits-search-status'} Estatus
-              .col.l4.input-field
+              .col.l3.input-field
                 =text_field_tag 'visits-search-date','', class: "datepicker", type:'date'
                 %label.active{for:'visits-search-date'} Fecha
-              .col.l4.center
+              .col.l3.input-field
+                =select_tag 'visits-search-type', options_from_collection_for_select(Visit::VISIT_TYPES,:first, :last), include_blank: 'Todos los tipos'
+                %label{for:'visits-search-type'} Estatus
+              .col.l3.center
                 %button#visits-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
                   Buscar
                   %i.material-icons.left
@@ -76,6 +79,9 @@
     searchVisits();
   });
   $("#visits-search-status").on('change', function() {
+    searchVisits();
+  });
+  $("#visits-search-type").on('change', function() {
     searchVisits();
   });
 
@@ -131,6 +137,7 @@
     searchObject.resp = $("#visits-search-resp").val();
     searchObject.status = $("#visits-search-status").val();
     searchObject.date = $("#visits-search-date").val();
+    searchObject.visit_type = $("#visits-search-type").val();
     console.log(searchObject);
     loadVisits();
 
