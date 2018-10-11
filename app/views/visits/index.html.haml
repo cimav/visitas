@@ -29,7 +29,7 @@
                 %label.active{for:'visits-search-date'} Fecha
               .col.l3.input-field
                 =select_tag 'visits-search-type', options_from_collection_for_select(Visit::VISIT_TYPES,:first, :last), include_blank: 'Todos los tipos'
-                %label{for:'visits-search-type'} Estatus
+                %label{for:'visits-search-type'} Tipo de visita
               .col.l3.center
                 %button#visits-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
                   Buscar
