@@ -1,0 +1,25 @@
+=form_for @user do |f|
+  .row
+    .col.s12.m4.input-field
+      =f.label :name
+      =f.text_field :name, required:true
+    .col.s12.m4.input-field
+      =f.label :email
+      =f.text_field :email, required:true, type:'email'
+    .col.s12.m6.input-field
+      =f.label :user_type, class:'active'
+      =f.select :user_type, User::TYPES.invert
+  .row
+    .col.s12.m12
+      =f.label :departments,'Departamentos a cargo'
+      =f.collection_check_boxes :departments, Department.all, :id,:name do |b|
+        .col.s12.m12
+          =b.check_box
+          =b.label
+  .row
+    .col.s12
+      =f.submit 'Guardar', class:'btn-large green'
+:javascript
+   $(document).ready(function(){
+    $('select').material_select();
+    });

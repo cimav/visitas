@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_213142) do
+ActiveRecord::Schema.define(version: 2018_10_18_214922) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 2018_10_10_213142) do
     t.integer "user_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "departments"
   end
 
   create_table "visit_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -83,6 +85,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_213142) do
     t.string "career"
     t.text "reason"
     t.integer "visit_type"
+    t.integer "people_approx"
     t.index ["department_id"], name: "index_visits_on_department_id"
   end
 

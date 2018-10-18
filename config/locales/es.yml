@@ -24,6 +24,7 @@ es:
         notes: Notas
         visit_type: Tipo de visita
         date: Fecha
+        people_approx: Aproximado de estudiantes
       room:
         name: Nombre
         department: Departamento

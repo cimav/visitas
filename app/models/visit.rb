@@ -8,8 +8,8 @@ class Visit < ApplicationRecord
   validates_presence_of :institution
   before_create :set_status
   before_create :set_token
-  after_create :send_requested_email
-  after_create :send_notice_admin_email
+  #after_create :send_requested_email
+  #after_create :send_notice_admin_email
 
   REQUESTED = 1
   APPROVED = 2

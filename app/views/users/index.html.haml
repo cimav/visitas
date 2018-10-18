@@ -1,0 +1,15 @@
+.row
+  .col.l12.m12
+    %h1
+      Usuarios
+    .collection
+      -@users.each do |user|
+        =link_to edit_user_path(user), class:'collection-item'do
+          =user.name
+          .right
+            =user.get_type
+
+.fixed-action-btn
+  =link_to new_user_path, class:'btn-floating btn-large red tooltipped', "data-position" => "left", "data-tooltip" => "Nuevo usuario", "data-delay" => "100" do
+    %i.material-icons
+      add

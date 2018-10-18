@@ -33,15 +33,18 @@
 
   .section
     .row
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         = f.label :resp_name
         = f.text_field :resp_name, required:true
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         = f.label :resp_phone
         = f.text_field :resp_phone, required:true
-      .input-field.col.s12.m4
+      .input-field.col.s12.m3
         = f.text_field :resp_email, type:'email', required:true, class:'validate'
         = f.label :resp_email, 'data-error':"Invalido", 'data-success':"Correcto"
+      .input-field.col.s12.m3
+        = f.label :people_approx
+        = f.number_field :people_approx, required:true
   .section
     .row
       .col.s12.m3
@@ -61,7 +64,7 @@
     .row
       .col.s12
         =f.label :reason
-        =f.text_area :reason, class:'materialize-textarea', placeholder:'Aquí puede especificar detalladamente los motivos y requerimientos de su visita'
+        =f.text_area :reason, class:'materialize-textarea', placeholder:'Aquí puede especificar los laboratorios que desea visitar, así como los motivos y requerimientos de su visita'
 
   .section
     .row

@@ -372,6 +372,6 @@ class VisitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def visit_params
-      params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status, :date, :reason, :career, :visit_type)
+      params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status, :date, :reason, :career, :visit_type, :people_approx)
     end
 end

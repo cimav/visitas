@@ -29,6 +29,9 @@
             %a{:href => "/departments"} Departamentos
           %li{class:"#{active_class('/rooms')}"}
             %a{:href => "/rooms"} Laboratorios
+          -if super_user?
+            %li{class:"#{active_class('/users')}"}
+              %a{:href => "/users"} Usuarios
           %li.tooltipped{'data-tooltip':'Cerrar sesión'}
             %a{:href => "/logout"}
               %i.material-icons.right
