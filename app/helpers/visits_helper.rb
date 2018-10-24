@@ -4,8 +4,10 @@ module VisitsHelper
     case status
     when Visit::REQUESTED
       color = 'orange-text text-lighten-2'
+    when Visit::PRE_APPROVED
+      color = 'cyan-text text-lighten-2'
     when Visit::APPROVED
-      color = 'blue-text text-lighten-2'
+      color = 'blue-text '
     when Visit::CONFIRMED
       color = 'green-text'
     when Visit::CANCELED

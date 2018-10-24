@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/visits/:id/load_people' => 'visits#visit_people'
   post '/visits/:id/add_person' => 'visits#add_person'
   post '/visits/:token/confirm_visit' => 'visits#confirm_visit'
+  post '/visits/:id/pre_approve' => 'visits#pre_approve'
 
 
   ########################################## sesiones

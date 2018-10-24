@@ -1,5 +1,5 @@
 class VisitsController < ApplicationController
-  before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit, :upload_file, :visit_people, :add_person]
+  before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit, :upload_file, :visit_people, :add_person, :pre_approve]
   skip_before_action :auth_required, only: [:access_with_token, :public_create_visit, :public_new_visit, :get_institutions, :visit_success, :visit_people, :add_person, :edit_visit_person, :update_visit_person, :upload_file_with_token, :delete_visit_person_with_token]
   before_action :allow_iframe_requests, only: [:public_new_visit, :public_create_visit, :visit_success]
   skip_before_action :verify_authenticity_token
@@ -77,11 +77,16 @@ class VisitsController < ApplicationController
 
   # GET /visits/new
   def new
+    only_admin
     @visit = Visit.new
   end
 
   # GET /visits/1/edit
   def edit
+    if !@visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED]
+      only_admin
+    end
+
     datetime = @visit.date.to_s()
     @date = datetime.split(" ")[0].to_date.strftime("%d %B, %Y")
     @time = datetime.split(" ")[1].to_time.strftime('%l:%M%P') rescue "" #hora con formato 12H
@@ -110,15 +115,24 @@ class VisitsController < ApplicationController
   def update
     respond_to do |format|
       send_approved_email = false
+      send_pre_approved_email = false
 
 
       if (@visit.status != Visit::APPROVED) && (params[:visit][:status].to_i == Visit::APPROVED)
         send_approved_email = true
       end
 
+
+      if (@visit.status != Visit::PRE_APPROVED) && (params[:visit][:status].to_i == Visit::PRE_APPROVED)
+        send_pre_approved_email = true
+      end
+
       if @visit.update(visit_params)
         if send_approved_email
           @visit.send_approved_email
+        end
+        if send_pre_approved_email
+          @visit.send_pre_approved_email
         end
         format.html { redirect_to @visit, notice: 'Visita actualizada' }
         format.json { render :show, status: :ok, location: @visit }
@@ -136,7 +150,7 @@ class VisitsController < ApplicationController
   def destroy
     @visit.destroy
     respond_to do |format|
-      format.html { redirect_to visits_url, notice: 'Visit eliminada' }
+      format.html { redirect_to visits_url, notice: 'Visita eliminada' }
       format.json { head :no_content }
     end
   end
@@ -344,12 +358,30 @@ class VisitsController < ApplicationController
     @visit.status =  Visit::CONFIRMED
     respond_to do |format|
       if @visit.save
+        @visit.send_confirmed_email
         format.html { redirect_to "/visits/token/#{params[:token]}", notice: 'Visita confirmada' }
         format.json { head :no_content }
       else
         format.html {
           flash[:alert] = @visit.errors.full_messages
           redirect_to "/visits/token/#{params[:token]}"
+        }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def pre_approve
+    @visit.status =  Visit::PRE_APPROVED
+    respond_to do |format|
+      if @visit.save
+        @visit.send_pre_approved_email
+        format.html { redirect_to @visit, notice: 'Visita lista para aprobar' }
+        format.json { head :no_content }
+      else
+        format.html {
+          flash[:alert] = @visit.errors.full_messages
+          redirect_to @visit
         }
         format.json { head :no_content }
       end
@@ -369,6 +401,9 @@ class VisitsController < ApplicationController
       @visit = Visit.find(params[:id])
     end
 
+    def only_admin
+      redirect_to '/visits' if !is_admin?
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def visit_params

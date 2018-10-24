@@ -4,16 +4,18 @@
       .card-content
         .card-title
           Visitas
-          %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva visita','data-delay':40,'data-position':'right',onclick:"openModal($('#new_visit_modal'));"}
-            %i.material-icons
-              add
+          -if is_admin?
+            %button.btn-floating.right.green.darken-2.tooltipped{'data-tooltip':'Nueva visita','data-delay':40,'data-position':'right',onclick:"openModal($('#new_visit_modal'));"}
+              %i.material-icons
+                add
 
         .row
           %form#visits-search-form{'data-remote':true, action:'/load_part_visits'}
             .row
-              .col.l4.input-field
-                =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
-                %label{for:'visits-search-type'} Departamento
+              -if is_admin?
+                .col.l4.input-field
+                  =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
+                  %label{for:'visits-search-type'} Departamento
               .col.l4.input-field
                 %input#visits-search-institution{placeholder:'Nombre de la institución'}
                 %label.active{for:'visits-search-institution'} Institución
@@ -132,7 +134,10 @@
 
   function searchVisits() {
     visits_loaded = 0;
-    searchObject.department = $("#visits-search-department").val();
+    if (#{current_user.user_type.in? [User::ASSISTANT]})
+      searchObject.department = #{current_user.departments.blank? ? '0' : current_user.departments};
+    else
+      searchObject.department = $("#visits-search-department").val();
     searchObject.institution = $("#visits-search-institution").val();
     searchObject.resp = $("#visits-search-resp").val();
     searchObject.status = $("#visits-search-status").val();

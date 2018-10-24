@@ -1,11 +1,17 @@
 %p
   Se ha confirmado la visita de
-  =@visit.institution
+  %b=@visit.institution
   a las instalaciones del Centro de Investigación en Materiales Avanzados para el día
-  ="#{l(@visit.date, format: "%d de %B del %Y")}."
+  %b="#{l(@visit.date, format: "%d de %B del %Y")}."
+
+%p Por medidas de seguridad se debe cumplir con lo siguiente.
 
 %p
-  Los visitantes deben traer los artículos:
+  Los visitantes deben traer:
 %ul
   %li Bata de laboratorio
-  %li Zapato cerrado cómodo
+  %li Pantalón
+  %li Zapato cerrado
+
+%p
+  %b Deben presentarse en caseta de vigilancia al menos 30 minutos antes de su visita.

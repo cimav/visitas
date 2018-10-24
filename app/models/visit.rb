@@ -8,14 +8,14 @@ class Visit < ApplicationRecord
   validates_presence_of :institution
   before_create :set_status
   before_create :set_token
-  #after_create :send_requested_email
-  #after_create :send_notice_admin_email
+  after_create :send_requested_email
 
   REQUESTED = 1
   APPROVED = 2
   CONFIRMED = 3
   CANCELED = 4
   FINISHED = 5
+  PRE_APPROVED = 6
   DELETED = 99
 
   CAR = 1
@@ -32,6 +32,7 @@ class Visit < ApplicationRecord
 
   STATUS = {
       REQUESTED => 'Solicitada',
+      PRE_APPROVED => 'Pre-aprobada',
       APPROVED => 'Aprobada',
       CONFIRMED => 'Confirmada',
       CANCELED => 'Cancelada',
@@ -64,17 +65,27 @@ class Visit < ApplicationRecord
     VisitsMailer.new_visit(self).deliver_later
     puts "[SOLICITUD] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
 
-    # También se envía correo al asistente del departamento para que esté enterado de la visita
-    if !self.department.assistant_email.blank?
-      VisitsMailer.notice_assistant_new_visit(self).deliver_later
-      puts "[NOTIFICACIÓN] Se notificará al asistente de #{self.department.name} #{self.department.assistant_email} sobre visita de #{self.institution}"
+    # También se envía correo al administrador para que le dé seguimiento a la visita
+    User.where(user_type:User::ADMIN).each do |user|
+      VisitsMailer.new_visit_admin(self, user.email).deliver_later
+      puts "[NOTIFICACIÓN] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
     end
+
+    # También se envía correo al asistente del departamento para que le dé seguimiento a la visita
+    User.where(user_type:User::ASSISTANT).each do |assistant|
+      if assistant.departments.include? self.department_id
+        VisitsMailer.new_visit_assistant(self, assistant.email).deliver_later
+        puts "[NOTIFICACIÓN] Se notificará a #{assistant.name} sobre visita de #{self.institution}"
+      end
+    end
+
   end
 
-  def send_notice_admin_email
+
+  def send_pre_approved_email
     User.where(user_type:User::ADMIN).each do |user|
-      VisitsMailer.notice_admin_new_visit(self, user.email).deliver_later
-      puts "[NOTIFICACIÓN] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
+      VisitsMailer.visit_pre_approved(self, user.email).deliver_later
+      puts "[PRE-APROBADA] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
     end
   end
 
@@ -84,12 +95,19 @@ class Visit < ApplicationRecord
   end
 
   def send_confirmed_email
-    VisitsMailer.visit_confirmed(self, self.resp_email).deliver_later
+    VisitsMailer.visit_confirmed(self).deliver_later
     puts "[CONFIRMADA] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name}"
 
     User.where(user_type:User::ADMIN).each do |user|
-      VisitsMailer.visit_confirmed(self, user.email).deliver_later
+      VisitsMailer.visit_confirmed_admin(self, user.email).deliver_later
       puts "[CONFIRMADA] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name}"
+    end
+
+    User.where(user_type:User::ASSISTANT).each do |assistant|
+      if assistant.departments.include? self.department_id
+        VisitsMailer.visit_confirmed_admin(self, assistant.email).deliver_later
+        puts "[CONFIRMADA] Se notificará a #{assistant.name} sobre visita de #{self.institution}"
+      end
     end
   end
 

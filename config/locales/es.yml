@@ -30,7 +30,7 @@ es:
         department: Departamento
         department_id: Departamento
       room_visit:
-          date: Fecha
+          date: Hora
           persona: Guía
           persona_id: Guía
           status: Estado

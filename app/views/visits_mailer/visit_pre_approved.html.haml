@@ -1,0 +1,8 @@
+%p
+  La solicitud de
+  %b=@visit.institution
+  para visitar el Centro de Investigación en Materiales Avanzados ha sido pre-aprobada para el día
+  %b="#{fdate(@visit.date)}."
+%p
+  Para continuar con el proceso, deberá aprobar la visita
+  %a{href:"https://visitas.cimav.edu.mx/visits/#{@visit.id}"} aquí.

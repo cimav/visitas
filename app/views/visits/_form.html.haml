@@ -34,7 +34,11 @@
         = f.select :visit_type, Visit::VISIT_TYPES.invert
       .col.s12.m3
         = f.label :status
-        = f.select :status, Visit::STATUS.invert
+        -if is_admin?
+          = f.select :status, Visit::STATUS.invert
+        -else
+          = f.select :status, Visit::STATUS.except(Visit::CONFIRMED, Visit::APPROVED, Visit::FINISHED).invert
+
 
   .section
     .row

@@ -10,11 +10,13 @@
     .card
       .card-content
         .card-title
-          %i.material-icons.left
-            info_outline
+          %a.no-link{href:"/visits/token/#{@visit.token}", target:'_blank'}
+            %i.material-icons.left
+              info_outline
           Información de la visita
-          = link_to edit_visit_path(@visit), class:'right btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-position':'right' do
-            %i.material-icons edit
+          -if (is_admin?) || (@visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED]) #el asistente sólo puede ver el botón si está en alguno de esos estatus
+            = link_to edit_visit_path(@visit), class:'right btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-position':'right' do
+              %i.material-icons edit
         .row
           .col.s12.m7
             %p
@@ -52,8 +54,12 @@
               = @visit.reason
 
           .col.s12.m5.center
-            %i.material-icons.center.inline{class:status_color(@visit.status)} lens
-            =@visit.get_status
+            .row
+              %i.material-icons.center.inline{class:status_color(@visit.status)} lens
+              =@visit.get_status
+            -if current_user.user_type == User::ASSISTANT && @visit.status == Visit::REQUESTED
+              .row.section
+                = link_to 'Pre-aprobar visita',"/visits/#{@visit.id}/pre_approve", class:"btn-large cyan #{@visit.room_visits.blank? ? 'disabled':''}", method:'post', data: {confirm:'¿Confirma que los documentos están en orden?'}
 
 .row
   .col.s12.m12
@@ -139,8 +145,9 @@
           %i.material-icons.left
             insert_invitation
           Visitas a laboratorios
-          %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openModal($('#new_room_visit_modal'));"}
-            %i.material-icons add
+          -if is_admin? || @visit.status == Visit::REQUESTED
+            %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openModal($('#new_room_visit_modal'));"}
+              %i.material-icons add
         -if @room_visits.size > 0
           %table.bordered.highlight.responsive-table
             %thead

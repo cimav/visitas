@@ -3,6 +3,27 @@
     -if @visit.status.in? [Visit::REQUESTED, Visit::APPROVED, Visit::CONFIRMED]
       .container{style:'margin-top:3rem;'}
 
+        -if @visit.status == Visit::APPROVED
+          .row
+            .col.s12.m12
+              .card
+                .card-content
+                  .card-title
+                    %i.material-icons.left
+                      assignment_turned_in
+                    Confirmar visita
+                  -if @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last && @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
+                    .section
+                      %p.grey-text.text-darken-2.center Al dar click en "confirmar visita" usted está de acuerdo con las fechas y el itinerario que el CIMAV le ofrece.
+                    .row
+                      .center
+                        =link_to 'Confirmar visita', "/visits/#{@visit.token}/confirm_visit", class:'btn btn-large green', data: { confirm: '¿Desea confirmar la visita?', method:'post'}
+                  -else
+                    %p.grey-text
+                      No se puede confirmar la visita.
+                      %br
+                      Asegúrese de subir todos los documentos solicitados y dar de alta la lista de asistencia.
+
         .row
           .col.s12.m12
             .card
@@ -25,6 +46,9 @@
                     %p
                       %b Carrera o especialidad:
                       = @visit.career
+                    %p
+                      %b Número aproximado de estudiantes:
+                      = @visit.people_approx
                     %p
                       %b Nombre del responsable:
                       = @visit.resp_name
@@ -78,7 +102,7 @@
                       %td
                         -if file
                           %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                        -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
+                        -if @visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED, Visit::APPROVED]
                           %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
                     -######################## Póliza de seguro
                     %tr
@@ -94,7 +118,7 @@
                       %td
                         -if file
                           %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                        -if @visit.status.in? [Visit::APPROVED, Visit::CONFIRMED]
+                        -if @visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED, Visit::APPROVED]
                           %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
 
         .row
@@ -115,16 +139,17 @@
                       .circle-clipper.right
                         .circle
                 #visit_people
-                =form_for @visit.visit_people.new, url: "/visits/#{@visit.id}/add_person", html:{id:'add_people_form', visit_id:@visit.id} do |f|
-                  .row#add-person
-                    .col.s12.m5.input-field
-                      =f.label :name, class:'active'
-                      =f.text_field :name
-                    .col.s12.m4.input-field
-                      =f.label :person_type, class:'active'
-                      =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
-                    .col.s12.m3
-                      %button.btn.btn-large.blue{type:'submit',value:'submit', style:'width:100%;'} Agregar
+                -if @visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED, Visit::APPROVED]
+                  =form_for @visit.visit_people.new, url: "/visits/#{@visit.id}/add_person", html:{id:'add_people_form', visit_id:@visit.id} do |f|
+                    .row#add-person
+                      .col.s12.m5.input-field
+                        =f.label :name, class:'active'
+                        =f.text_field :name
+                      .col.s12.m4.input-field
+                        =f.label :person_type, class:'active'
+                        =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert)
+                      .col.s12.m3
+                        %button.btn.btn-large.blue{type:'submit',value:'submit', style:'width:100%;'} Agregar
 
 
 
@@ -164,26 +189,7 @@
                   %blockquote
                     Aun no hay visitas a laboratorio
 
-        -if @visit.status == Visit::APPROVED
-          .row
-            .col.s12.m12
-              .card
-                .card-content
-                  .card-title
-                    %i.material-icons.left
-                      assignment_turned_in
-                    Confirmar visita
-                  -if @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last && @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
-                    .section
-                      %p.grey-text.text-darken-2 Al dar click en "confirmar visita" usted está de acuerdo con las fechas y el itinerario que el CIMAV le ofrece.
-                    .row
-                      .center
-                        =link_to 'Confirmar visita', "/visits/#{@visit.token}/confirm_visit", class:'btn btn-large green', data: { confirm: '¿Desea confirmar la visita?', method:'post'}
-                  -else
-                    %p.grey-text
-                      No se puede confirmar la visita.
-                      %br
-                      Asegúrese de subir todos los documentos solicitados y dar de alta la lista de asistencia.
+
         #upload_institution_request_modal.modal
           .modal-content
             .center

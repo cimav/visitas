@@ -1,0 +1,13 @@
+%p
+  Se ha recibido una solicitud de
+  %b= @visit.institution
+  para realizar la actividad de
+  =@visit.get_visit_type.downcase
+  en las instalaciones del CIMAV.
+%br
+
+%p
+  La institución deberá proporcionar los documentos correspondientes y la lista de asistentes.
+%p
+  Usted deberá revisar los documentos y la disponibilidad de fechas, también deberá seleccionar los laboratorios que se visitarán dando click
+  %a{href:"https://visitas.cimav.edu.mx/visits/#{@visit.id}"} aquí

@@ -5,18 +5,9 @@
   Su solicitud para visitar el Centro de Investigación en Materiales Avanzados ha sido aprobada para el día
   ="#{fdate(@visit.date)}."
 %p
-  Para continuar con el proceso haga click
-  %a{href:"https://visitas.cimav.edu.mx/visits/token/#{@visit.token}"} aquí
-  para subir los siguientes documentos:
-
-  %ul
-    %li Oficio de solicitud de la institución.
-    %li Poliza de seguro.
-
-%p También deberá ingresar en el sistema la lista de personas que asistirán a la visita, incluyendo choferes y maestros.
-
-%p Puede consultar el itinerario de la visita en el enlace anterior.
-%p
-  %b Despues de subir los documentos y la lista de asistencia, debe dar click en el botón "confirmar visita".
+  %b
+    Debe confirmar su asistencia
+    %a{href:"https://visitas.cimav.edu.mx/visits/token/#{@visit.token}"} aquí
+    al menos dos días hábiles antes de su visita. En caso contrario su visita será cancelada.
 
 %p Que pase un excelente día.

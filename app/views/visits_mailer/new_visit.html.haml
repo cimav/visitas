@@ -2,6 +2,17 @@
   ="Estimado(a) #{@visit.resp_name}."
 
 %p
-  Hemos recibido su solicitud para visitar el Centro de Investigación en Materiales Avanzados. Se revisarán las fechas disponibles y posteriormente se le notificará una vez sea aprobada.
+  Gracias por considerarnos dentro de su programa de visitas.
+  Para completar el proceso de solicitud es necesario dar click
+  %a{href:"https://visitas.cimav.edu.mx/visits/token/#{@visit.token}"} aquí
+  y subir los siguientes documentos:
+
+  %ul
+    %li Oficio de solicitud de la institución.
+    %li Poliza de seguro.
+
+%p También deberá ingresar en el sistema la lista de personas que asistirán a la visita, incluyendo choferes y maestros.
+
+%p Se le estará notificando en caso de ser aprobada.
 
 Que pase un excelente día.
