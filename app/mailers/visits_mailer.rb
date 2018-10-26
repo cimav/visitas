@@ -51,4 +51,11 @@ class VisitsMailer < ApplicationMailer
     mail(to: user_email, :from => @from, subject: '(VISITAS) Visita confirmada')
   end
 
+  def room_visit_confirm(room_visit)
+    # email para que el técnico confirme que realizó la visita
+    @room_visit = room_visit
+    @from = "Notificaciones CIMAV <notificaciones@cimav.edu.mx>"
+    mail(to: "#{room_visit.persona.cuenta_cimav}@cimav.edu.mx", :from => @from, subject: '(VISITAS) Confirmar visita a laboratorio')
+  end
+
 end

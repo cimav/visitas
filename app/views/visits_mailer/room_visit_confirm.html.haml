@@ -1,0 +1,26 @@
+%p
+  ="Buen día"
+
+%p
+  La Plataforma de Visitas del CIMAV tiene registro que el día
+  %b="#{l(@room_visit.visit.date, format: "%d de %B del %Y")} a las #{@room_visit.date.strftime('%I:%M%p')}"
+  atendío una visita de
+  %b=@room_visit.visit.institution
+  con la actividad de
+  =@room_visit.visit.get_visit_type.downcase
+
+
+%p
+  Para tener la información correcta en nuestras bases de datos es necesario saber si usted atendió la visita.
+
+%br
+%br
+
+%p
+  Por favor haga click en la opción correcta:
+%a{href:"https://visitas.cimav.edu.mx/visits/confirm_room_visit/#{@room_visit.id}"}
+  Confirmo que atendí la visita
+%br
+%br
+%a{href:"https://visitas.cimav.edu.mx/visits/cancel_room_visit/#{@room_visit.id}"}
+  No atendí la visita (la atendió alguien más o fue cancelada)

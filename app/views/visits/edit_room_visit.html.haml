@@ -16,8 +16,8 @@
     .row
       .col.s12
         .right
-          %a.btn.btn-large.red{href:"/visits/#{@visit.id}/delete_room_visit/#{@room_visit.id}", 'data-method': 'delete', data: { confirm: '¿Deseas eliminar la visita?' }}
-            Eliminar
+          %a.btn.btn-large.red{href:"/visits/delete_room_visit/#{@room_visit.id}", 'data-method': 'delete', data: { confirm: '¿Deseas cancelar la visita?' }}
+            Cancelar
           =f.submit 'Guardar', class:'btn btn-large green darken-2'
 
 

@@ -158,7 +158,7 @@
                 %th Hora
                 %th Estatus
             %tbody
-              -@room_visits.order('date ASC').each do |room_visit|
+              -@room_visits.where.not(status: RoomVisit::CANCELED).order('date ASC').each do |room_visit|
                 %tr.tr-click{onclick:"openEditRoomVisitModal(#{room_visit.id});"}
                   %td
                     %img.room-visit-icon.circle{src:"https://cimav.edu.mx/foto/#{room_visit.persona.cuenta_cimav}"}
