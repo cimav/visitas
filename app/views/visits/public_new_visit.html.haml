@@ -47,18 +47,17 @@
         = f.number_field :people_approx, required:true
   .section
     .row
-      .col.s12.m3
+      .col.s12.m4
         = f.label :department_id, 'Departamento a visitar', class:'active'
         = f.collection_select :department_id, Department.all, :id,:name
-      .col.s12.m3
+      .col.s12.m4
         = f.label :date, 'Fecha sugerida'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
-      .col.s12.m3
+      .col.s12.m4
         = f.label :transport_type
         = f.select :transport_type, Visit::TRANSPORT_TYPES.invert
-      .col.s12.m3
-        = f.label :visit_type
-        = f.select :visit_type, Visit::VISIT_TYPES.invert
+
+        = f.hidden_field :visit_type, value: Visit::TOUR
 
   .section
     .row
@@ -118,7 +117,7 @@
         close: 'Cerrar',
 
         format: 'yyyy-mm-dd',
-        min: new Date(),
+        min: new Date(new Date().getTime()+604800000), // No se permite seleccionar fechas menores a 7 días
         disable: [
           1, 2, 3, 4, 5, 7
         ]
