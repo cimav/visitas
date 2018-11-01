@@ -2,11 +2,11 @@
   ="Estimado(a) #{@visit.resp_name}."
 
 %p
-  Su solicitud para visitar el Centro de Investigación en Materiales Avanzados ha sido aprobada para el día
+  Tenemos aprobada su solicitud para visitar el Centro de Investigación en Materiales Avanzados para el día
   ="#{fdate(@visit.date)}."
 %p
   %b
-    Tiene hasta el
+    Le recordamos que tiene hasta el
     ="#{l(@visit.date - 3.days, format: "%d de %B del %Y")} a las 8:00PM"
     para confirmar su asistencia en
     %a{href:"https://visitas.cimav.edu.mx/visits/token/#{@visit.token}"} este enlace.

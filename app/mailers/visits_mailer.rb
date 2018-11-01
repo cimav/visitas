@@ -58,4 +58,18 @@ class VisitsMailer < ApplicationMailer
     mail(to: "#{room_visit.persona.cuenta_cimav}@cimav.edu.mx", :from => @from, subject: '(VISITAS) Confirmar visita a laboratorio')
   end
 
+  def visit_reminder_confirm(visit)
+    # email para recordar a la institución confirmar su visita
+    @visit = visit
+    @from = "Notificaciones CIMAV <notificaciones@cimav.edu.mx>"
+    mail(to: @visit.resp_email, :from => @from, subject: '(VISITAS) Es necesario confirmar su visita')
+  end
+
+  def reminder_pending_requests(pending_requests, user_email)
+    # email para recordar a asistente que tiene solicitudes pendientes
+    @pending_requests = pending_requests
+    @from = "Notificaciones CIMAV <notificaciones@cimav.edu.mx>"
+    mail(to: user_email, :from => @from, subject: '(VISITAS) Recordatorio de solicitudes pendientes')
+  end
+
 end
