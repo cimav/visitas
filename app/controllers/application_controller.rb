@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :auth_required
   protect_from_forgery with: :exception
+  skip_before_action :verify_authenticity_token
+
   include ApplicationHelper
 
   def authenticated?
