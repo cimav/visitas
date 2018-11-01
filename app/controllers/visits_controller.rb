@@ -148,6 +148,7 @@ class VisitsController < ApplicationController
   # DELETE /visits/1
   # DELETE /visits/1.json
   def destroy
+    only_admin
     @visit.destroy
     respond_to do |format|
       format.html {redirect_to visits_url, notice: 'Visita eliminada'}

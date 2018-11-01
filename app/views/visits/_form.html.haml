@@ -50,9 +50,6 @@
     .row
       .col.s12
         .right
-          -if screen == 'edit'
-            %a.btn.btn-large.red{href:"/visits/#{visit.id}", 'data-method': 'delete', data: { confirm: '¿Deseas eliminar la visita?' }}
-              Eliminar
           =f.submit 'Guardar', class:'btn btn-large purple'
 :javascript
    $(document).ready(function(){
