@@ -2,7 +2,6 @@ class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :edit, :update, :destroy, :create_room_visit, :upload_file, :visit_people, :add_person, :pre_approve]
   skip_before_action :auth_required, only: [:access_with_token, :public_create_visit, :public_new_visit, :get_institutions, :visit_success, :visit_people, :add_person, :edit_visit_person, :update_visit_person, :upload_file_with_token, :delete_visit_person_with_token, :confirm_room_visit, :cancel_room_visit]
   before_action :allow_iframe_requests, only: [:public_new_visit, :public_create_visit, :visit_success]
-  skip_before_action :verify_authenticity_token
 
   # GET /visits
   # GET /visits.json
@@ -401,6 +400,7 @@ class VisitsController < ApplicationController
     respond_to do |format|
       if @visit.save
         @visit.send_confirmed_email
+        @visit.send_confirm_email_technician
         format.html {redirect_to "/visits/token/#{params[:token]}", notice: 'Visita confirmada'}
         format.json {head :no_content}
       else
