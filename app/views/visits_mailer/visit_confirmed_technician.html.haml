@@ -1,0 +1,15 @@
+%p
+  Buen día.
+
+%p
+  Ha sido seleccionado para
+  ="#{@room_visit.visit.visit_type == Visit::TOUR ? 'guiar':'impartir'} #{@room_visit.visit.visit_type == Visit::PRACTICE ? 'una':'un'} #{@room_visit.visit.get_visit_type.downcase}"
+  de
+  %b=@room_visit.visit.institution
+  al laboratorio
+  %b="#{@room_visit.room.name}"
+  para el día
+  %b="#{l(@room_visit.visit.date, format: "%d de %B del %Y")} a las #{@room_visit.date.strftime('%I:%M%p')}"
+
+%p
+  Que tenga un excelente día.
