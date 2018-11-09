@@ -133,13 +133,13 @@ class VisitsController < ApplicationController
         if send_pre_approved_email
           @visit.send_pre_approved_email
         end
+        format.json {render plain: 'Separar en grupos'}
         format.html {redirect_to @visit, notice: 'Visita actualizada'}
-        format.json {render :show, status: :ok, location: @visit}
       else
         format.html {
           flash[:alert] = @visit.errors.full_messages
           render :edit}
-        format.json {render json: @visit.errors, status: :unprocessable_entity}
+        format.json {redirect_to '/nel'}
       end
     end
   end
@@ -191,6 +191,7 @@ class VisitsController < ApplicationController
         room_id: params[:room_visit][:room_id],
         date: "01-01-2000 #{params[:room_visit][:time]}", #todos los room_visit tienen la misma fecha ya que sólo importa la hora
     }
+    room_visit_params[:group] = params[:room_visit][:group] if !params[:room_visit][:group].blank?
     respond_to do |format|
       if room_visit.update(room_visit_params)
         format.html {redirect_to room_visit.visit, notice: 'Visita a laboratorio actualizada'}
@@ -450,6 +451,6 @@ class VisitsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def visit_params
-    params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status, :date, :reason, :career, :visit_type, :people_approx)
+    params.require(:visit).permit(:department_id, :institution, :resp_name, :resp_phone, :resp_email, :requested_date, :transport_type, :status, :date, :reason, :career, :visit_type, :people_approx, :split_in_groups)
   end
 end

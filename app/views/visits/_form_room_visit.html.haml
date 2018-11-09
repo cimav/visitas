@@ -8,6 +8,11 @@
     .col.s12
       = f.label :room_id
       = f.select :room_id, @visit.department.rooms.collect {|p| [p.name, p.id]}, {}, class:'material-select'
+  -if @visit.split_in_groups
+    .row
+      .col.s12
+        = f.label :group
+        = f.text_field :group, placeholder:'Por ejemplo: A'
   .row
     .col.s12
       = f.label :date

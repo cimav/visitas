@@ -149,12 +149,20 @@
             %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openModal($('#new_room_visit_modal'));"}
               %i.material-icons add
         -if @room_visits.size > 0
+          .row
+            .col.s12
+              .right
+              =form_for @visit, html:{id:'splitInGroupsForm', remote:true} do |f|
+                %p
+                  =f.check_box :split_in_groups
+                  =f.label :split_in_groups
           %table.bordered.highlight.responsive-table
             %thead
               %tr
                 %th
                 %th Laboratorio
                 %th Guía
+                %th.splitByGroups Grupo
                 %th Hora
                 %th Estatus
             %tbody
@@ -166,6 +174,8 @@
                     =room_visit.room.name
                   %td
                     =room_visit.persona.full_name rescue ''
+                  %td.splitByGroups
+                    =room_visit.group rescue ''
                   %td
                     =ftime room_visit.date rescue ''
                     -if !room_visit.date.between?('01-01-2000 08:00:00 -0700', '01-01-2000 17:00:00 -0700')
@@ -229,7 +239,20 @@
 :javascript
   $(document).ready(function(){
     loadVisitPeople(#{@visit.id},false);
+    showGroups();
   });
   $('.material-select').material_select();
   $('.do-select2').select2();
   Turbolinks.clearCache();
+
+  $('#visit_split_in_groups').change(function() {
+    $('form#splitInGroupsForm').ajaxSubmit(); //se actualiza de forma asíncrona
+    showGroups();
+  });
+
+  function showGroups(){
+    if ($('#visit_split_in_groups').is(':checked'))
+     $('.splitByGroups').show();
+   else
+    $('.splitByGroups').hide();
+  }

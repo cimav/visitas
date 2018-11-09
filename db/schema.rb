@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_185613) do
+ActiveRecord::Schema.define(version: 2018_11_07_202850) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_185613) do
     t.bigint "persona_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group"
     t.index ["persona_id"], name: "index_room_visits_on_persona_id"
     t.index ["room_id"], name: "index_room_visits_on_room_id"
     t.index ["visit_id"], name: "index_room_visits_on_visit_id"
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_185613) do
     t.text "reason"
     t.integer "visit_type"
     t.integer "people_approx"
+    t.boolean "split_in_groups", default: false
     t.index ["department_id"], name: "index_visits_on_department_id"
   end
 

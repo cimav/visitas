@@ -25,6 +25,7 @@ es:
         visit_type: Tipo de visita
         date: Fecha
         people_approx: Aproximado de estudiantes
+        split_in_groups: Separar en grupos
       room:
         name: Nombre
         department: Departamento
@@ -34,6 +35,7 @@ es:
           persona: Guía
           persona_id: Guía
           status: Estado
+          group: Grupo
           room: Laboratorio
           room_id: Laboratorio
       visit_person:

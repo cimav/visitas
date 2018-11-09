@@ -7,16 +7,19 @@ class ApplicationController < ActionController::Base
 
   def authenticated?
     if session[:user_auth].blank?
-      user = User.where(:email => session[:user_email]).first
+      user = User.find_by_email(session[:user_email])
       session[:user_auth] = user && user.email == session[:user_email]
+      session[:is_super_user] = true if user.user_type == User::SUPER_USER rescue puts "usuario no encontrado"
 
       if session[:user_auth]
         session[:user_id] = user.id
       end
+
     else
       session[:user_auth]
     end
   end
+
 
   def auth_required
     redirect_to '/login' unless authenticated?
@@ -48,5 +51,7 @@ class ApplicationController < ActionController::Base
     # send_file("tmp/#{filename}.xls", :type=>"application/ms-excel", :x_sendfile=>true)
     send_file "tmp/#{filename}.xls", :x_sendfile => true
   end
+
+
 
 end

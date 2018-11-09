@@ -23,7 +23,16 @@
           = image_tag "IMG_9922.jpg", class: 'slide-image'
 
     = yield
+    / Mensajes
+    -if flash[:alert]
+      -flash[:alert].each do |message|
+        :javascript
+          Materialize.toast("#{message}", 4500, 'red darken-4')
     :javascript
+      Materialize.toast("#{notice}", 3000)
+    :javascript
+
+
       $(document).ready(function(){
           $('.slider').slider({indicators: false});
       });
