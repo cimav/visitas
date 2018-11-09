@@ -114,6 +114,7 @@ class VisitsController < ApplicationController
   def update
     respond_to do |format|
       send_approved_email = false
+      send_confirm_email = false
       send_pre_approved_email = false
 
 
@@ -126,10 +127,20 @@ class VisitsController < ApplicationController
         send_pre_approved_email = true
       end
 
+      if (@visit.status != Visit::CONFIRMED) && (params[:visit][:status].to_i == Visit::CONFIRMED)
+        send_confirm_email = true
+      end
+
       if @visit.update(visit_params)
         if send_approved_email
           @visit.send_approved_email
         end
+
+        if send_confirm_email
+          @visit.send_confirmed_email
+          @visit.send_confirm_email_technician
+        end
+
         if send_pre_approved_email
           @visit.send_pre_approved_email
         end
