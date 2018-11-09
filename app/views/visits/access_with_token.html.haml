@@ -168,6 +168,8 @@
                         %th
                         %th Laboratorio
                         %th Guía
+                        -if @visit.split_in_groups
+                          %th Grupo
                         %th Hora
                         %th Estatus
                     %tbody
@@ -179,6 +181,9 @@
                             =room_visit.room.name
                           %td
                             =room_visit.persona.full_name rescue ''
+                          -if @visit.split_in_groups
+                            %td
+                              =room_visit.group
                           %td
                             =ftime room_visit.date rescue ''
                             -if !room_visit.date.between?('01-01-2000 08:00:00 -0700', '01-01-2000 17:00:00 -0700')
