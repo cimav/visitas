@@ -154,7 +154,10 @@
               .right
               =form_for @visit, html:{id:'splitInGroupsForm', remote:true} do |f|
                 %p
-                  =f.check_box :split_in_groups
+                  -if is_admin? || (@visit.status == Visit::REQUESTED)
+                    =f.check_box :split_in_groups
+                  -else
+                    =f.check_box :split_in_groups, disabled:true
                   =f.label :split_in_groups
           %table.bordered.highlight.responsive-table
             %thead
@@ -219,7 +222,11 @@
           .circle-clipper.right
             .circle
 
-    #edit_room_visit_content
+    -if is_admin? || (@visit.status == Visit::REQUESTED)
+      #edit_room_visit_content
+    -else
+      %blockquote
+        Ya no puede editar esta visita a laboratorio
 
 #edit_visit_person_modal.modal
   .modal-content
