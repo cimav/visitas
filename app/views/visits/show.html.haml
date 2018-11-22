@@ -146,7 +146,7 @@
             insert_invitation
           Visitas a laboratorios
           -if is_admin? || @visit.status == Visit::REQUESTED
-            %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openModal($('#new_room_visit_modal'));"}
+            %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openNewRoomVisitModal(#{@visit.id});"}
               %i.material-icons add
         -if @room_visits.size > 0
           .row
@@ -192,9 +192,21 @@
 
 #new_room_visit_modal.modal
   .modal-content
-    .center
-      %h4 Nueva visita a laboratorio
-    =render 'form_room_visit', room_visit: RoomVisit.new, screen:'new', time:'', url:"/visits/#{@visit.id}/create_room_visit"
+    %h4.center Nueva visita a laboratorio
+    .center-align
+      #new_room_visit_preloader.preloader-wrapper.big.active
+        .spinner-layer.spinner-blue-only
+          .circle-clipper.left
+            .circle
+          .gap-patch
+            .circle
+          .circle-clipper.right
+            .circle
+    -if is_admin? || (@visit.status == Visit::REQUESTED)
+      #new_room_visit_content
+    -else
+      %blockquote
+        Ya no puede editar esta visita a laboratorio
 
 #upload_institution_request_modal.modal
   .modal-content

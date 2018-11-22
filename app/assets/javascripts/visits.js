@@ -17,6 +17,18 @@ function openEditRoomVisitModal(room_visit_id){
         });
 }
 
+function openNewRoomVisitModal(visit_id){
+    $('#new_room_visit_modal').modal('open');
+    $('#new_room_visit_preloader').show();
+    $('#new_room_visit_content').html('');
+
+    $.get( "/visits/"+visit_id+"/new_room_visit/")
+        .done(function( data ) {
+            $('#new_room_visit_preloader').hide();
+            $('#new_room_visit_content').html(data);
+        });
+}
+
 function openEditVisitPersonModal(visit_person_id, token){
     $('#edit_visit_person_modal').modal('open');
     $('#edit_visit_person_preloader').show();

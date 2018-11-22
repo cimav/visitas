@@ -150,7 +150,7 @@ class VisitsController < ApplicationController
         format.html {
           flash[:alert] = @visit.errors.full_messages
           render :edit}
-        format.json {redirect_to '/nel'}
+        format.json {redirect_to '/error'}
       end
     end
   end
@@ -176,20 +176,22 @@ class VisitsController < ApplicationController
   end
 
   def create_room_visit
-    room_visit = @visit.room_visits.new(
+    room_visit = @visit.room_visits.new
+    room_visit_params = {
         persona_id: params[:room_visit][:persona_id],
         room_id: params[:room_visit][:room_id],
         date: "01-01-2000 #{params[:room_visit][:time]}", #todos los room_visit tienen la misma fecha ya que sólo importa la hora
         status: RoomVisit::SCHEDULED
-    )
+    }
+    room_visit_params[:group] = params[:room_visit][:group] if !params[:room_visit][:group].blank?
     respond_to do |format|
-      if room_visit.save
+      if room_visit.update(room_visit_params)
         format.html {redirect_to @visit, notice: 'Visita a laboratorio agendada'}
         format.json {render :show, status: :created, location: @visit}
       else
         format.html {
           flash[:alert] = room_visit.errors.full_messages
-          render :new}
+          redirect_to @visit}
         format.json {render json: '/visit_error', status: :unprocessable_entity}
       end
     end
@@ -210,7 +212,7 @@ class VisitsController < ApplicationController
       else
         format.html {
           flash[:alert] = room_visit.errors.full_messages
-          render :new}
+          redirect_to @visit}
         format.json {render json: @visit.errors, status: :unprocessable_entity}
       end
     end
@@ -257,6 +259,11 @@ class VisitsController < ApplicationController
     end
   end
 
+  def new_room_visit
+    @room_visit = RoomVisit.new
+    @visit = Visit.find(params[:id])
+    render layout: false
+  end
 
   def edit_room_visit
     @room_visit = RoomVisit.find(params[:room_visit_id])

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/load_visits' => 'visits#load_visits'
   post '/visits/:id/create_room_visit' => 'visits#create_room_visit'
   get '/visits/edit_room_visit/:room_visit_id' => 'visits#edit_room_visit'
+  get '/visits/:id/new_room_visit' => 'visits#new_room_visit'
   get '/visits/edit_visit_person/:visit_person_id' => 'visits#edit_visit_person'
   patch '/visits/update_room_visit/:room_visit_id' => 'visits#update_room_visit'
   delete '/visits/delete_room_visit/:room_visit_id' => 'visits#delete_room_visit'

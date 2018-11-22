@@ -1,13 +1,13 @@
 
-=form_for room_visit, url: url do |f|
+=form_for @room_visit, url: "/visits/#{@visit.id}/create_room_visit" do |f|
   .row
     .input-field.col.s12
       = f.label :persona_id, class:'active'
-      = f.select :persona_id, Persona.all.collect {|p| [p.nombre, p.id]}, {}, class:'do-select2'
+      = f.select :persona_id, Persona.all.collect {|p| [p.nombre, p.id]}, {}, id:'new_persona_id'
   .row
     .col.s12
       = f.label :room_id
-      = f.select :room_id, @visit.department.rooms.collect {|p| [p.name, p.id]}, {}, class:'material-select'
+      = f.select :room_id, @visit.department.rooms.collect {|p| [p.name, p.id]}, {}, id:'new_room_id'
   -if @visit.split_in_groups
     .row
       .col.s12
@@ -16,18 +16,17 @@
   .row
     .col.s12
       = f.label :date
-      = text_field_tag '[room_visit][time]',time, class: "timepicker", placeholder:'Selecciona la hora de la visita', required:true
+      = text_field_tag '[room_visit][time]','', class: "timepicker", placeholder:'Selecciona la hora de la visita', required:true
   .section
     .row
       .col.s12
         .right
-          -if screen == 'edit'
-            %a.btn.btn-large.red{href:"/visits/#{@visit.id}/delete_room_visit/#{room_visit.id}", 'data-method': 'delete', data: { confirm: '¿Deseas eliminar la visita?' }}
-              Eliminar
           =f.submit 'Guardar', class:'btn btn-large green darken-2'
 
 
 :javascript
+  $('#new_room_id').material_select();
+  $('#new_persona_id').select2();
   $('.timepicker').pickatime({
     default: 'now', // Set default time: 'now', '1:30AM', '16:30'
     fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
