@@ -15,6 +15,7 @@ Department.create(name:'Departamento de Metalurgia e Integridad Estructural')
 Department.create(name:'Departamento de Medio Ambiente y Energía')
 Department.create(name:'Servicios Generales')
 Department.create(name:'Laboratorio Nacional de Nanotecnología')
+Department.create(id:1000, name:'Áreas comunes')
 
 #Se crean laboratorios
 Room.delete_all
