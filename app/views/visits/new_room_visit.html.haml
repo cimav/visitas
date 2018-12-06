@@ -6,8 +6,7 @@
       = f.select :persona_id, Persona.all.collect {|p| [p.nombre, p.id]}, {}, id:'new_persona_id'
   .row
     .col.s12
-      -rooms = @visit.department.rooms
-      -rooms << Room.where(department_id: 1000)
+      -rooms = Room.where(department_id: [@visit.department_id,1000])
       = f.label :room_id
       = f.select :room_id, rooms.collect {|p| [p.name, p.id]}, {}, id:'new_room_id'
   -if @visit.split_in_groups
