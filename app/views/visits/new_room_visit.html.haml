@@ -7,6 +7,7 @@
   .row
     .col.s12
       -rooms = Room.where(department_id: [@visit.department_id,1000])
+      -rooms = Room.all if is_admin?
       = f.label :room_id
       = f.select :room_id, rooms.collect {|p| [p.name, p.id]}, {}, id:'new_room_id'
   -if @visit.split_in_groups
