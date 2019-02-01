@@ -13,7 +13,7 @@ Department.create(name:'Departamento de Física de Materiales')
 Department.create(name:'Departamento de Ingeniería y Química de Materiales')
 Department.create(name:'Departamento de Metalurgia e Integridad Estructural')
 Department.create(name:'Departamento de Medio Ambiente y Energía')
-Department.create(name:'Servicios Generales')
+Department.create(name:'Servicios Generales de Laboratorio')
 Department.create(name:'Laboratorio Nacional de Nanotecnología')
 Department.create(id:1000, name:'Áreas comunes')
 
@@ -79,7 +79,7 @@ Department.find_by_name('Departamento de Medio Ambiente y Energía').rooms.creat
 )
 
 #Laboratorios de Servicios Generales
-Department.find_by_name('Servicios Generales').rooms.create(
+Department.find_by_name('Servicios Generales de Laboratorio').rooms.create(
     [
         {name:'Materiales Cerámicos'},
         {name:'Análisis térmicos'},
