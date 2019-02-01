@@ -12,4 +12,8 @@
   %b="#{l(@room_visit.visit.date, format: "%d de %B del %Y")} a las #{@room_visit.date.strftime('%I:%M%p')}"
 
 %p
+  Para ver los detalles de la visita haga click en
+  %a{href:"https://visitas.cimav.edu.mx/visits/token/#{@visit.token}"} este enlace
+
+%p
   Que tenga un excelente día.

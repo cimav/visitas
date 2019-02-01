@@ -207,20 +207,21 @@
               %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
             =render 'visit_file_form_token', type:VisitFile::INSURANCE
 
-        #edit_visit_person_modal.modal
-          .modal-content
-            %h4.center Editar Persona
-            .center-align
-              #edit_visit_person_preloader.preloader-wrapper.big.active
-                .spinner-layer.spinner-blue-only
-                  .circle-clipper.left
-                    .circle
-                  .gap-patch
-                    .circle
-                  .circle-clipper.right
-                    .circle
+        -if @visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED, Visit::APPROVED]
+          #edit_visit_person_modal.modal
+            .modal-content
+              %h4.center Editar Persona
+              .center-align
+                #edit_visit_person_preloader.preloader-wrapper.big.active
+                  .spinner-layer.spinner-blue-only
+                    .circle-clipper.left
+                      .circle
+                    .gap-patch
+                      .circle
+                    .circle-clipper.right
+                      .circle
 
-            #edit_visit_person_content
+              #edit_visit_person_content
 
 
 
