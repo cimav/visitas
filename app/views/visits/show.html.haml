@@ -14,7 +14,7 @@
             %i.material-icons.left
               info_outline
           Información de la visita
-          -if (is_admin?) || (@visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED]) #el asistente sólo puede ver el botón si está en alguno de esos estatus
+          -if (is_admin?) || ((current_user.user_type == User::ASSISTANT) && (@visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED])) # el asistente sólo puede ver el botón si está en alguno de esos estatus
             = link_to edit_visit_path(@visit), class:'right btn-floating tooltipped blue', 'data-tooltip':'Editar', 'data-position':'right' do
               %i.material-icons edit
         .row
@@ -90,7 +90,8 @@
               %td
                 -if file
                   %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
+                -if is_admin? || (current_user.user_type == User::ASSISTANT && @visit.status == Visit::REQUESTED)
+                  %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
             -######################## Póliza de seguro
             %tr
               -file = @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
@@ -105,7 +106,8 @@
               %td
                 -if file
                   %i.material-icons.icon-button{onclick:"openInNewTab('#{file.file_url}');"} remove_red_eye
-                %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
+                -if is_admin? || (current_user.user_type == User::ASSISTANT && @visit.status == Visit::REQUESTED)
+                  %i.material-icons.icon-button{onclick:"openModal($('#upload_insurance_modal'));"} cloud_upload
 
 .row
   .col.s12.m12
@@ -125,16 +127,17 @@
               .circle-clipper.right
                 .circle
         #visit_people
-        =form_for @visit.visit_people.new, url: "/visits/#{@visit.id}/add_person", html:{id:'add_people_form', visit_id:@visit.id} do |f|
-          .row#add-person
-            .col.s12.m5.input-field
-              =f.label :name, class:'active'
-              =f.text_field :name
-            .col.s12.m4.input-field
-              =f.label :person_type, class:'active'
-              =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert), {}, class:'material-select'
-            .col.s12.m3
-              %button.btn.btn-large.blue{type:'submit',value:'submit', style:'width:100%;'} Agregar
+        -if is_admin? || (current_user.user_type == User::ASSISTANT && @visit.status == Visit::REQUESTED)
+          =form_for @visit.visit_people.new, url: "/visits/#{@visit.id}/add_person", html:{id:'add_people_form', visit_id:@visit.id} do |f|
+            .row#add-person
+              .col.s12.m5.input-field
+                =f.label :name, class:'active'
+                =f.text_field :name
+              .col.s12.m4.input-field
+                =f.label :person_type, class:'active'
+                =f.select :person_type, options_for_select(VisitPerson::PERSON_TYPES.invert), {}, class:'material-select'
+              .col.s12.m3
+                %button.btn.btn-large.blue{type:'submit',value:'submit', style:'width:100%;'} Agregar
 
 
 .row
@@ -145,7 +148,7 @@
           %i.material-icons.left
             insert_invitation
           Visitas a laboratorios
-          -if is_admin? || @visit.status == Visit::REQUESTED
+          -if is_admin? || (current_user.user_type == User::ASSISTANT && @visit.status == Visit::REQUESTED)
             %button.btn-floating.green.darken-2.tooltipped.right{'data-tooltip':'Agregar visita a laboratorio','data-position':'right', onclick:"openNewRoomVisitModal(#{@visit.id});"}
               %i.material-icons add
         -if @room_visits.size > 0
@@ -154,7 +157,7 @@
               .right
               =form_for @visit, html:{id:'splitInGroupsForm', remote:true} do |f|
                 %p
-                  -if is_admin? || (@visit.status == Visit::REQUESTED)
+                  -if is_admin? || (current_user.user_type == User::ASSISTANT && @visit.status == Visit::REQUESTED)
                     =f.check_box :split_in_groups
                   -else
                     =f.check_box :split_in_groups, disabled:true
@@ -190,49 +193,50 @@
             Aun no hay visitas a laboratorio
 
 
-#new_room_visit_modal.modal
-  .modal-content
-    %h4.center Nueva visita a laboratorio
-    .center-align
-      #new_room_visit_preloader.preloader-wrapper.big.active
-        .spinner-layer.spinner-blue-only
-          .circle-clipper.left
-            .circle
-          .gap-patch
-            .circle
-          .circle-clipper.right
-            .circle
-    -if is_admin? || (@visit.status == Visit::REQUESTED)
-      #new_room_visit_content
-    -else
-      %blockquote
-        Ya no puede editar esta visita a laboratorio
+-if is_admin? || (current_user.user_type == User::ASSISTANT)
+  #new_room_visit_modal.modal
+    .modal-content
+      %h4.center Nueva visita a laboratorio
+      .center-align
+        #new_room_visit_preloader.preloader-wrapper.big.active
+          .spinner-layer.spinner-blue-only
+            .circle-clipper.left
+              .circle
+            .gap-patch
+              .circle
+            .circle-clipper.right
+              .circle
+      -if is_admin? || (@visit.status == Visit::REQUESTED)
+        #new_room_visit_content
+      -else
+        %blockquote
+          Ya no puede editar esta visita a laboratorio
 
-#upload_institution_request_modal.modal
-  .modal-content
-    .center
-      %h5= VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
-    =render 'visit_file_form', type:VisitFile::INSTITUTION_REQUEST
+  #upload_institution_request_modal.modal
+    .modal-content
+      .center
+        %h5= VisitFile::FILE_TYPES[VisitFile::INSTITUTION_REQUEST]
+      =render 'visit_file_form', type:VisitFile::INSTITUTION_REQUEST
 
-#upload_insurance_modal.modal
-  .modal-content
-    .center
-      %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
-    =render 'visit_file_form', type:VisitFile::INSURANCE
+  #upload_insurance_modal.modal
+    .modal-content
+      .center
+        %h5= VisitFile::FILE_TYPES[VisitFile::INSURANCE]
+      =render 'visit_file_form', type:VisitFile::INSURANCE
 
 
-#edit_room_visit_modal.modal
-  .modal-content
-    %h4.center Editar visita a laboratorio
-    .center-align
-      #edit_room_visit_preloader.preloader-wrapper.big.active
-        .spinner-layer.spinner-blue-only
-          .circle-clipper.left
-            .circle
-          .gap-patch
-            .circle
-          .circle-clipper.right
-            .circle
+  #edit_room_visit_modal.modal
+    .modal-content
+      %h4.center Editar visita a laboratorio
+      .center-align
+        #edit_room_visit_preloader.preloader-wrapper.big.active
+          .spinner-layer.spinner-blue-only
+            .circle-clipper.left
+              .circle
+            .gap-patch
+              .circle
+            .circle-clipper.right
+              .circle
 
     -if is_admin? || (@visit.status == Visit::REQUESTED)
       #edit_room_visit_content
@@ -240,20 +244,20 @@
       %blockquote
         Ya no puede editar esta visita a laboratorio
 
-#edit_visit_person_modal.modal
-  .modal-content
-    %h4.center Editar Persona
-    .center-align
-      #edit_visit_person_preloader.preloader-wrapper.big.active
-        .spinner-layer.spinner-blue-only
-          .circle-clipper.left
-            .circle
-          .gap-patch
-            .circle
-          .circle-clipper.right
-            .circle
+  #edit_visit_person_modal.modal
+    .modal-content
+      %h4.center Editar Persona
+      .center-align
+        #edit_visit_person_preloader.preloader-wrapper.big.active
+          .spinner-layer.spinner-blue-only
+            .circle-clipper.left
+              .circle
+            .gap-patch
+              .circle
+            .circle-clipper.right
+              .circle
 
-    #edit_visit_person_content
+      #edit_visit_person_content
 
 :javascript
   $(document).ready(function(){

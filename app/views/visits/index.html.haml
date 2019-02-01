@@ -9,34 +9,36 @@
               %i.material-icons
                 add
 
+
         .row
           %form#visits-search-form{'data-remote':true, action:'/load_part_visits'}
-            .row
-              -if is_admin?
+            -if current_user.user_type != User::SUPERVISOR
+              .row
+                -if is_admin?
+                  .col.l4.input-field
+                    =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
+                    %label{for:'visits-search-type'} Departamento
                 .col.l4.input-field
-                  =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
-                  %label{for:'visits-search-type'} Departamento
-              .col.l4.input-field
-                %input#visits-search-institution{placeholder:'Nombre de la institución'}
-                %label.active{for:'visits-search-institution'} Institución
-              .col.l4.input-field
-                %input#visits-search-resp{placeholder:'Nombre del responsable'}
-                %label.active{for:'visits-search-resp'} Responsable
-            .row
-              .col.l3.input-field
-                =select_tag 'visits-search-status', options_from_collection_for_select(Visit::STATUS.except(Visit::DELETED),:first, :last), include_blank: 'Todos los estatus'
-                %label{for:'visits-search-status'} Estatus
-              .col.l3.input-field
-                =text_field_tag 'visits-search-date','', class: "datepicker", type:'date'
-                %label.active{for:'visits-search-date'} Fecha
-              .col.l3.input-field
-                =select_tag 'visits-search-type', options_from_collection_for_select(Visit::VISIT_TYPES,:first, :last), include_blank: 'Todos los tipos'
-                %label{for:'visits-search-type'} Tipo de visita
-              .col.l3.center
-                %button#visits-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
-                  Buscar
-                  %i.material-icons.left
-                    search
+                  %input#visits-search-institution{placeholder:'Nombre de la institución'}
+                  %label.active{for:'visits-search-institution'} Institución
+                .col.l4.input-field
+                  %input#visits-search-resp{placeholder:'Nombre del responsable'}
+                  %label.active{for:'visits-search-resp'} Responsable
+              .row
+                .col.l3.input-field
+                  =select_tag 'visits-search-status', options_from_collection_for_select(Visit::STATUS.except(Visit::DELETED),:first, :last), include_blank: 'Todos los estatus'
+                  %label{for:'visits-search-status'} Estatus
+                .col.l3.input-field
+                  =text_field_tag 'visits-search-date','', class: "datepicker", type:'date'
+                  %label.active{for:'visits-search-date'} Fecha
+                .col.l3.input-field
+                  =select_tag 'visits-search-type', options_from_collection_for_select(Visit::VISIT_TYPES,:first, :last), include_blank: 'Todos los tipos'
+                  %label{for:'visits-search-type'} Tipo de visita
+                .col.l3.center
+                  %button#visits-search-button.btn.btn-large.blue.waves-effect{type:'submit'}
+                    Buscar
+                    %i.material-icons.left
+                      search
         #visits-wrapper
           %table#visits-table.bordered.highlight
             %thead
@@ -134,15 +136,16 @@
 
   function searchVisits() {
     visits_loaded = 0;
-    if (#{current_user.user_type.in? [User::ASSISTANT]})
+    if (#{current_user.user_type == User::ASSISTANT})
       searchObject.department = #{current_user.departments.blank? ? '0' : current_user.departments};
     else
       searchObject.department = $("#visits-search-department").val();
     searchObject.institution = $("#visits-search-institution").val();
     searchObject.resp = $("#visits-search-resp").val();
-    searchObject.status = $("#visits-search-status").val();
     searchObject.date = $("#visits-search-date").val();
     searchObject.visit_type = $("#visits-search-type").val();
+    if (#{current_user.user_type == User::SUPERVISOR})
+      searchObject.status = [#{Visit::CONFIRMED}, #{Visit::FINISHED}];
     console.log(searchObject);
     loadVisits();
 

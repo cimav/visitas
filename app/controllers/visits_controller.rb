@@ -35,10 +35,10 @@ class VisitsController < ApplicationController
     #filtro por fecha
     @visits = @visits.where("date LIKE '#{date}%'") unless date.blank?
 
-    #filtro por fecha
+    #filtro por nombre del responsable
     @visits = @visits.where("resp_name LIKE '%#{resp}%'") unless resp.blank?
 
-    #filtro por fecha
+    #filtro por estatus
     @visits = @visits.where(status: status) unless status.blank?
 
     #filtro por tipo

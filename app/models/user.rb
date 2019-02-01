@@ -3,11 +3,13 @@ class User < ApplicationRecord
 
   ADMIN = 1
   ASSISTANT = 2
+  SUPERVISOR = 3
   SUPER_USER = 1000
 
   TYPES = {
       ADMIN => 'Administrador',
       ASSISTANT => 'Asistente',
+      SUPERVISOR => 'Supervisor',
       SUPER_USER => 'Súper Usuario'
   }
 

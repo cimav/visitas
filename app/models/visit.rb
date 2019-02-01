@@ -98,9 +98,15 @@ class Visit < ApplicationRecord
     VisitsMailer.visit_confirmed(self).deliver_later
     puts "[#{DateTime.now.to_s}][CONFIRMADA] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name} (id: #{self.id})"
 
+
     User.where(user_type:User::ADMIN).each do |user|
       VisitsMailer.visit_confirmed_admin(self, user.email).deliver_later
       puts "[#{DateTime.now.to_s}][CONFIRMADA] Se notificará al administrador sobre visita de #{self.institution} a #{self.department.name} (id: #{self.id})"
+    end
+
+    User.where(user_type:User::SUPERVISOR).each do |user|
+      VisitsMailer.visit_confirmed_supervisor(self, user.email).deliver_later
+      puts "[#{DateTime.now.to_s}][CONFIRMADA] Se notificará al supervisor sobre visita de #{self.institution} a #{self.department.name} (id: #{self.id})"
     end
 
     User.where(user_type:User::ASSISTANT).each do |assistant|
