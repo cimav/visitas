@@ -144,6 +144,7 @@
     searchObject.resp = $("#visits-search-resp").val();
     searchObject.date = $("#visits-search-date").val();
     searchObject.visit_type = $("#visits-search-type").val();
+    searchObject.status = $("#visits-search-status").val();
     if (#{current_user.user_type == User::SUPERVISOR})
       searchObject.status = [#{Visit::CONFIRMED}, #{Visit::FINISHED}];
     console.log(searchObject);
