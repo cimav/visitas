@@ -61,6 +61,13 @@
               .row.section
                 = link_to 'Pre-aprobar visita',"/visits/#{@visit.id}/pre_approve", class:"btn-large cyan #{@visit.room_visits.blank? ? 'disabled':''}", method:'post', data: {confirm:'¿Confirma que los documentos están en orden?'}
 
+        .row
+          .col.s12
+            -if !@visit.notes.blank?
+              %p.grey-text.text-darken-3
+                %b Notas:
+                = @visit.notes
+
 .row
   .col.s12.m12
     .card

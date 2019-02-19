@@ -49,6 +49,12 @@
   .section
     .row
       .col.s12
+        =f.label :notes
+        =f.text_area :notes, class:'materialize-textarea', placeholder:'Escriba alguna nota sobre esta visita'
+
+  .section
+    .row
+      .col.s12
         .right
           =f.submit 'Guardar', class:'btn btn-large purple'
 :javascript

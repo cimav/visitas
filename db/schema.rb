@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_07_202850) do
+ActiveRecord::Schema.define(version: 2019_02_19_171719) do
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_202850) do
     t.integer "visit_type"
     t.integer "people_approx"
     t.boolean "split_in_groups", default: false
+    t.text "notes"
     t.index ["department_id"], name: "index_visits_on_department_id"
   end
 
