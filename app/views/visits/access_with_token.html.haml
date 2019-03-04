@@ -3,6 +3,13 @@
     -if @visit.status.in? [Visit::REQUESTED, Visit::APPROVED, Visit::CONFIRMED]
       .container{style:'margin-top:3rem;'}
 
+
+
+        / Div para orientar al usuario a usar el botón confirmar
+        .tap-target.green{"data-activates" => "confirmButton"}
+
+
+
         -if @visit.status == Visit::APPROVED
           .row
             .col.s12.m12
@@ -17,7 +24,11 @@
                       %p.grey-text.text-darken-2.center Al dar click en "confirmar visita" usted está de acuerdo con las fechas y el itinerario que el CIMAV le ofrece.
                     .row
                       .center
-                        =link_to 'Confirmar visita', "/visits/#{@visit.token}/confirm_visit", class:'btn btn-large green', data: { confirm: '¿Desea confirmar la visita?', method:'post'}
+                        =link_to 'Confirmar visita', "/visits/#{@visit.token}/confirm_visit", id:"confirmButton", class:'btn btn-large green', data: { confirm: '¿Desea confirmar la visita?', method:'post'}
+                        :javascript
+                          $(document).ready(function(){
+                            $('.tap-target').tapTarget('open');
+                          });
                   -else
                     %p.grey-text
                       No se puede confirmar la visita.
