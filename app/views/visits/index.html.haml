@@ -29,7 +29,7 @@
                   =select_tag 'visits-search-status', options_from_collection_for_select(Visit::STATUS.except(Visit::DELETED),:first, :last), include_blank: 'Todos los estatus'
                   %label{for:'visits-search-status'} Estatus
                 .col.l3.input-field
-                  =text_field_tag 'visits-search-date','', class: "datepicker", type:'date'
+                  =text_field_tag 'visits-search-date','', class: "nn", type:'date'
                   %label.active{for:'visits-search-date'} Fecha
                 .col.l3.input-field
                   =select_tag 'visits-search-type', options_from_collection_for_select(Visit::VISIT_TYPES,:first, :last), include_blank: 'Todos los tipos'

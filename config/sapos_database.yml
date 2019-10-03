@@ -18,7 +18,9 @@ test:
   database: sapos_test
 
 production:
-  <<: *default
+  adapter: mysql2
+  host: 10.0.0.25
+  pool: 5
   database: sapos_production
-  username: root
-password: <%= ENV['SAPOS_DATABASE_PASSWORD'] %>
+  username: visitas
+  password: v151t4s!
