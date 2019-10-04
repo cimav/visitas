@@ -60,5 +60,5 @@ production_cimavnetmultix:
   encoding: utf8
   pool: 5
   username: netmultix
-  password: N3tMult1x@CIMAV
+  password: <%= ENV['CIMAVNETMULTIX_DATABASE_PASSWORD'] %>
   database: cimavnetmultix
