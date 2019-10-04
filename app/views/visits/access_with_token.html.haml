@@ -83,6 +83,28 @@
                     %i.material-icons.center.inline{class:status_color(@visit.status)} lens
                     =@visit.get_status
 
+        .row
+          .col.s12.m12
+            .card.yellow.darken-4
+              .card-content.white-text
+                .card-title
+                  %i.material-icons.left
+                    warning
+                  Advertencia
+                .row
+                  .col.s12.m12
+                    Se negará el acceso a las instaciones a toda persona que no cumpla con los siguientes requerimientos:
+                    %ul{list_style_type:"circle !important"}
+                    %li
+                      Presentarse en caseta de vigilancia al menos 30 minutos antes de su visita
+                    %li
+                      Identificación con fotografía
+                    %li
+                      Bata de laboratorio
+                    %li
+                      Pantalón
+                    %li
+                      Zapato cerrado
 
         .row
           .col.s12.m12
