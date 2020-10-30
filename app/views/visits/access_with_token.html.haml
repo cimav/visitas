@@ -138,7 +138,7 @@
                         -if @visit.status.in? [Visit::REQUESTED, Visit::PRE_APPROVED, Visit::APPROVED]
                           %i.material-icons.icon-button{onclick:"openModal($('#upload_institution_request_modal'));"} cloud_upload
                     -######################## Póliza de seguro
-                    %tr
+                    -#%tr
                       -file = @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
                       %td
                         -if file
