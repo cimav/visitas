@@ -53,9 +53,9 @@
       .col.s12.m4
         = f.label :date, 'Fecha sugerida'
         = f.text_field :date ,class: "datepicker", placeholder:'Selecciona la fecha de la visita', required:true
-      .col.s12.m4
-        = f.label :transport_type
-        = f.select :transport_type, Visit::TRANSPORT_TYPES.invert
+        -# col.s12.m4
+          = f.label :transport_type
+          = f.select :transport_type, Visit::TRANSPORT_TYPES.invert
 
         = f.hidden_field :visit_type, value: Visit::TOUR
 
@@ -117,9 +117,10 @@
         close: 'Cerrar',
 
         format: 'yyyy-mm-dd',
-        min: new Date(new Date().getTime()+604800000), // No se permite seleccionar fechas menores a 7 días
+        //min: new Date(new Date().getTime()+604800000), // No se permite seleccionar fechas menores a 7 días
+	min: new Date(new Date().getTime()+86400000), // Por la visitas virtuales es 1 día
         disable: [
-          1, 2, 3, 4, 5, 7
+          1 //, 2, 3, 4, 5, 7
         ]
   });
 

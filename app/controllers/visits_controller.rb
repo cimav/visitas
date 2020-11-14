@@ -62,12 +62,13 @@ class VisitsController < ApplicationController
               'Responsable' => (visit.resp_name rescue 'Sin información'),
               'Teléfono Responsable' => (visit.resp_phone rescue 'Sin información'),
               'Email Responsable' => (visit.resp_email rescue 'Sin información'),
-              'Tipo de transporte' => (visit.get_transport_type rescue 'Sin información'),
               'Fecha' => (visit.date rescue 'Sin información'),
               'Estado' => (visit.get_status rescue 'Sin información')
           }
         end
-        column_order = ['Departamento', 'Institución', 'Carrera', 'Tipo de visita', 'Responsable', 'Teléfono Responsable', 'Email Responsable', 'Tipo de transporte', 'Fecha', 'Estado']
+	# 'Tipo de transporte' => (visit.get_transport_type rescue 'Sin información'),
+        # column_order = ['Departamento', 'Institución', 'Carrera', 'Tipo de visita', 'Responsable', 'Teléfono Responsable', 'Email Responsable', 'Tipo de transporte', 'Fecha', 'Estado']
+        column_order = ['Departamento', 'Institución', 'Carrera', 'Tipo de visita', 'Responsable', 'Teléfono Responsable', 'Email Responsable', 'Fecha', 'Estado']
         to_excel(rows, column_order, "Servicios", "Reporte_Becas")
       end
     end

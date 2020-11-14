@@ -19,7 +19,7 @@
                     %i.material-icons.left
                       assignment_turned_in
                     Confirmar visita
-                  -if @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last && @visit.visit_files.where(file_type:VisitFile::INSURANCE).last
+                  -if @visit.visit_files.where(file_type:VisitFile::INSTITUTION_REQUEST).last 
                     .section
                       %p.grey-text.text-darken-2.center Al dar click en "confirmar visita" usted está de acuerdo con las fechas y el itinerario que el CIMAV le ofrece.
                     .row
@@ -69,8 +69,8 @@
                     %p
                       %b Correo del responsable:
                       = @visit.resp_email
-                    %p
-                      %b Tipo de transporte:
+                    -#%p
+                      %b Tipo de transporte_2:
                       = @visit.get_transport_type
                     %p
                       %b Fecha:
@@ -83,7 +83,7 @@
                     %i.material-icons.center.inline{class:status_color(@visit.status)} lens
                     =@visit.get_status
 
-        .row
+        -#.row
           .col.s12.m12
             .card.yellow.darken-4
               .card-content.white-text
