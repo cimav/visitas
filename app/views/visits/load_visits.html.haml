@@ -1,15 +1,17 @@
 -@visits.each do |visit|
   %tr.tr-click{href:"/visits/#{visit.id}"}
-    %td{width:'28%'}
-      =visit.department.name
-    %td{width:'27%'}
-      =visit.institution
     %td{width:'25%'}
+      =visit.department.name
+    %td{width:'25%'}
+      =visit.institution
+    %td{width:'22%'}
       =visit.resp_name
-    %td{width:'10%'}
+    %td{width:'8%'}
       =visit.get_status
     %td{width:'10%'}
       =l(visit.date, format: "%d %b. %Y")
+    %td{width:'10%'}
+      =l(visit.created_at, format: "%d %b. %Y")
 :javascript
   $("tr.tr-click").on('click', function () {
     window.location = ($(this).attr("href"));
