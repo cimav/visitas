@@ -6,12 +6,16 @@
       =visit.institution
     %td{width:'22%'}
       =visit.resp_name
-    %td{width:'8%'}
+    %td{width:'7%'}
       =visit.get_status
-    %td{width:'10%'}
+    %td{width:'9%'}
       =l(visit.date, format: "%d %b. %Y")
     %td{width:'10%'}
       =l(visit.created_at, format: "%d %b. %Y")
+    %td{width:'2%', :style=>'text-align: center;'}
+      - if visit.visit_files.length > 0
+        %i.tiny.material-icons
+          attach_file
 :javascript
   $("tr.tr-click").on('click', function () {
     window.location = ($(this).attr("href"));
