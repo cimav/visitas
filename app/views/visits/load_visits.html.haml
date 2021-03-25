@@ -1,14 +1,16 @@
 -@visits.each do |visit|
   %tr.tr-click{href:"/visits/#{visit.id}"}
+    %td{width:'2%', :style=>'font-size:small;'}
+      =visit.id
     %td{width:'25%'}
       =visit.department.name
     %td{width:'25%'}
       =visit.institution
-    %td{width:'22%'}
+    %td{width:'20%'}
       =visit.resp_name
-    %td{width:'7%'}
+    %td{width:'8%'}
       =visit.get_status
-    %td{width:'9%'}
+    %td{width:'8%'}
       =l(visit.date, format: "%d %b. %Y")
     %td{width:'10%'}
       =l(visit.created_at, format: "%d %b. %Y")

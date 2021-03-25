@@ -50,8 +50,10 @@
           -if session[:is_super_user]
             %li
               %a.dropdown-button{href:'#', 'data-activates':'changeUserDropdown'}
-                Ver como otro usuario
+                %span
+                  Ver como
                 %i.material-icons.right arrow_drop_down
+                %span.new.badge.pink{'data-badge-caption':current_user.name}
           %li.tooltipped{'data-tooltip':'Cerrar sesión'}
             %a{:href => "/logout"}
               %i.material-icons.right
@@ -70,7 +72,7 @@
                 exit_to_app
 
 
-    .container{style:'margin-top:3rem;'}
+    .container{style:'margin-top:3rem; width: 90%;'}
       = yield
 
 / Mensajes
