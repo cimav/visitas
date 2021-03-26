@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def only_super_user
-    redirect_to '/' if !super_user?
+    redirect_to '/' if !super_user? && !is_admin?
   end
 
   def user_params
