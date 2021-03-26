@@ -14,10 +14,10 @@
           %form#visits-search-form{'data-remote':true, action:'/load_part_visits'}
             -if current_user.user_type != User::SUPERVISOR
               .row
-                -if is_admin?
-                  .col.l4.input-field
-                    =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
-                    %label{for:'visits-search-type'} Departamento
+                -#-if is_admin?
+                .col.l4.input-field
+                  =select_tag 'visits-search-department', options_from_collection_for_select(Department.all,'id','name'), include_blank: 'Todos los departamentos'
+                  %label{for:'visits-search-type'} Departamento
                 .col.l4.input-field
                   %input#visits-search-institution{placeholder:'Nombre de la institución'}
                   %label.active{for:'visits-search-institution'} Institución
