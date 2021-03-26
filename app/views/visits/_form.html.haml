@@ -49,6 +49,12 @@
   .section
     .row
       .col.s12
+        =f.label :meeting_link
+        =f.text_field :meeting_link, type:'url', placeholder:'Link al enlace de la reunión (BlueJeans)'
+
+  .section
+    .row
+      .col.s12
         =f.label :notes
         =f.text_area :notes, class:'materialize-textarea', placeholder:'Escriba alguna nota sobre esta visita'
 

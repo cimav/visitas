@@ -62,6 +62,7 @@ class Visit < ApplicationRecord
   end
 
   def send_requested_email
+    # se le envía correo al responsable
     VisitsMailer.new_visit(self).deliver_later
     puts "[#{DateTime.now.to_s}][SOLICITUD] Se notificará a #{self.resp_email} sobre visita de #{self.institution} a #{self.department.name} (id: #{self.id})"
 
@@ -80,7 +81,6 @@ class Visit < ApplicationRecord
     end
 
   end
-
 
   def send_pre_approved_email
     User.where(user_type:User::ADMIN).each do |user|

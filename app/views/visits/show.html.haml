@@ -55,6 +55,12 @@
             %p
               %b Motivo de visita:
               = @visit.reason
+            %p
+              %b Meeting Link:
+              -if @visit.meeting_link.blank?
+                Falta capturar enlace a la reunión
+              -else  
+                = @visit.meeting_link
 
           .col.s12.m5.center
             .row
