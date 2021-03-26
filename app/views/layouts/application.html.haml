@@ -44,9 +44,9 @@
               %a{:href => "/departments"} Departamentos
             %li{class:"#{active_class('/rooms')}"}
               %a{:href => "/rooms"} Laboratorios
-            -if super_user?
-              %li{class:"#{active_class('/users')}"}
-                %a{:href => "/users"} Usuarios
+            -# -if super_user?
+            %li{class:"#{active_class('/users')}"}
+              %a{:href => "/users"} Usuarios
           -if session[:is_super_user]
             %li
               %a.dropdown-button{href:'#', 'data-activates':'changeUserDropdown'}
